@@ -1,0 +1,3307 @@
+[gd_scene load_steps=18 format=3]
+[ext_resource type="Script" path="res://src/world/region.gd" id="region"]
+[ext_resource type="Script" path="res://src/world/terrain.gd" id="terrain"]
+[ext_resource type="Script" path="res://src/world/world_prop.gd" id="prop"]
+[ext_resource type="Script" path="res://src/world/road.gd" id="road"]
+[ext_resource type="Script" path="res://src/world/encounter.gd" id="encounter"]
+[ext_resource type="Script" path="res://src/world/enemy_spawn.gd" id="spawn"]
+[ext_resource type="Script" path="res://src/interaction/npc.gd" id="npc"]
+[ext_resource type="Resource" path="res://content/enemies/raider.tres" id="raider"]
+[ext_resource type="Resource" path="res://content/enemies/archer.tres" id="archer"]
+[ext_resource type="Resource" path="res://content/enemies/wolf.tres" id="wolf"]
+[ext_resource type="Resource" path="res://content/npcs/mara.tres" id="mara"]
+[ext_resource type="Resource" path="res://content/npcs/iona.tres" id="iona"]
+[ext_resource type="Resource" path="res://content/npcs/elric.tres" id="elric"]
+
+[sub_resource type="NavigationMesh" id="navmesh"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 1
+cell_size = 0.3
+cell_height = 0.25
+agent_height = 2.0
+agent_radius = 0.6
+agent_max_climb = 0.5
+agent_max_slope = 45.0
+
+[node name="BriarMarch" type="Node3D"]
+script = ExtResource("region")
+[node name="NavigationRegion" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("navmesh")
+[node name="Terrain" type="Node3D" parent="NavigationRegion"]
+script = ExtResource("terrain")
+[node name="Scenery" type="Node3D" parent="NavigationRegion"]
+
+[node name="KingsRoad" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+elevation = 0.055
+points = PackedVector3Array(-35, 0, 62, -35, 0, 29, -35, 0, 10, -13, 0, 0, 10, 0, -9, 38, 0, -28, 48, 0, -40, 63, 0, -57)
+width = 4.8
+tint = Color(0.48, 0.44, 0.34, 1)
+
+[node name="WestTrail" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-13, 0, 0, -25, 0, -10, -39, 0, -30, -54, 0, -38)
+width = 3
+tint = Color(0.48, 0.44, 0.34, 1)
+
+[node name="EastTrail" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10, 0, -9, 27, 0, 8, 43, 0, 24, 58, 0, 29)
+width = 3
+tint = Color(0.48, 0.44, 0.34, 1)
+
+[node name="VillageSquare" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+elevation = 0.03
+points = PackedVector3Array(-47, 0, 27, -25, 0, 27)
+width = 17
+tint = Color(0.49, 0.48, 0.40, 1)
+
+[node name="NorthLane" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+elevation = 0.05
+points = PackedVector3Array(-46, 0, 17, -25, 0, 17)
+width = 3
+tint = Color(0.48, 0.44, 0.34, 1)
+
+[node name="house_1" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45, 0, 21)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "house"
+tint = Color(0.34, 0.38, 0.31, 1)
+variation = 1
+
+[node name="house_2" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-26, 0, 21)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "house"
+tint = Color(0.42, 0.24, 0.18, 1)
+variation = 2
+
+[node name="house_3" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45, 0, 37)
+rotation = Vector3(0, 3.141592653589793, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "house"
+tint = Color(0.29, 0.36, 0.33, 1)
+variation = 3
+
+[node name="house_4" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-26, 0, 36)
+rotation = Vector3(0, 3.141592653589793, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "house"
+tint = Color(0.43, 0.36, 0.25, 1)
+variation = 4
+
+[node name="house_5" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-46, 0, 12)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "house"
+tint = Color(0.37, 0.35, 0.27, 1)
+variation = 5
+
+[node name="tower_6" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-29, 0, 10)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tower"
+tint = Color(0.4, 0.4, 0.35, 1)
+variation = 6
+
+[node name="well_7" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-36, 0, 29)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "well"
+tint = Color(0.28, 0.38, 0.34, 1)
+variation = 0
+
+[node name="fire_8" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-26, 0, 27)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fire"
+tint = Color(0.4, 0.3, 0.2, 1)
+variation = 1
+
+[node name="banner_9" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-38, 0, 12)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+tint = Color(0.23, 0.41, 0.42, 1)
+variation = 2
+
+[node name="banner_10" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-32, 0, 12)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+tint = Color(0.23, 0.41, 0.42, 1)
+variation = 3
+
+[node name="crate_11" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-23, 0, 27)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+tint = Color(0.52, 0.40, 0.27, 1)
+variation = 4
+
+[node name="crate_12" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-23, 0, 29)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+tint = Color(0.52, 0.40, 0.27, 1)
+variation = 5
+
+[node name="fence_13" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 15)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 6
+
+[node name="fence_14" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 15)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 0
+
+[node name="fence_15" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 18.4)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 1
+
+[node name="fence_16" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 18.4)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 2
+
+[node name="fence_17" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 21.799999999999997)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 3
+
+[node name="fence_18" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 21.799999999999997)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 4
+
+[node name="fence_19" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 25.199999999999996)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 5
+
+[node name="fence_20" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 25.199999999999996)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 6
+
+[node name="fence_21" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 28.599999999999994)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 0
+
+[node name="fence_22" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 28.599999999999994)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 1
+
+[node name="fence_23" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 31.999999999999993)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 2
+
+[node name="fence_24" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 31.999999999999993)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 3
+
+[node name="fence_25" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 35.39999999999999)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 4
+
+[node name="fence_26" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 35.39999999999999)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 5
+
+[node name="fence_27" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 38.79999999999999)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 6
+
+[node name="fence_28" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 38.79999999999999)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 0
+
+[node name="fence_29" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, 42.19999999999999)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 1
+
+[node name="fence_30" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, 42.19999999999999)
+rotation = Vector3(0, 1.5707963267948966, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 2
+
+[node name="fence_31" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-50, 0, 44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 3
+
+[node name="fence_32" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-46.6, 0, 44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 4
+
+[node name="fence_33" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-43.2, 0, 44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 5
+
+[node name="fence_34" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-39.800000000000004, 0, 44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 6
+
+[node name="fence_35" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-29.60000000000001, 0, 44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 0
+
+[node name="fence_36" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-26.20000000000001, 0, 44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 1
+
+[node name="fence_37" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-22.80000000000001, 0, 44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 2
+
+[node name="fence_38" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19.400000000000013, 0, 44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fence"
+tint = Color(0.37, 0.33, 0.23, 1)
+variation = 3
+
+[node name="fire_39" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-39, 0, -30)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fire"
+tint = Color(0.28, 0.39, 0.29, 1)
+variation = 4
+
+[node name="tent_40" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-44, 0, -33)
+rotation = Vector3(0, 0.2, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+tint = Color(0.56, 0.43, 0.27, 1)
+variation = 5
+
+[node name="tent_41" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-34, 0, -28)
+rotation = Vector3(0, -1.2, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+tint = Color(0.43, 0.31, 0.22, 1)
+variation = 6
+
+[node name="crate_42" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-36, 0, -34)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+tint = Color(0.51, 0.39, 0.26, 1)
+variation = 0
+
+[node name="banner_43" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-42, 0, -27)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+tint = Color(0.52, 0.23, 0.15, 1)
+variation = 1
+
+[node name="fire_44" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(43, 0, 24)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fire"
+tint = Color(0.28, 0.39, 0.29, 1)
+variation = 2
+
+[node name="tent_45" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(38, 0, 21)
+rotation = Vector3(0, 0.2, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+tint = Color(0.56, 0.43, 0.27, 1)
+variation = 3
+
+[node name="tent_46" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(48, 0, 26)
+rotation = Vector3(0, -1.2, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+tint = Color(0.43, 0.31, 0.22, 1)
+variation = 4
+
+[node name="crate_47" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(46, 0, 20)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+tint = Color(0.51, 0.39, 0.26, 1)
+variation = 5
+
+[node name="banner_48" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(40, 0, 27)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+tint = Color(0.52, 0.23, 0.15, 1)
+variation = 6
+
+[node name="fire_49" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(48, 0, -40)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fire"
+tint = Color(0.28, 0.39, 0.29, 1)
+variation = 0
+
+[node name="tent_50" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(43, 0, -43)
+rotation = Vector3(0, 0.2, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+tint = Color(0.56, 0.43, 0.27, 1)
+variation = 1
+
+[node name="tent_51" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(53, 0, -38)
+rotation = Vector3(0, -1.2, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+tint = Color(0.43, 0.31, 0.22, 1)
+variation = 2
+
+[node name="crate_52" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(51, 0, -44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+tint = Color(0.51, 0.39, 0.26, 1)
+variation = 3
+
+[node name="banner_53" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45, 0, -37)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+tint = Color(0.52, 0.23, 0.15, 1)
+variation = 4
+
+[node name="tower_54" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(48, 0, -49)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tower"
+tint = Color(0.28, 0.39, 0.29, 1)
+variation = 5
+
+[node name="ruin_55" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(41, 0, -47)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "ruin"
+tint = Color(0.28, 0.39, 0.29, 1)
+variation = 6
+
+[node name="ruin_56" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(55, 0, -43)
+rotation = Vector3(0, 1.4, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "ruin"
+tint = Color(0.5,0.5,0.5, 1)
+variation = 0
+
+[node name="ruin_57" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(18, 0, 37)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "ruin"
+tint = Color(0.28, 0.39, 0.29, 1)
+variation = 1
+
+[node name="ruin_58" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(22, 0, 37)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "ruin"
+tint = Color(0.28, 0.39, 0.29, 1)
+variation = 2
+
+[node name="tree_59" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(28, 0, -51)
+rotation = Vector3(0, 2.3632971541956067, 0)
+scale = Vector3(0.8509996066102758, 0.8509996066102758, 0.8509996066102758)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_60" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-3, 0, 24)
+rotation = Vector3(0, 0.19690521340817213, 0)
+scale = Vector3(1.2222296728985385, 1.2222296728985385, 1.2222296728985385)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_61" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(63, 0, 1)
+rotation = Vector3(0, 2.405008510686457, 0)
+scale = Vector3(1.15063818434719, 1.15063818434719, 1.15063818434719)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_62" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(22, 0, 30)
+rotation = Vector3(0, 4.734364134259522, 0)
+scale = Vector3(1.0397488473216072, 1.0397488473216072, 1.0397488473216072)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_63" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-48, 0, 64)
+rotation = Vector3(0, 5.419474733993411, 0)
+scale = Vector3(1.016500684968196, 1.016500684968196, 1.016500684968196)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_64" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(63, 0, -36)
+rotation = Vector3(0, 5.245257804170251, 0)
+scale = Vector3(0.8135745269944892, 0.8135745269944892, 0.8135745269944892)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_65" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(2, 0, -35)
+rotation = Vector3(0, 5.6112866923213005, 0)
+scale = Vector3(0.8331619958160446, 0.8331619958160446, 0.8331619958160446)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_66" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-47, 0, -48)
+rotation = Vector3(0, 2.0134331043809652, 0)
+scale = Vector3(1.0628731302684173, 1.0628731302684173, 1.0628731302684173)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_67" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-69, 0, 52)
+rotation = Vector3(0, 5.7621862180531025, 0)
+scale = Vector3(1.1692510564578698, 1.1692510564578698, 1.1692510564578698)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_68" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5, 0, 6)
+rotation = Vector3(0, 2.4352394957095385, 0)
+scale = Vector3(1.0031669797142968, 1.0031669797142968, 1.0031669797142968)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_69" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(58, 0, 8)
+rotation = Vector3(0, 3.731559393927455, 0)
+scale = Vector3(1.076382077834569, 1.076382077834569, 1.076382077834569)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_70" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(72, 0, -21)
+rotation = Vector3(0, 0.9476747922599316, 0)
+scale = Vector3(1.2833328583044932, 1.2833328583044932, 1.2833328583044932)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_71" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-2, 0, -22)
+rotation = Vector3(0, 1.941512519493699, 0)
+scale = Vector3(0.9285765072098002, 0.9285765072098002, 0.9285765072098002)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_72" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-22, 0, -28)
+rotation = Vector3(0, 1.584661410190165, 0)
+scale = Vector3(0.9625170517945663, 0.9625170517945663, 0.9625170517945663)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_73" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(19, 0, -48)
+rotation = Vector3(0, 4.002448811195791, 0)
+scale = Vector3(1.2603219592245296, 1.2603219592245296, 1.2603219592245296)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_74" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-65, 0, 65)
+rotation = Vector3(0, 0.004706692881882191, 0)
+scale = Vector3(1.2853647543350235, 1.2853647543350235, 1.2853647543350235)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_75" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(6, 0, 0)
+rotation = Vector3(0, 3.698396785184741, 0)
+scale = Vector3(1.0771056223427877, 1.0771056223427877, 1.0771056223427877)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_76" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-71, 0, -54)
+rotation = Vector3(0, 3.4397080605849624, 0)
+scale = Vector3(1.2563294184627012, 1.2563294184627012, 1.2563294184627012)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_77" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(27, 0, -46)
+rotation = Vector3(0, 0.927593951113522, 0)
+scale = Vector3(0.8614904226968065, 0.8614904226968065, 0.8614904226968065)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_78" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(62, 0, 57)
+rotation = Vector3(0, 1.866143616847694, 0)
+scale = Vector3(0.9766867703991011, 0.9766867703991011, 0.9766867703991011)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_79" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25, 0, -23)
+rotation = Vector3(0, 1.9457481214776635, 0)
+scale = Vector3(0.9506925370777026, 0.9506925370777026, 0.9506925370777026)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_80" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-1, 0, 27)
+rotation = Vector3(0, 1.6917587835341692, 0)
+scale = Vector3(0.9837975041707978, 0.9837975041707978, 0.9837975041707978)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_81" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-27, 0, -34)
+rotation = Vector3(0, 5.481059208512306, 0)
+scale = Vector3(0.924621398630552, 0.924621398630552, 0.924621398630552)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 4
+
+[node name="tree_82" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-58, 0, -28)
+rotation = Vector3(0, 3.1791177671402693, 0)
+scale = Vector3(1.1681464161491022, 1.1681464161491022, 1.1681464161491022)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_83" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-64, 0, 33)
+rotation = Vector3(0, 4.606769096106291, 0)
+scale = Vector3(1.2788420133991167, 1.2788420133991167, 1.2788420133991167)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_84" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-38, 0, -54)
+rotation = Vector3(0, 1.130860710516572, 0)
+scale = Vector3(1.078381702839397, 1.078381702839397, 1.078381702839397)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 0
+
+[node name="tree_85" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(50, 0, 63)
+rotation = Vector3(0, 0.8076856210827827, 0)
+scale = Vector3(0.8270700546680019, 0.8270700546680019, 0.8270700546680019)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_86" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(29, 0, -40)
+rotation = Vector3(0, 3.8180786529555917, 0)
+scale = Vector3(1.1988515619421378, 1.1988515619421378, 1.1988515619421378)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_87" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-69, 0, 56)
+rotation = Vector3(0, 5.833064063452184, 0)
+scale = Vector3(1.1647187986643985, 1.1647187986643985, 1.1647187986643985)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_88" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-21, 0, 50)
+rotation = Vector3(0, 1.5492725791409612, 0)
+scale = Vector3(1.163016870454885, 1.163016870454885, 1.163016870454885)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_89" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(7, 0, 6)
+rotation = Vector3(0, 3.2204268677160144, 0)
+scale = Vector3(1.1706994029926137, 1.1706994029926137, 1.1706994029926137)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_90" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-61, 0, -11)
+rotation = Vector3(0, 1.9987405026331544, 0)
+scale = Vector3(1.0459627740317956, 1.0459627740317956, 1.0459627740317956)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_91" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(16, 0, 55)
+rotation = Vector3(0, 5.9758115177974105, 0)
+scale = Vector3(1.2235891309799627, 1.2235891309799627, 1.2235891309799627)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_92" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(19, 0, 48)
+rotation = Vector3(0, 0.3934378372505307, 0)
+scale = Vector3(0.844371439726092, 0.844371439726092, 0.844371439726092)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 1
+
+[node name="tree_93" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(70, 0, 19)
+rotation = Vector3(0, 2.993104579858482, 0)
+scale = Vector3(1.2014330647187308, 1.2014330647187308, 1.2014330647187308)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 2
+
+[node name="tree_94" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(70, 0, -3)
+rotation = Vector3(0, 4.9728932389989495, 0)
+scale = Vector3(1.0112543802941218, 1.0112543802941218, 1.0112543802941218)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_95" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(13, 0, 24)
+rotation = Vector3(0, 0.6554237622767687, 0)
+scale = Vector3(1.0211926312884316, 1.0211926312884316, 1.0211926312884316)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_96" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(10, 0, 2)
+rotation = Vector3(0, 2.518335923552513, 0)
+scale = Vector3(0.8432965903310106, 0.8432965903310106, 0.8432965903310106)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_97" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(37, 0, -49)
+rotation = Vector3(0, 0.46248394064605236, 0)
+scale = Vector3(1.2581426422810182, 1.2581426422810182, 1.2581426422810182)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_98" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(73, 0, -28)
+rotation = Vector3(0, 0.2880725674331188, 0)
+scale = Vector3(1.0838928707642481, 1.0838928707642481, 1.0838928707642481)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_99" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(43, 0, -51)
+rotation = Vector3(0, 2.4018663112074137, 0)
+scale = Vector3(1.2948391964426265, 1.2948391964426265, 1.2948391964426265)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_100" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(24, 0, 44)
+rotation = Vector3(0, 2.179372049868107, 0)
+scale = Vector3(1.0231428789673374, 1.0231428789673374, 1.0231428789673374)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_101" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-68, 0, -20)
+rotation = Vector3(0, 4.512568524107337, 0)
+scale = Vector3(1.1782498001819477, 1.1782498001819477, 1.1782498001819477)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_102" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(34, 0, -10)
+rotation = Vector3(0, 5.761932704597712, 0)
+scale = Vector3(1.0042940285755322, 1.0042940285755322, 1.0042940285755322)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_103" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-33, 0, -43)
+rotation = Vector3(0, 5.831513034179807, 0)
+scale = Vector3(1.0208021649857983, 1.0208021649857983, 1.0208021649857983)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_104" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(27, 0, 43)
+rotation = Vector3(0, 0.5857995450496674, 0)
+scale = Vector3(0.9170109695522115, 0.9170109695522115, 0.9170109695522115)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_105" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15, 0, -57)
+rotation = Vector3(0, 2.327140850946307, 0)
+scale = Vector3(1.0951107699191198, 1.0951107699191198, 1.0951107699191198)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_106" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(36, 0, -8)
+rotation = Vector3(0, 5.552458014339209, 0)
+scale = Vector3(1.1827271506888792, 1.1827271506888792, 1.1827271506888792)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 1
+
+[node name="tree_107" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-65, 0, 20)
+rotation = Vector3(0, 2.708005288615823, 0)
+scale = Vector3(0.9599534241249785, 0.9599534241249785, 0.9599534241249785)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 2
+
+[node name="tree_108" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-69, 0, 58)
+rotation = Vector3(0, 0.026491018943488598, 0)
+scale = Vector3(0.9983095622854308, 0.9983095622854308, 0.9983095622854308)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 3
+
+[node name="tree_109" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(27, 0, 18)
+rotation = Vector3(0, 2.3086855122819543, 0)
+scale = Vector3(1.1473949130857364, 1.1473949130857364, 1.1473949130857364)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_110" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12, 0, 22)
+rotation = Vector3(0, 5.636781306937337, 0)
+scale = Vector3(1.2017781423171983, 1.2017781423171983, 1.2017781423171983)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_111" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(38, 0, -61)
+rotation = Vector3(0, 5.888612821698189, 0)
+scale = Vector3(0.8561204178957269, 0.8561204178957269, 0.8561204178957269)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_112" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(60, 0, 9)
+rotation = Vector3(0, 5.829704789444804, 0)
+scale = Vector3(1.198421537480317, 1.198421537480317, 1.198421537480317)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_113" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-7, 0, 55)
+rotation = Vector3(0, 2.4583820812404156, 0)
+scale = Vector3(1.1208487116498873, 1.1208487116498873, 1.1208487116498873)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 1
+
+[node name="tree_114" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(20, 0, -43)
+rotation = Vector3(0, 1.940076196566224, 0)
+scale = Vector3(1.1956247692694888, 1.1956247692694888, 1.1956247692694888)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 2
+
+[node name="tree_115" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(55, 0, 12)
+rotation = Vector3(0, 3.1882578805088997, 0)
+scale = Vector3(0.9970801594434306, 0.9970801594434306, 0.9970801594434306)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_116" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(64, 0, -9)
+rotation = Vector3(0, 3.130916615948081, 0)
+scale = Vector3(1.1663807347184048, 1.1663807347184048, 1.1663807347184048)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 4
+
+[node name="tree_117" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-70, 0, 34)
+rotation = Vector3(0, 0.8813369907438755, 0)
+scale = Vector3(1.0392438155366108, 1.0392438155366108, 1.0392438155366108)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_118" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(53, 0, 8)
+rotation = Vector3(0, 3.5319219399243593, 0)
+scale = Vector3(1.2819550359388814, 1.2819550359388814, 1.2819550359388814)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_119" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(22, 0, 16)
+rotation = Vector3(0, 1.7898128628730774, 0)
+scale = Vector3(1.1059984705178068, 1.1059984705178068, 1.1059984705178068)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 0
+
+[node name="tree_120" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-8, 0, -57)
+rotation = Vector3(0, 5.173056615516543, 0)
+scale = Vector3(1.25661254262086, 1.25661254262086, 1.25661254262086)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_121" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(73, 0, 12)
+rotation = Vector3(0, 5.178183532319963, 0)
+scale = Vector3(0.9133785602869466, 0.9133785602869466, 0.9133785602869466)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_122" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(28, 0, -53)
+rotation = Vector3(0, 1.608774594962597, 0)
+scale = Vector3(1.2124239961383865, 1.2124239961383865, 1.2124239961383865)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_123" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-23, 0, -26)
+rotation = Vector3(0, 0.5234770830720663, 0)
+scale = Vector3(1.1423423640197143, 1.1423423640197143, 1.1423423640197143)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 4
+
+[node name="tree_124" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-61, 0, 39)
+rotation = Vector3(0, 2.9839745052158833, 0)
+scale = Vector3(1.264975192095153, 1.264975192095153, 1.264975192095153)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_125" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-62, 0, 49)
+rotation = Vector3(0, 5.405214157886803, 0)
+scale = Vector3(0.9260470306733624, 0.9260470306733624, 0.9260470306733624)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_126" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-58, 0, -14)
+rotation = Vector3(0, 5.50702368747443, 0)
+scale = Vector3(0.9683167676674203, 0.9683167676674203, 0.9683167676674203)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_127" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-48, 0, -22)
+rotation = Vector3(0, 2.0055547887459397, 0)
+scale = Vector3(1.2584287643665448, 1.2584287643665448, 1.2584287643665448)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_128" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(2, 0, -29)
+rotation = Vector3(0, 2.991123757325113, 0)
+scale = Vector3(0.9407141183735803, 0.9407141183735803, 0.9407141183735803)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_129" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-6, 0, -62)
+rotation = Vector3(0, 3.899775671772659, 0)
+scale = Vector3(0.9263721018331126, 0.9263721018331126, 0.9263721018331126)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 3
+
+[node name="tree_130" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-32, 0, -47)
+rotation = Vector3(0, 1.290135190822184, 0)
+scale = Vector3(1.1079092610860244, 1.1079092610860244, 1.1079092610860244)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_131" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(9, 0, -27)
+rotation = Vector3(0, 1.685825957916677, 0)
+scale = Vector3(1.0390840911539272, 1.0390840911539272, 1.0390840911539272)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_132" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-54, 0, -65)
+rotation = Vector3(0, 4.652528953738511, 0)
+scale = Vector3(1.1477607859531418, 1.1477607859531418, 1.1477607859531418)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_133" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-72, 0, 12)
+rotation = Vector3(0, 0.5373973678797483, 0)
+scale = Vector3(1.0308481562649832, 1.0308481562649832, 1.0308481562649832)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_134" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-57, 0, 15)
+rotation = Vector3(0, 4.621795839630067, 0)
+scale = Vector3(1.144697339576669, 1.144697339576669, 1.144697339576669)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_135" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-70, 0, -42)
+rotation = Vector3(0, 0.8627661690115929, 0)
+scale = Vector3(1.0728234882233665, 1.0728234882233665, 1.0728234882233665)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_136" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-61, 0, 35)
+rotation = Vector3(0, 1.58589902613312, 0)
+scale = Vector3(1.1327401723945514, 1.1327401723945514, 1.1327401723945514)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_137" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(59, 0, 50)
+rotation = Vector3(0, 1.2357704630121589, 0)
+scale = Vector3(1.1538627625675872, 1.1538627625675872, 1.1538627625675872)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 4
+
+[node name="tree_138" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-63, 0, -23)
+rotation = Vector3(0, 1.3961339564993978, 0)
+scale = Vector3(1.2408624997595326, 1.2408624997595326, 1.2408624997595326)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_139" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(6, 0, -35)
+rotation = Vector3(0, 2.0341521156951785, 0)
+scale = Vector3(1.005565446172841, 1.005565446172841, 1.005565446172841)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_140" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(42, 0, 34)
+rotation = Vector3(0, 1.6332067362964153, 0)
+scale = Vector3(1.2049284689826891, 1.2049284689826891, 1.2049284689826891)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_141" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-72, 0, 25)
+rotation = Vector3(0, 5.768055905587971, 0)
+scale = Vector3(0.8560547212371603, 0.8560547212371603, 0.8560547212371603)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 1
+
+[node name="tree_142" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(8, 0, -19)
+rotation = Vector3(0, 3.3130244817584753, 0)
+scale = Vector3(0.9243255719309673, 0.9243255719309673, 0.9243255719309673)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 2
+
+[node name="tree_143" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-32, 0, -60)
+rotation = Vector3(0, 2.5700738467276096, 0)
+scale = Vector3(0.9321776759577916, 0.9321776759577916, 0.9321776759577916)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 3
+
+[node name="tree_144" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(40, 0, -20)
+rotation = Vector3(0, 5.618206900544465, 0)
+scale = Vector3(1.2381280509987846, 1.2381280509987846, 1.2381280509987846)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_145" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-11, 0, -8)
+rotation = Vector3(0, 2.958121488802135, 0)
+scale = Vector3(1.1822963509010151, 1.1822963509010151, 1.1822963509010151)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_146" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(59, 0, 8)
+rotation = Vector3(0, 4.390760608948767, 0)
+scale = Vector3(1.1515848569804803, 1.1515848569804803, 1.1515848569804803)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_147" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(44, 0, -25)
+rotation = Vector3(0, 2.3119215136393905, 0)
+scale = Vector3(1.0144915369572118, 1.0144915369572118, 1.0144915369572118)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_148" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(53, 0, -8)
+rotation = Vector3(0, 2.0771993324160576, 0)
+scale = Vector3(1.1029331396101043, 1.1029331396101043, 1.1029331396101043)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_149" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(44, 0, 58)
+rotation = Vector3(0, 4.925181811675429, 0)
+scale = Vector3(0.9392905734246597, 0.9392905734246597, 0.9392905734246597)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 2
+
+[node name="tree_150" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-22, 0, -28)
+rotation = Vector3(0, 4.528723209165037, 0)
+scale = Vector3(1.0013452724786476, 1.0013452724786476, 1.0013452724786476)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_151" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(31, 0, -54)
+rotation = Vector3(0, 1.519675520248711, 0)
+scale = Vector3(1.242645818577148, 1.242645818577148, 1.242645818577148)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_152" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-29, 0, -39)
+rotation = Vector3(0, 0.01213961374014616, 0)
+scale = Vector3(0.8089140544878319, 0.8089140544878319, 0.8089140544878319)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_153" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-40, 0, -40)
+rotation = Vector3(0, 5.071315627545118, 0)
+scale = Vector3(1.2217789479298518, 1.2217789479298518, 1.2217789479298518)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_154" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-8, 0, 54)
+rotation = Vector3(0, 4.513400310650468, 0)
+scale = Vector3(1.0557077755918727, 1.0557077755918727, 1.0557077755918727)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 0
+
+[node name="tree_155" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-59, 0, -54)
+rotation = Vector3(0, 1.7132068751379848, 0)
+scale = Vector3(1.0575205742614344, 1.0575205742614344, 1.0575205742614344)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_156" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-58, 0, 9)
+rotation = Vector3(0, 2.613895640708506, 0)
+scale = Vector3(0.9714798469329253, 0.9714798469329253, 0.9714798469329253)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_157" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-41, 0, -59)
+rotation = Vector3(0, 0.2751494189724326, 0)
+scale = Vector3(1.0085852437885479, 1.0085852437885479, 1.0085852437885479)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_158" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-21, 0, -63)
+rotation = Vector3(0, 2.111977974884212, 0)
+scale = Vector3(1.2629209983395413, 1.2629209983395413, 1.2629209983395413)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_159" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(11, 0, 21)
+rotation = Vector3(0, 5.164299096912146, 0)
+scale = Vector3(0.9975579605204985, 0.9975579605204985, 0.9975579605204985)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_160" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(9, 0, -55)
+rotation = Vector3(0, 5.9389087948948145, 0)
+scale = Vector3(0.9315191773464904, 0.9315191773464904, 0.9315191773464904)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_161" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-51, 0, 3)
+rotation = Vector3(0, 4.906370960175991, 0)
+scale = Vector3(1.1782412315486, 1.1782412315486, 1.1782412315486)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_162" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(28, 0, 46)
+rotation = Vector3(0, 4.136763663031161, 0)
+scale = Vector3(1.1293845650041476, 1.1293845650041476, 1.1293845650041476)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_163" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(62, 0, 54)
+rotation = Vector3(0, 1.2884041657671332, 0)
+scale = Vector3(0.9967026145430282, 0.9967026145430282, 0.9967026145430282)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 2
+
+[node name="tree_164" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-62, 0, -24)
+rotation = Vector3(0, 4.258260724134743, 0)
+scale = Vector3(1.0373540183762089, 1.0373540183762089, 1.0373540183762089)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 3
+
+[node name="tree_165" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(19, 0, -50)
+rotation = Vector3(0, 5.892158056609333, 0)
+scale = Vector3(1.1171321238623932, 1.1171321238623932, 1.1171321238623932)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_166" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(63, 0, -45)
+rotation = Vector3(0, 1.7439820999279618, 0)
+scale = Vector3(0.9017742023104802, 0.9017742023104802, 0.9017742023104802)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_167" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(21, 0, -36)
+rotation = Vector3(0, 1.4446985637769103, 0)
+scale = Vector3(1.157773216557689, 1.157773216557689, 1.157773216557689)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_168" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-49, 0, -47)
+rotation = Vector3(0, 3.491293360479176, 0)
+scale = Vector3(1.1747716197976843, 1.1747716197976843, 1.1747716197976843)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_169" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(29, 0, -63)
+rotation = Vector3(0, 4.424384909681976, 0)
+scale = Vector3(1.1923496856587008, 1.1923496856587008, 1.1923496856587008)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_170" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(67, 0, 49)
+rotation = Vector3(0, 0.8632583180442452, 0)
+scale = Vector3(0.8390208695316688, 0.8390208695316688, 0.8390208695316688)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_171" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(33, 0, 43)
+rotation = Vector3(0, 1.8991550970822573, 0)
+scale = Vector3(1.0128648901125417, 1.0128648901125417, 1.0128648901125417)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_172" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-59, 0, -43)
+rotation = Vector3(0, 5.793289840221405, 0)
+scale = Vector3(1.0656418642727659, 1.0656418642727659, 1.0656418642727659)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 4
+
+[node name="tree_173" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(54, 0, -65)
+rotation = Vector3(0, 0.5509582841768861, 0)
+scale = Vector3(1.0711981140309945, 1.0711981140309945, 1.0711981140309945)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_174" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-71, 0, 28)
+rotation = Vector3(0, 0.41740587819367647, 0)
+scale = Vector3(0.9613173471996561, 0.9613173471996561, 0.9613173471996561)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_175" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(37, 0, 65)
+rotation = Vector3(0, 5.955820980481803, 0)
+scale = Vector3(0.8278286925749854, 0.8278286925749854, 0.8278286925749854)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 0
+
+[node name="tree_176" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(53, 0, 52)
+rotation = Vector3(0, 5.850171972066164, 0)
+scale = Vector3(1.2098509390605614, 1.2098509390605614, 1.2098509390605614)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_177" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(1, 0, -49)
+rotation = Vector3(0, 2.6780981440097094, 0)
+scale = Vector3(1.0274637998780236, 1.0274637998780236, 1.0274637998780236)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_178" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(14, 0, -50)
+rotation = Vector3(0, 0.2603906840085983, 0)
+scale = Vector3(0.8183089374331758, 0.8183089374331758, 0.8183089374331758)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_179" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15, 0, 63)
+rotation = Vector3(0, 5.605269787833095, 0)
+scale = Vector3(1.2258333932375536, 1.2258333932375536, 1.2258333932375536)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_180" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(57, 0, -59)
+rotation = Vector3(0, 1.9829109124839306, 0)
+scale = Vector3(0.8169175126357004, 0.8169175126357004, 0.8169175126357004)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_181" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-3, 0, -53)
+rotation = Vector3(0, 5.1333305183798075, 0)
+scale = Vector3(0.8331261655082927, 0.8331261655082927, 0.8331261655082927)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_182" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(58, 0, -22)
+rotation = Vector3(0, 4.941068686544895, 0)
+scale = Vector3(1.1143232482252643, 1.1143232482252643, 1.1143232482252643)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_183" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-66, 0, -6)
+rotation = Vector3(0, 2.2954186107963324, 0)
+scale = Vector3(0.8899619668489323, 0.8899619668489323, 0.8899619668489323)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 1
+
+[node name="tree_184" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-55, 0, -58)
+rotation = Vector3(0, 4.3549529649317265, 0)
+scale = Vector3(1.2583634015871212, 1.2583634015871212, 1.2583634015871212)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 2
+
+[node name="tree_185" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(61, 0, 7)
+rotation = Vector3(0, 4.935097144916654, 0)
+scale = Vector3(1.2992958524962888, 1.2992958524962888, 1.2992958524962888)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_186" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19, 0, -42)
+rotation = Vector3(0, 1.4412134690210223, 0)
+scale = Vector3(1.2388275045203045, 1.2388275045203045, 1.2388275045203045)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_187" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(64, 0, -34)
+rotation = Vector3(0, 4.904330589808524, 0)
+scale = Vector3(1.1576174058252946, 1.1576174058252946, 1.1576174058252946)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_188" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-6, 0, 47)
+rotation = Vector3(0, 1.7480974858626723, 0)
+scale = Vector3(1.248671950143762, 1.248671950143762, 1.248671950143762)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_189" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(13, 0, 39)
+rotation = Vector3(0, 0.2954888390377164, 0)
+scale = Vector3(1.2980172576615587, 1.2980172576615587, 1.2980172576615587)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_190" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(13, 0, 11)
+rotation = Vector3(0, 5.527369651012123, 0)
+scale = Vector3(1.1653965658741072, 1.1653965658741072, 1.1653965658741072)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_191" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25, 0, -61)
+rotation = Vector3(0, 2.3206544229760766, 0)
+scale = Vector3(0.8599843409145251, 0.8599843409145251, 0.8599843409145251)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_192" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-57, 0, -30)
+rotation = Vector3(0, 4.762638210318983, 0)
+scale = Vector3(0.9486199201317504, 0.9486199201317504, 0.9486199201317504)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_193" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-17, 0, -44)
+rotation = Vector3(0, 1.0102495523169637, 0)
+scale = Vector3(1.0543731859186665, 1.0543731859186665, 1.0543731859186665)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_194" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-8, 0, -58)
+rotation = Vector3(0, 4.684603063389659, 0)
+scale = Vector3(1.1608747090911493, 1.1608747090911493, 1.1608747090911493)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_195" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52, 0, -25)
+rotation = Vector3(0, 4.17125048674643, 0)
+scale = Vector3(0.8110716199269519, 0.8110716199269519, 0.8110716199269519)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_196" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(6, 0, -25)
+rotation = Vector3(0, 3.5865252194926143, 0)
+scale = Vector3(0.8256153150694445, 0.8256153150694445, 0.8256153150694445)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 0
+
+[node name="tree_197" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-24, 0, -23)
+rotation = Vector3(0, 3.817573193460703, 0)
+scale = Vector3(1.0863544177962468, 1.0863544177962468, 1.0863544177962468)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_198" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-13, 0, -12)
+rotation = Vector3(0, 3.8197864461690187, 0)
+scale = Vector3(1.0875597769161687, 1.0875597769161687, 1.0875597769161687)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_199" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(67, 0, -13)
+rotation = Vector3(0, 2.5189362270757556, 0)
+scale = Vector3(1.1116484257625416, 1.1116484257625416, 1.1116484257625416)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_200" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-11, 0, 46)
+rotation = Vector3(0, 3.16644770745188, 0)
+scale = Vector3(1.19888784813229, 1.19888784813229, 1.19888784813229)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 4
+
+[node name="tree_201" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(48, 0, 56)
+rotation = Vector3(0, 4.8109953766688704, 0)
+scale = Vector3(1.091313132387586, 1.091313132387586, 1.091313132387586)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_202" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-41, 0, -17)
+rotation = Vector3(0, 4.662150596268475, 0)
+scale = Vector3(1.2698051350424067, 1.2698051350424067, 1.2698051350424067)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_203" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-70, 0, -64)
+rotation = Vector3(0, 0.038546922616660595, 0)
+scale = Vector3(1.2777313611702994, 1.2777313611702994, 1.2777313611702994)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 0
+
+[node name="tree_204" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(50, 0, 1)
+rotation = Vector3(0, 0.9858616478741169, 0)
+scale = Vector3(1.1979862917913124, 1.1979862917913124, 1.1979862917913124)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_205" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0, 0, 46)
+rotation = Vector3(0, 4.08761346526444, 0)
+scale = Vector3(0.9849730940302834, 0.9849730940302834, 0.9849730940302834)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_206" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(61, 0, 17)
+rotation = Vector3(0, 2.2654937356710434, 0)
+scale = Vector3(0.99806464004796, 0.99806464004796, 0.99806464004796)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_207" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25, 0, -56)
+rotation = Vector3(0, 5.584119139239192, 0)
+scale = Vector3(0.9105541627621279, 0.9105541627621279, 0.9105541627621279)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_208" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5, 0, 48)
+rotation = Vector3(0, 4.775202864781022, 0)
+scale = Vector3(1.297075622319244, 1.297075622319244, 1.297075622319244)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_209" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(49, 0, -16)
+rotation = Vector3(0, 1.0529794469475746, 0)
+scale = Vector3(1.1358615207253024, 1.1358615207253024, 1.1358615207253024)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_210" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-68, 0, -16)
+rotation = Vector3(0, 1.6920497920364141, 0)
+scale = Vector3(0.8497081041103229, 0.8497081041103229, 0.8497081041103229)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_211" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-73, 0, -41)
+rotation = Vector3(0, 5.200351808220148, 0)
+scale = Vector3(0.8841654565883801, 0.8841654565883801, 0.8841654565883801)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_212" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-37, 0, -4)
+rotation = Vector3(0, 1.1137698758393526, 0)
+scale = Vector3(0.9015824446221814, 0.9015824446221814, 0.9015824446221814)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_213" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-20, 0, 49)
+rotation = Vector3(0, 1.6402914924547076, 0)
+scale = Vector3(0.934407167439349, 0.934407167439349, 0.934407167439349)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_214" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12, 0, -11)
+rotation = Vector3(0, 1.507231512106955, 0)
+scale = Vector3(1.1290914722019807, 1.1290914722019807, 1.1290914722019807)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 4
+
+[node name="tree_215" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(72, 0, -61)
+rotation = Vector3(0, 3.0655246702954173, 0)
+scale = Vector3(1.1223526097135619, 1.1223526097135619, 1.1223526097135619)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_216" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45, 0, -10)
+rotation = Vector3(0, 0.4969463059678674, 0)
+scale = Vector3(1.0471957501256839, 1.0471957501256839, 1.0471957501256839)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="tree_217" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-37, 0, -41)
+rotation = Vector3(0, 1.767847596667707, 0)
+scale = Vector3(1.294770929333754, 1.294770929333754, 1.294770929333754)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 0
+
+[node name="tree_218" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15, 0, -33)
+rotation = Vector3(0, 3.511475441046059, 0)
+scale = Vector3(1.1395762523869053, 1.1395762523869053, 1.1395762523869053)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_219" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(9, 0, -37)
+rotation = Vector3(0, 1.9559787763282657, 0)
+scale = Vector3(1.0490896369563416, 1.0490896369563416, 1.0490896369563416)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 2
+
+[node name="tree_220" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-60, 0, -58)
+rotation = Vector3(0, 4.217255258001387, 0)
+scale = Vector3(1.1520610496634618, 1.1520610496634618, 1.1520610496634618)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 3
+
+[node name="tree_221" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-62, 0, 39)
+rotation = Vector3(0, 5.542969814501703, 0)
+scale = Vector3(1.070574273657985, 1.070574273657985, 1.070574273657985)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_222" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(3, 0, -37)
+rotation = Vector3(0, 1.9764950769022107, 0)
+scale = Vector3(0.873690707446076, 0.873690707446076, 0.873690707446076)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 5
+
+[node name="tree_223" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-39, 0, -4)
+rotation = Vector3(0, 3.282016536220908, 0)
+scale = Vector3(1.2992800786858425, 1.2992800786858425, 1.2992800786858425)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 6
+
+[node name="tree_224" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(12, 0, -38)
+rotation = Vector3(0, 0.845085684210062, 0)
+scale = Vector3(1.1054097992135212, 1.1054097992135212, 1.1054097992135212)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 0
+
+[node name="tree_225" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(33, 0, -59)
+rotation = Vector3(0, 0.8775943089276552, 0)
+scale = Vector3(0.8902896368643269, 0.8902896368643269, 0.8902896368643269)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 1
+
+[node name="tree_226" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(66, 0, 23)
+rotation = Vector3(0, 2.7028947472572327, 0)
+scale = Vector3(1.07463218185585, 1.07463218185585, 1.07463218185585)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 2
+
+[node name="tree_227" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0, 0, -11)
+rotation = Vector3(0, 1.439619792625308, 0)
+scale = Vector3(1.1793106231605635, 1.1793106231605635, 1.1793106231605635)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 3
+
+[node name="tree_228" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-34, 0, -11)
+rotation = Vector3(0, 3.7271465621888638, 0)
+scale = Vector3(0.9706529379589484, 0.9706529379589484, 0.9706529379589484)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 4
+
+[node name="tree_229" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(29, 0, 19)
+rotation = Vector3(0, 5.684474769048393, 0)
+scale = Vector3(1.2817798427538947, 1.2817798427538947, 1.2817798427538947)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.25, 0.36, 0.27, 1)
+variation = 5
+
+[node name="tree_230" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-11, 0, 28)
+rotation = Vector3(0, 1.1320473561063409, 0)
+scale = Vector3(1.1784858953440562, 1.1784858953440562, 1.1784858953440562)
+script = ExtResource("prop")
+kind = "tree"
+tint = Color(0.35, 0.43, 0.28, 1)
+variation = 6
+
+[node name="rock_231" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(31, 0, -4)
+rotation = Vector3(0, 0.5662477305158973, 0)
+scale = Vector3(0.7226726414635778, 0.7226726414635778, 0.7226726414635778)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 0
+
+[node name="rock_232" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-48, 0, -50)
+rotation = Vector3(0, 2.0400975197553635, 0)
+scale = Vector3(1.2320638177916408, 1.2320638177916408, 1.2320638177916408)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 1
+
+[node name="rock_233" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(40, 0, -57)
+rotation = Vector3(0, 1.3358871918171644, 0)
+scale = Vector3(0.7392489736899733, 0.7392489736899733, 0.7392489736899733)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 2
+
+[node name="rock_234" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-2, 0, -29)
+rotation = Vector3(0, 5.51792399212718, 0)
+scale = Vector3(0.8465871108695865, 0.8465871108695865, 0.8465871108695865)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 3
+
+[node name="rock_235" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-2, 0, -43)
+rotation = Vector3(0, 3.0033245282247663, 0)
+scale = Vector3(0.6235668221488595, 0.6235668221488595, 0.6235668221488595)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 4
+
+[node name="rock_236" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(29, 0, -38)
+rotation = Vector3(0, 2.0717744110152125, 0)
+scale = Vector3(1.09572039116174, 1.09572039116174, 1.09572039116174)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 5
+
+[node name="rock_237" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(70, 0, -5)
+rotation = Vector3(0, 4.781771228648722, 0)
+scale = Vector3(0.7561032468453049, 0.7561032468453049, 0.7561032468453049)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 6
+
+[node name="rock_238" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-10, 0, -59)
+rotation = Vector3(0, 2.3461593529209495, 0)
+scale = Vector3(1.1751104773953558, 1.1751104773953558, 1.1751104773953558)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 0
+
+[node name="rock_239" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-8, 0, -60)
+rotation = Vector3(0, 4.6108932020142674, 0)
+scale = Vector3(0.6564654180780053, 0.6564654180780053, 0.6564654180780053)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 1
+
+[node name="rock_240" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-67, 0, 56)
+rotation = Vector3(0, 2.881047947332263, 0)
+scale = Vector3(1.3667921429499983, 1.3667921429499983, 1.3667921429499983)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 2
+
+[node name="rock_241" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-60, 0, -9)
+rotation = Vector3(0, 2.2307576201856136, 0)
+scale = Vector3(1.2992196394130588, 1.2992196394130588, 1.2992196394130588)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 3
+
+[node name="rock_242" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(67, 0, -54)
+rotation = Vector3(0, 0.18615821935236454, 0)
+scale = Vector3(0.923530044220388, 0.923530044220388, 0.923530044220388)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 4
+
+[node name="rock_243" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-68, 0, -49)
+rotation = Vector3(0, 3.4315334782004356, 0)
+scale = Vector3(0.6905612556263805, 0.6905612556263805, 0.6905612556263805)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 5
+
+[node name="rock_244" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-63, 0, -23)
+rotation = Vector3(0, 2.4596311803907156, 0)
+scale = Vector3(0.7342596923932433, 0.7342596923932433, 0.7342596923932433)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 6
+
+[node name="rock_245" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(1, 0, -37)
+rotation = Vector3(0, 0.8205645270645618, 0)
+scale = Vector3(1.3447759969159963, 1.3447759969159963, 1.3447759969159963)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 0
+
+[node name="rock_246" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-65, 0, -62)
+rotation = Vector3(0, 3.2437603790313005, 0)
+scale = Vector3(1.354841988347471, 1.354841988347471, 1.354841988347471)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 1
+
+[node name="rock_247" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(66, 0, 24)
+rotation = Vector3(0, 2.8517043739557266, 0)
+scale = Vector3(0.9519288657233119, 0.9519288657233119, 0.9519288657233119)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 2
+
+[node name="rock_248" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5, 0, 38)
+rotation = Vector3(0, 0.40050133410841227, 0)
+scale = Vector3(1.119941952265799, 1.119941952265799, 1.119941952265799)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 3
+
+[node name="rock_249" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(31, 0, -3)
+rotation = Vector3(0, 2.5497012650594115, 0)
+scale = Vector3(0.9886174472048879, 0.9886174472048879, 0.9886174472048879)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 4
+
+[node name="rock_250" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(8, 0, 15)
+rotation = Vector3(0, 2.4572093384340405, 0)
+scale = Vector3(0.8387286344543099, 0.8387286344543099, 0.8387286344543099)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 5
+
+[node name="rock_251" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-6, 0, 54)
+rotation = Vector3(0, 4.502755302004516, 0)
+scale = Vector3(0.891396920569241, 0.891396920569241, 0.891396920569241)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 6
+
+[node name="rock_252" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-66, 0, 35)
+rotation = Vector3(0, 3.664266840554774, 0)
+scale = Vector3(0.7572243029251695, 0.7572243029251695, 0.7572243029251695)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 0
+
+[node name="rock_253" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(70, 0, 56)
+rotation = Vector3(0, 0.1915756305679679, 0)
+scale = Vector3(0.845717197842896, 0.845717197842896, 0.845717197842896)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 1
+
+[node name="rock_254" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(14, 0, -30)
+rotation = Vector3(0, 2.833432674407959, 0)
+scale = Vector3(0.9918368993327021, 0.9918368993327021, 0.9918368993327021)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 2
+
+[node name="rock_255" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-56, 0, 51)
+rotation = Vector3(0, 5.823322964832187, 0)
+scale = Vector3(0.8765926843509078, 0.8765926843509078, 0.8765926843509078)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 3
+
+[node name="rock_256" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5, 0, -22)
+rotation = Vector3(0, 5.937241908162832, 0)
+scale = Vector3(1.2671456767246128, 1.2671456767246128, 1.2671456767246128)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 4
+
+[node name="rock_257" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-66, 0, 50)
+rotation = Vector3(0, 4.451155671849847, 0)
+scale = Vector3(1.041479160450399, 1.041479160450399, 1.041479160450399)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 5
+
+[node name="rock_258" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(17, 0, -46)
+rotation = Vector3(0, 1.8841868564486504, 0)
+scale = Vector3(1.3391517369076609, 1.3391517369076609, 1.3391517369076609)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 6
+
+[node name="rock_259" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(63, 0, -13)
+rotation = Vector3(0, 1.8119689878076315, 0)
+scale = Vector3(0.7461117779836058, 0.7461117779836058, 0.7461117779836058)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 0
+
+[node name="rock_260" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(18, 0, -55)
+rotation = Vector3(0, 2.3342978842556477, 0)
+scale = Vector3(0.6802931291982531, 0.6802931291982531, 0.6802931291982531)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 1
+
+[node name="rock_261" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(21, 0, 13)
+rotation = Vector3(0, 1.915829898789525, 0)
+scale = Vector3(0.8904920628294348, 0.8904920628294348, 0.8904920628294348)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 2
+
+[node name="rock_262" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-21, 0, -26)
+rotation = Vector3(0, 5.8185770362615585, 0)
+scale = Vector3(1.1810254810377956, 1.1810254810377956, 1.1810254810377956)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 3
+
+[node name="rock_263" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5, 0, 45)
+rotation = Vector3(0, 2.844948945567012, 0)
+scale = Vector3(0.8746703689917922, 0.8746703689917922, 0.8746703689917922)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 4
+
+[node name="rock_264" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(53, 0, 7)
+rotation = Vector3(0, 3.6100917868316174, 0)
+scale = Vector3(1.3263844979926944, 1.3263844979926944, 1.3263844979926944)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 5
+
+[node name="rock_265" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(52, 0, 0)
+rotation = Vector3(0, 2.1955713825300336, 0)
+scale = Vector3(0.9829218188300729, 0.9829218188300729, 0.9829218188300729)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 6
+
+[node name="rock_266" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(62, 0, -30)
+rotation = Vector3(0, 0.5286382315680385, 0)
+scale = Vector3(0.9958411501720548, 0.9958411501720548, 0.9958411501720548)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 0
+
+[node name="rock_267" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-39, 0, 3)
+rotation = Vector3(0, 1.2689876295626163, 0)
+scale = Vector3(1.2734007401391865, 1.2734007401391865, 1.2734007401391865)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 1
+
+[node name="rock_268" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(29, 0, 51)
+rotation = Vector3(0, 0.09358237870037556, 0)
+scale = Vector3(1.3500418772920968, 1.3500418772920968, 1.3500418772920968)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 2
+
+[node name="rock_269" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(8, 0, -17)
+rotation = Vector3(0, 2.4826745688915253, 0)
+scale = Vector3(1.307092267088592, 1.307092267088592, 1.307092267088592)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 3
+
+[node name="rock_270" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(44, 0, 0)
+rotation = Vector3(0, 3.555471100844443, 0)
+scale = Vector3(1.3934054577723147, 1.3934054577723147, 1.3934054577723147)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.44, 0.48, 0.42, 1)
+variation = 4
+
+[node name="rock_271" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-78, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_272" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-78, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_273" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-69, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_274" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-69, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_275" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-60, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_276" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-60, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_277" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-51, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_278" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-51, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_279" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-42, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_280" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-42, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_281" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-33, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_282" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-33, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_283" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-24, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_284" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-24, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_285" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_286" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_287" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-6, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_288" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-6, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_289" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(3, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_290" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(3, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_291" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(12, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_292" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(12, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_293" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(21, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_294" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(21, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_295" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(30, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_296" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(30, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_297" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(39, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_298" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(39, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_299" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(48, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_300" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(48, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_301" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(57, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_302" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(57, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_303" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(66, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_304" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(66, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_305" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(75, 0, -70)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_306" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(75, 0, 70)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_307" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, -62)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_308" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, -62)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_309" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, -53)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_310" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, -53)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_311" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, -44)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_312" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, -44)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_313" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, -35)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_314" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, -35)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_315" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, -26)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_316" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, -26)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_317" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, -17)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_318" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, -17)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_319" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, -8)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_320" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, -8)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_321" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, 1)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_322" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 1)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_323" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, 10)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_324" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 10)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_325" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, 19)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_326" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 19)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_327" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, 28)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_328" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 28)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_329" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, 37)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="rock_330" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 37)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 1
+
+[node name="rock_331" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, 46)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 2
+
+[node name="rock_332" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 46)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 3
+
+[node name="rock_333" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, 55)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 4
+
+[node name="rock_334" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 55)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 5
+
+[node name="rock_335" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-79, 0, 64)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 6
+
+[node name="rock_336" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 64)
+rotation = Vector3(0, 1, 0)
+scale = Vector3(3, 3, 3)
+script = ExtResource("prop")
+kind = "rock"
+tint = Color(0.33, 0.39, 0.35, 1)
+variation = 0
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+position = Vector3(-35, 0.1, 35)
+
+[node name="Actors" type="Node3D" parent="."]
+
+[node name="NPCs" type="Node3D" parent="."]
+
+[node name="mara" type="Node3D" parent="NPCs"]
+position = Vector3(-27, 0, 29)
+script = ExtResource("npc")
+definition = ExtResource("mara")
+
+[node name="iona" type="Node3D" parent="NPCs"]
+position = Vector3(-43, 0, 31)
+script = ExtResource("npc")
+definition = ExtResource("iona")
+
+[node name="elric" type="Node3D" parent="NPCs"]
+position = Vector3(-33, 0, 23)
+script = ExtResource("npc")
+definition = ExtResource("elric")
+
+[node name="Encounters" type="Node3D" parent="."]
+
+[node name="meadow_wolves" type="Node3D" parent="Encounters"]
+position = Vector3(-12, 0, 14)
+script = ExtResource("encounter")
+encounter_id = &"meadow_wolves"
+display_name = "Meadow wolves"
+
+[node name="wolf_1" type="Marker3D" parent="Encounters/meadow_wolves"]
+position = Vector3(0, 0.05, 0)
+script = ExtResource("spawn")
+spawn_id = &"meadow_wolves_1"
+definition = ExtResource("wolf")
+
+[node name="wolf_2" type="Marker3D" parent="Encounters/meadow_wolves"]
+position = Vector3(3, 0.05, 2)
+script = ExtResource("spawn")
+spawn_id = &"meadow_wolves_2"
+definition = ExtResource("wolf")
+
+[node name="wood_wolves" type="Node3D" parent="Encounters"]
+position = Vector3(-10, 0, -25)
+script = ExtResource("encounter")
+encounter_id = &"wood_wolves"
+display_name = "Pinewood pack"
+
+[node name="wolf_1" type="Marker3D" parent="Encounters/wood_wolves"]
+position = Vector3(0, 0.05, 0)
+script = ExtResource("spawn")
+spawn_id = &"wood_wolves_1"
+definition = ExtResource("wolf")
+
+[node name="wolf_2" type="Marker3D" parent="Encounters/wood_wolves"]
+position = Vector3(3, 0.05, -2)
+script = ExtResource("spawn")
+spawn_id = &"wood_wolves_2"
+definition = ExtResource("wolf")
+
+[node name="wolf_3" type="Marker3D" parent="Encounters/wood_wolves"]
+position = Vector3(-3, 0.05, 2)
+script = ExtResource("spawn")
+spawn_id = &"wood_wolves_3"
+definition = ExtResource("wolf")
+
+[node name="charcoal" type="Node3D" parent="Encounters"]
+position = Vector3(-39, 0, -30)
+script = ExtResource("encounter")
+encounter_id = &"charcoal"
+display_name = "Charcoal camp"
+
+[node name="raider_1" type="Marker3D" parent="Encounters/charcoal"]
+position = Vector3(0, 0.05, 4)
+script = ExtResource("spawn")
+spawn_id = &"charcoal_1"
+definition = ExtResource("raider")
+
+[node name="raider_2" type="Marker3D" parent="Encounters/charcoal"]
+position = Vector3(-3, 0.05, 1)
+script = ExtResource("spawn")
+spawn_id = &"charcoal_2"
+definition = ExtResource("raider")
+
+[node name="archer_3" type="Marker3D" parent="Encounters/charcoal"]
+position = Vector3(2, 0.05, -4)
+script = ExtResource("spawn")
+spawn_id = &"charcoal_3"
+definition = ExtResource("archer")
+
+[node name="eastroad" type="Node3D" parent="Encounters"]
+position = Vector3(43, 0, 24)
+script = ExtResource("encounter")
+encounter_id = &"eastroad"
+display_name = "Eastroad camp"
+
+[node name="raider_1" type="Marker3D" parent="Encounters/eastroad"]
+position = Vector3(0, 0.05, 4)
+script = ExtResource("spawn")
+spawn_id = &"eastroad_1"
+definition = ExtResource("raider")
+
+[node name="raider_2" type="Marker3D" parent="Encounters/eastroad"]
+position = Vector3(-3, 0.05, 0)
+script = ExtResource("spawn")
+spawn_id = &"eastroad_2"
+definition = ExtResource("raider")
+
+[node name="archer_3" type="Marker3D" parent="Encounters/eastroad"]
+position = Vector3(2, 0.05, -4)
+script = ExtResource("spawn")
+spawn_id = &"eastroad_3"
+definition = ExtResource("archer")
+
+[node name="watchtower" type="Node3D" parent="Encounters"]
+position = Vector3(48, 0, -40)
+script = ExtResource("encounter")
+encounter_id = &"watchtower"
+display_name = "Old Watchtower"
+
+[node name="raider_1" type="Marker3D" parent="Encounters/watchtower"]
+position = Vector3(-1, 0.05, 5)
+script = ExtResource("spawn")
+spawn_id = &"watchtower_1"
+definition = ExtResource("raider")
+health_override = 66.0
+damage_override = 15.0
+
+[node name="raider_2" type="Marker3D" parent="Encounters/watchtower"]
+position = Vector3(3, 0.05, 5)
+script = ExtResource("spawn")
+spawn_id = &"watchtower_2"
+definition = ExtResource("raider")
+
+[node name="raider_3" type="Marker3D" parent="Encounters/watchtower"]
+position = Vector3(-4, 0.05, -1)
+script = ExtResource("spawn")
+spawn_id = &"watchtower_3"
+definition = ExtResource("raider")
+
+[node name="archer_4" type="Marker3D" parent="Encounters/watchtower"]
+position = Vector3(1, 0.05, -4)
+script = ExtResource("spawn")
+spawn_id = &"watchtower_4"
+definition = ExtResource("archer")
+
+[node name="archer_5" type="Marker3D" parent="Encounters/watchtower"]
+position = Vector3(6, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"watchtower_5"
+definition = ExtResource("archer")
+
+[node name="road_patrol" type="Node3D" parent="Encounters"]
+position = Vector3(16, 0, -17)
+script = ExtResource("encounter")
+encounter_id = &"road_patrol"
+display_name = "Broken cart patrol"
+
+[node name="raider_1" type="Marker3D" parent="Encounters/road_patrol"]
+position = Vector3(0, 0.05, 0)
+script = ExtResource("spawn")
+spawn_id = &"road_patrol_1"
+definition = ExtResource("raider")
+
+[node name="archer_2" type="Marker3D" parent="Encounters/road_patrol"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"road_patrol_2"
+definition = ExtResource("archer")
+
+[node name="south_wolves" type="Node3D" parent="Encounters"]
+position = Vector3(4, 0, 44)
+script = ExtResource("encounter")
+encounter_id = &"south_wolves"
+display_name = "South meadow pack"
+
+[node name="wolf_1" type="Marker3D" parent="Encounters/south_wolves"]
+position = Vector3(0, 0.05, 0)
+script = ExtResource("spawn")
+spawn_id = &"south_wolves_1"
+definition = ExtResource("wolf")
+
+[node name="wolf_2" type="Marker3D" parent="Encounters/south_wolves"]
+position = Vector3(4, 0.05, -2)
+script = ExtResource("spawn")
+spawn_id = &"south_wolves_2"
+definition = ExtResource("wolf")
+
+[node name="wolf_3" type="Marker3D" parent="Encounters/south_wolves"]
+position = Vector3(-4, 0.05, 2)
+script = ExtResource("spawn")
+spawn_id = &"south_wolves_3"
+definition = ExtResource("wolf")
+
+[node name="north_wolves" type="Node3D" parent="Encounters"]
+position = Vector3(12, 0, -52)
+script = ExtResource("encounter")
+encounter_id = &"north_wolves"
+display_name = "North ridge pack"
+
+[node name="wolf_1" type="Marker3D" parent="Encounters/north_wolves"]
+position = Vector3(0, 0.05, 0)
+script = ExtResource("spawn")
+spawn_id = &"north_wolves_1"
+definition = ExtResource("wolf")
+
+[node name="wolf_2" type="Marker3D" parent="Encounters/north_wolves"]
+position = Vector3(3, 0.05, 1)
+script = ExtResource("spawn")
+spawn_id = &"north_wolves_2"
+definition = ExtResource("wolf")
+
+[node name="wolf_3" type="Marker3D" parent="Encounters/north_wolves"]
+position = Vector3(-3, 0.05, 2)
+script = ExtResource("spawn")
+spawn_id = &"north_wolves_3"
+definition = ExtResource("wolf")

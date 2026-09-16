@@ -1,0 +1,38 @@
+[gd_scene load_steps=9 format=3]
+[ext_resource type="Script" path="res://src/entities/player.gd" id="actor"]
+[ext_resource type="Script" path="res://src/combat/health_component.gd" id="health"]
+[ext_resource type="Script" path="res://src/combat/attack_component.gd" id="attack"]
+[ext_resource type="Script" path="res://src/presentation/actor_visual.gd" id="visual"]
+[ext_resource type="Script" path="res://src/items/inventory.gd" id="inventory"]
+[ext_resource type="Resource" path="res://content/attacks/sword.tres" id="sword"]
+[ext_resource type="Script" path="res://src/presentation/combat_audio.gd" id="audio"]
+[sub_resource type="CapsuleShape3D" id="capsule"]
+radius = 0.4
+height = 1.7
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("actor")
+basic_attack = ExtResource("sword")
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.85, 0)
+shape = SubResource("capsule")
+[node name="Visual" type="Node3D" parent="."]
+script = ExtResource("visual")
+[node name="Health" type="Node" parent="."]
+script = ExtResource("health")
+[node name="Attack" type="Node" parent="."]
+script = ExtResource("attack")
+[node name="Navigation" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.45
+target_desired_distance = 0.7
+radius = 0.45
+height = 1.8
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("inventory")
+
+[node name="Audio" type="Node" parent="."]
+script = ExtResource("audio")
+
+[node name="AudioListener" type="AudioListener3D" parent="."]
+position = Vector3(0, 1, 0)

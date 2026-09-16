@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ContentCatalog" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://src/data/content_catalog.gd" id="1"]
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="item_script"]
+[ext_resource type="Resource" path="res://content/quests/open_road.tres" id="quest"]
+[ext_resource type="Resource" path="res://content/items/old_sword.tres" id="i0"]
+[ext_resource type="Resource" path="res://content/items/oak_shield.tres" id="i1"]
+[ext_resource type="Resource" path="res://content/items/coat.tres" id="i2"]
+[ext_resource type="Resource" path="res://content/items/forged_sword.tres" id="i3"]
+[ext_resource type="Resource" path="res://content/items/iron_shield.tres" id="i4"]
+[ext_resource type="Resource" path="res://content/items/mail.tres" id="i5"]
+[ext_resource type="Resource" path="res://content/items/tonic.tres" id="i6"]
+[ext_resource type="Resource" path="res://content/items/warden_blade.tres" id="i7"]
+
+[resource]
+script = ExtResource("1")
+items = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7")])
+quest = ExtResource("quest")
+

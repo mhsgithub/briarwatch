@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="1"]
+[ext_resource type="Resource" path="res://content/attacks/raider.tres" id="attack"]
+[ext_resource type="Script" path="res://src/data/loot_entry.gd" id="loot_script"]
+[ext_resource type="Resource" path="res://content/items/tonic.tres" id="tonic_item"]
+[ext_resource type="Resource" path="res://content/items/mail.tres" id="gear_item"]
+[sub_resource type="Resource" id="tonic"]
+script = ExtResource("loot_script")
+item = ExtResource("tonic_item")
+chance = 0.35
+
+[sub_resource type="Resource" id="gear"]
+script = ExtResource("loot_script")
+item = ExtResource("gear_item")
+chance = 0.15
+
+[resource]
+script = ExtResource("1")
+id = &"raider"
+display_name = "Road raider"
+behavior = "melee"
+max_health = 42.0
+move_speed = 3.5
+aggro_radius = 11.0
+leash_radius = 20.0
+attack = ExtResource("attack")
+gold_min = 4
+gold_max = 6
+loot = Array[ExtResource("loot_script")]([SubResource("tonic"), SubResource("gear")])
+tint = Color(0.56, 0.27, 0.20, 1)
+

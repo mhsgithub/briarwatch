@@ -1,0 +1,38 @@
+[CmdletBinding()]
+param(
+    [ValidateSet('play', 'editor', 'test', 'capture')]
+    [string]$Mode = 'play',
+    [string]$GodotPath = ''
+)
+$ErrorActionPreference = 'Stop'
+$projectRoot = Split-Path -Parent $PSScriptRoot
+$engineInfo = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'engine.json') -Raw | ConvertFrom-Json
+if (-not $GodotPath) {
+    $GodotPath = Join-Path (Join-Path $projectRoot '.tools/godot') $engineInfo.console_executable
+}
+if (-not (Test-Path -LiteralPath $GodotPath)) {
+    throw 'Godot was not found. Run tools/setup.ps1 first, or pass -GodotPath with your Godot executable.'
+}
+$versionText = & $GodotPath --version
+if ($versionText -notmatch ('^' + [regex]::Escape($engineInfo.version) + '\.stable')) {
+    throw "Expected Godot $($engineInfo.version) stable; found $versionText"
+}
+Push-Location $projectRoot
+try {
+    if ($Mode -in @('test', 'capture')) {
+        New-Item -ItemType Directory -Force 'test-results' | Out-Null
+        New-Item -ItemType File -Force 'test-results/.gdignore' | Out-Null
+        # Import is required on a fresh clone before running class_name-based tests.
+        & $GodotPath --headless --path . --editor --import --quit
+        if ($LASTEXITCODE -ne 0) { throw 'Godot import failed.' }
+    }
+    switch ($Mode) {
+        'play' { & $GodotPath --path . }
+        'editor' { & $GodotPath --editor --path . }
+        'test' { & $GodotPath --headless --path . --script res://tests/integration.gd -- --test }
+        'capture' { & $GodotPath --path . --script res://tests/visual_capture.gd -- --test }
+    }
+    $runExit = $LASTEXITCODE
+}
+finally { Pop-Location }
+exit $runExit

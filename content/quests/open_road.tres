@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="QuestDefinition" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://src/data/quest_definition.gd" id="1"]
+[ext_resource type="Resource" path="res://content/items/warden_blade.tres" id="reward"]
+
+[resource]
+script = ExtResource("1")
+id = &"open_road"
+title = "A road through the briar"
+description = "Clear the Old Watchtower camp northeast of Briarwatch, then return to Warden Elric. Other camps and wolves are optional."
+target_encounter = &"watchtower"
+reward_gold = 50
+reward_item = ExtResource("reward")
+

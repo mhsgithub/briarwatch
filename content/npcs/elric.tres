@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NpcDefinition" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://src/data/npc_definition.gd" id="1"]
+
+
+[resource]
+script = ExtResource("1")
+id = &"elric"
+display_name = "Warden Elric"
+title = "Keeper of the road"
+service = "warden"
+greeting = "Raiders hold the old watchtower to the northeast. Follow the road past the crossroads and drive them out. Briarwatch cannot survive another closed winter."
+tint = Color(0.35, 0.49, 0.57, 1)
+
