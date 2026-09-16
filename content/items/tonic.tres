@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://src/data/item_definition.gd" id="1"]
 
@@ -14,4 +14,3 @@ damage_bonus = 0.0
 armor_bonus = 0.0
 heal_amount = 45.0
 tint = Color(0.5, 0.76, 0.59, 1)
-

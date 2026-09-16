@@ -10,4 +10,3 @@ script = ExtResource("script")
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("mesh")
 material_override = SubResource("mat")
-

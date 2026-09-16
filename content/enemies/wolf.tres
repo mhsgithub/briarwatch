@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="1"]
 [ext_resource type="Resource" path="res://content/attacks/bite.tres" id="attack"]
@@ -29,4 +29,3 @@ gold_min = 1
 gold_max = 3
 loot = Array[ExtResource("loot_script")]([SubResource("tonic"), SubResource("gear")])
 tint = Color(0.57, 0.61, 0.56, 1)
-

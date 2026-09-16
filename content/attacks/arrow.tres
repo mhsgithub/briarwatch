@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AttackDefinition" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="AttackDefinition" load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://src/data/attack_definition.gd" id="1"]
 
@@ -12,4 +12,3 @@ windup = 0.85
 cooldown = 2.1
 projectile = true
 projectile_speed = 14.0
-

@@ -16,4 +16,3 @@
 script = ExtResource("1")
 items = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7")])
 quest = ExtResource("quest")
-

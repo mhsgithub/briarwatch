@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="NpcDefinition" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="NpcDefinition" load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://src/data/npc_definition.gd" id="1"]
 
@@ -11,4 +11,3 @@ title = "Wayside healer"
 service = "healer"
 greeting = "Rest here a moment. The March asks enough of the living. I will tend your wounds, free of charge."
 tint = Color(0.52, 0.65, 0.58, 1)
-

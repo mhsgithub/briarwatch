@@ -45,9 +45,13 @@ in the test, navigation startup synchronization and active sound cleanup on unlo
 
 ## Reproducibility and scope
 
+Verified on 16 September 2026: a Git archive was extracted into a separate clean
+directory, imported with no original `.godot` cache or bundled tools, and passed
+all **47 checks** using the pinned engine. The launch script's `-GodotPath` override
+was used to supply the engine independently of the copied project.
+
 The engine version and official Windows archive checksum are pinned in
-`tools/engine.json`. A fresh source copy must import and pass tests using only that
-engine, without the original `.godot` cache or `.tools` directory. Native Godot
+`tools/engine.json`. Future fresh copies must pass the same process. Native Godot
 UID sidecars are versioned. No project/resource reference embeds a local username,
 drive path, API key or dependency from the original PC.
 
