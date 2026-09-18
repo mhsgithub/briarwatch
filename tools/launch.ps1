@@ -29,8 +29,27 @@ try {
     switch ($Mode) {
         'play' { & $GodotPath --path . }
         'editor' { & $GodotPath --editor --path . }
-        'test' { & $GodotPath --headless --path . --script res://tests/integration.gd -- --test }
-        'capture' { & $GodotPath --path . --script res://tests/visual_capture.gd -- --test }
+        'test' {
+            & $GodotPath --headless --path . --script res://tests/integration.gd -- --test
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/watchtower.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/progression_warwick.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/ability_combat.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/talent_ui.gd -- --test
+            }
+        }
+        'capture' {
+            & $GodotPath --path . --script res://tests/visual_capture.gd -- --test
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --path . --script res://tests/update_capture.gd -- --test
+            }
+        }
     }
     $runExit = $LASTEXITCODE
 }

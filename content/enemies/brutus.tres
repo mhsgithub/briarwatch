@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=5 format=3]
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="1"]
+[ext_resource type="Resource" path="res://content/attacks/brutus.tres" id="2"]
+[ext_resource type="Script" path="res://src/data/brute_definition.gd" id="3"]
+[sub_resource type="Resource" id="kit"]
+script = ExtResource("3")
+[resource]
+script = ExtResource("1")
+id = &"brutus"
+display_name = "Jailor Brutus"
+max_health = 120.0
+move_speed = 2.35
+hit_chance = 1.0
+aggro_radius = 11.0
+leash_radius = 35.0
+visual_scale = 1.23
+tint = Color(0.36, 0.3, 0.23, 1)
+attack = ExtResource("2")
+experience = 5
+is_boss = true
+brute = SubResource("kit")
+

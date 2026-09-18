@@ -1,13 +1,17 @@
 [gd_resource type="Resource" script_class="QuestDefinition" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://src/data/quest_definition.gd" id="1"]
-[ext_resource type="Resource" path="res://content/items/warden_blade.tres" id="reward"]
+[ext_resource type="Resource" path="res://content/quests/warwick_rescue.tres" id="next"]
 
 [resource]
 script = ExtResource("1")
-id = &"open_road"
-title = "A road through the briar"
-description = "Clear the Old Watchtower camp northeast of Briarwatch, then return to Warden Elric. Other camps and wolves are optional."
-target_encounter = &"watchtower"
+id = &"crowbanes_key"
+title = "The Crow's Captive"
+description = "Bandit gangs pillage Briarwatch and the kingdom's roads. Only Lord Kasparov can muster the armies to drive them out, but the lord himself has vanished into their hands. Scouts have traced him to the locked cellars beneath the ruins of Warwick Castle.\n\nTheir commander, Darius Crowbane, keeps the cellar key in the captured watchtower northeast of Briarwatch. Enter the tower, defeat Crowbane and retrieve his key. Bring it to Warden Elric so the rescue can begin."
+target_encounter = &"crowbane"
+target_region = &"watchtower"
+required_item = &"cellar_key"
+objective = "Enter the northeast watchtower. Retrieve Darius Crowbane's cellar key."
+completion_text = "The key is safe with Elric. Kasparov's rescue awaits."
 reward_gold = 50
-reward_item = ExtResource("reward")
+next_quest = ExtResource("next")

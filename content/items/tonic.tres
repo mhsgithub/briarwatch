@@ -2,15 +2,22 @@
 
 [ext_resource type="Script" path="res://src/data/item_definition.gd" id="1"]
 
-
 [resource]
 script = ExtResource("1")
 id = &"tonic"
-display_name = "Field tonic"
-description = "Restores 45 health. Use from your pack or press Q."
+display_name = "Tonic"
+description = "Restores 50 vitality over 5 seconds."
 slot = "consumable"
-price = 8
+icon_index = 3
+price = 5
+sell_price = 2
 damage_bonus = 0.0
 armor_bonus = 0.0
-heal_amount = 45.0
-tint = Color(0.5, 0.76, 0.59, 1)
+vitality_bonus = 0.0
+tier = "white"
+appearance = "plain"
+swing_seconds = 0.8
+two_handed = false
+heal_amount = 50.0
+heal_seconds = 5.0
+tint = Color(0.32, 0.48, 0.48, 1)

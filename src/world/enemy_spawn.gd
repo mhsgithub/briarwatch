@@ -24,6 +24,9 @@ func _preview() -> void:
 		return
 	var visual := ActorVisual.new()
 	visual.style = definition.behavior
+	if definition.commander: visual.style = "commander"
+	if definition.brute: visual.style = "brutus"
+	visual.scale = Vector3.ONE * definition.visual_scale
 	visual.tint = definition.tint
 	add_child(visual)
 	Geometry.label(self, "%s\nHP %s | DMG %s" % [definition.display_name, definition.max_health if health_override < 0 else health_override, definition.attack.damage if damage_override < 0 else damage_override], Vector3(0, 2.5, 0), Color("ffe2a3"), 26)

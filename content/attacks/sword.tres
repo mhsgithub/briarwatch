@@ -6,8 +6,9 @@
 [resource]
 script = ExtResource("1")
 id = &"sword"
-damage = 10.0
+damage = 0.0
 reach = 2.7
 windup = 0.18
-cooldown = 0.57
+cooldown = 0.8
 arc_degrees = 115.0
+advance_speed = 3.8

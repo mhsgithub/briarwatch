@@ -20,6 +20,7 @@ func _physics_process(delta: float) -> void:
 		var body: Node = hit.collider
 		if body.is_in_group(target_group) and body.has_method("receive_damage"):
 			body.receive_damage(packet)
+		AudioLibrary.play_world(get_parent(),hit.position,"arrow_impact")
 		queue_free()
 	global_position = end
 	if lifetime <= 0:

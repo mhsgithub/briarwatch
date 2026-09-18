@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="QuestDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://src/data/quest_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/items/kasparov_seal.tres" id="ring"]
+[resource]
+script = ExtResource("script")
+id = &"warwick_rescue"
+title = "A Lord Beneath the Stones"
+offer_dialogue = "Crowbane is dead, and his key is our road into Warwick. Take it. Our scouts saw Brutus dragging the lord below the old keep. Bring Kasparov home before the gangs learn what we have done."
+description = "Crowbane's key has given Briarwatch a chance. Warden Elric entrusts it to you: ride the southern road to the shattered walls of Warwick Castle, southeast of town. Bandits hold the cellar entrance among the ruins.\n\nBelow, Jailor Brutus keeps Lord Kasparov behind iron bars. Defeat the jailor, unlock the lord's cell and speak with him. Bring him safely to Briarwatch; only he can summon the armies that will break the gangs' grip on the kingdom."
+target_encounter = &"brutus"
+target_region = &"warwick_cellars"
+objective = "Enter Warwick's cellars in the southeast. Defeat Jailor Brutus."
+return_objective = "Unlock the rear cell and speak with Lord Kasparov."
+handin_region = &"warwick_cellars"
+handin_npc = "kasparov"
+entrance_label = "Warwick cellar entrance"
+accept_text = "I will bring Lord Kasparov home"
+completion_text = "Kasparov is safe in Briarwatch. The kingdom has its voice again."
+reward_gold = 10
+reward_item = ExtResource("ring")

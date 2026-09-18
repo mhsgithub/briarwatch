@@ -5,8 +5,8 @@ signal died
 signal interaction_requested(target: Node)
 signal feedback(text: String)
 
-@export var move_speed: float = 6.2
-@export var base_health: float = 110.0
+@export var move_speed: float = 4.96
+@export var base_health: float = 100.0
 @export var basic_attack: AttackDefinition
 @onready var health: HealthComponent = $Health
 @onready var attack: AttackComponent = $Attack
@@ -21,9 +21,32 @@ var interact_target: Node3D
 var camera: Camera3D
 var facing := Vector3.FORWARD
 var recovery_time: float = 0
+var potion_recovery: RecoveryComponent
+var actions: ActionLoadout
+var combat_state: PlayerCombatState
+var progression: CharacterProgression
+var statuses: StatusEffects
+var abilities: PlayerAbilities
 
 func _ready() -> void:
 	add_to_group("player")
+	progression = CharacterProgression.new()
+	add_child(progression)
+	statuses = StatusEffects.new()
+	add_child(statuses)
+	abilities = PlayerAbilities.new()
+	abilities.player = self
+	add_child(abilities)
+	progression.changed.connect(_equipment_changed)
+	potion_recovery = RecoveryComponent.new()
+	potion_recovery.health = health
+	add_child(potion_recovery)
+	actions = ActionLoadout.new()
+	actions.progression = progression
+	add_child(actions)
+	actions.activated.connect(func(kind: StringName, id: StringName):
+		if kind == &"item": use_consumable(id)
+		elif kind == &"ability": abilities.activate(str(id)))
 	$AudioListener.make_current()
 	health.configure(base_health)
 	attack.definition = basic_attack
@@ -32,25 +55,32 @@ func _ready() -> void:
 	health.damaged.connect(_damaged)
 	health.died.connect(_die)
 	inventory.changed.connect(_equipment_changed)
+	combat_state = PlayerCombatState.new()
+	combat_state.player = self
+	add_child(combat_state)
 
 func _equipment_changed() -> void:
 	attack.damage_bonus = inventory.bonus("damage_bonus")
 	health.armor = inventory.bonus("armor_bonus")
+	health.set_maximum(base_health + inventory.bonus("vitality_bonus") * (1.0 + progression.rank("iron_constitution") * 0.05))
+	attack.cooldown_override = swing_seconds()
+	visual.set_equipment(inventory.equipment)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not input_enabled or dead or camera == null:
+	if not input_enabled or dead or combat_state.knockdown_left > 0 or camera == null:
 		return
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			var target := _pick_enemy(event.position)
-			if target:
+			if Input.is_key_pressed(KEY_SHIFT):
+				click_moving = false
+				attack_target = null
+				interact_target = null
+				_try_attack(_ground_point(event.position) - global_position)
+			elif target:
 				attack_target = target
 				interact_target = null
 				click_moving = true
-			elif Input.is_key_pressed(KEY_SHIFT):
-				click_moving = false
-				attack_target = null
-				_try_attack(_ground_point(event.position) - global_position)
 			else:
 				_move_to_mouse(event.position)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
@@ -58,8 +88,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.physical_keycode == KEY_E:
 			interact_nearest()
-		elif event.physical_keycode == KEY_Q:
-			use_potion()
 
 func _move_to_mouse(screen: Vector2) -> void:
 	attack_target = null
@@ -99,7 +127,9 @@ func _ground_point(screen: Vector2) -> Vector3:
 func _physics_process(delta: float) -> void:
 	recovery_time = maxf(0, recovery_time - delta)
 	health.invulnerable = recovery_time > 0
-	if dead or not input_enabled:
+	attack.cooldown_override = swing_seconds()
+	if abilities.move_leap(delta): return
+	if dead or not input_enabled or combat_state.knockdown_left > 0 or statuses.has("stun"):
 		velocity = Vector3.ZERO
 		visual.moving = false
 		return
@@ -116,9 +146,13 @@ func _physics_process(delta: float) -> void:
 		if is_instance_valid(attack_target) and attack_target.health.current > 0:
 			var offset := attack_target.global_position - global_position
 			navigation.target_position = attack_target.global_position
-			if offset.length() <= basic_attack.reach * 0.88:
+			# Close enough for contact after windup, even if the target retreats.
+			# Keep pursuing during cooldown instead of stopping at the range edge.
+			var retreat_speed := maxf(0, attack_target.velocity.dot(offset.normalized()))
+			var contact_range := basic_attack.reach - maxf(0.25, retreat_speed * basic_attack.windup)
+			if offset.length() <= contact_range and attack.remaining <= 0:
 				_try_attack(offset)
-			else:
+			elif offset.length() > 1.2:
 				move = _navigation_direction()
 		elif is_instance_valid(interact_target) and global_position.distance_to(interact_target.global_position) < 2.8:
 			click_moving = false
@@ -131,8 +165,12 @@ func _physics_process(delta: float) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.is_key_pressed(KEY_SHIFT):
 		_try_attack(_ground_point(get_viewport().get_mouse_position()) - global_position)
 	if attack.pending:
-		move *= 0.15
-	velocity = move * move_speed
+		if is_instance_valid(attack_target) and not Input.is_key_pressed(KEY_SHIFT):
+			move = attack.direction * basic_attack.advance_speed / move_speed
+		else:
+			move *= 0.15
+	velocity = move * move_speed * abilities.movement_multiplier() * statuses.movement_factor()
+	velocity += abilities.push_velocity
 	velocity.y = -2.0
 	move_and_slide()
 	visual.moving = move.length() > 0.1
@@ -154,17 +192,30 @@ func _face(direction: Vector3) -> void:
 	visual.rotation.y = atan2(-facing.x, -facing.z)
 
 func _try_attack(direction: Vector3) -> void:
+	if abilities.storm_left > 0 or abilities.leap_left > 0 or statuses.has("stun"): return
 	if attack.request(direction):
 		_face(direction)
 
 func receive_damage(packet: DamagePacket) -> void:
+	if dead or health.invulnerable: return
+	if not abilities.accept_hit(packet): return
 	health.receive(packet)
+	if not dead and (packet.bleed_ticks > 0 or packet.knockdown_seconds > 0):
+		combat_state.apply(packet)
+	if not dead and packet.knockback > 0 and not statuses.control_immune and is_instance_valid(packet.source):
+		abilities.push_velocity = (global_position-packet.source.global_position).normalized() * packet.knockback
+	if not dead and packet.stun_seconds > 0 and statuses.apply("stun",packet.stun_seconds):
+		attack.cancel()
 
 func _damaged(_amount: float) -> void:
 	visual.hit()
 
 func _die() -> void:
 	dead = true
+	combat_state.reset()
+	abilities.reset()
+	statuses.reset()
+	potion_recovery.cancel()
 	attack.cancel()
 	click_moving = false
 	visual.rotation.z = PI * 0.5
@@ -173,6 +224,8 @@ func _die() -> void:
 func respawn(point: Vector3) -> void:
 	global_position = point
 	dead = false
+	combat_state.reset()
+	potion_recovery.cancel()
 	visual.rotation.z = 0
 	health.revive()
 	recovery_time = 3.0
@@ -192,15 +245,42 @@ func interact_nearest() -> void:
 	else:
 		feedback.emit("Move closer to a person or a dropped item.")
 
+func melee_damage() -> float:
+	return basic_attack.damage + inventory.bonus("damage_bonus")
+
+func swing_seconds() -> float:
+	var weapon_item: ItemDefinition = inventory.equipment.weapon
+	var seconds := weapon_item.swing_seconds if weapon_item else 0.8
+	return seconds / (1.2 if abilities and abilities.rampage_left > 0 else 1.0)
+
 func use_potion() -> void:
-	if health.current >= health.maximum:
-		feedback.emit("Your health is already full.")
-		return
-	for i in range(inventory.items.size()):
-		if inventory.items[i].heal_amount > 0:
-			health.heal(inventory.items[i].heal_amount)
-			inventory.items.remove_at(i)
-			inventory.changed.emit()
-			feedback.emit("Field tonic restored health.")
+	for item in inventory.items:
+		if item.slot == "consumable" and item.heal_amount > 0:
+			use_consumable(item.id)
 			return
-	feedback.emit("No field tonic. Mara sells supplies in town.")
+	feedback.emit("No Tonic in your pack.")
+
+func use_consumable(id: StringName) -> void:
+	for i in range(inventory.items.size()):
+		if inventory.items[i].id == id:
+			use_item(i)
+			return
+	feedback.emit("None left in your pack.")
+
+func use_item(index: int) -> void:
+	if dead or index < 0 or index >= inventory.items.size():
+		return
+	var item := inventory.items[index]
+	if item.slot != "consumable":
+		if inventory.equip(index): AudioLibrary.play_ui(get_parent(),"equip")
+		return
+	if potion_recovery.remaining > 0:
+		feedback.emit("A Tonic is already restoring vitality.")
+		return
+	if not potion_recovery.start(item.heal_amount, item.heal_seconds):
+		feedback.emit("Your vitality is already full.")
+		return
+	inventory.items.remove_at(index)
+	inventory.changed.emit()
+	feedback.emit("%s · Restoring vitality over %.0f seconds." % [item.display_name, item.heal_seconds])
+	AudioLibrary.play_ui(get_parent(),"potion")

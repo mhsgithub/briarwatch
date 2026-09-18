@@ -1,0 +1,178 @@
+{
+  "level_up": {"files":["metal_1"],"volume_db":-15,"cooldown":0.4},
+  "talent_learn": {"files":["equip"],"volume_db":-17,"cooldown":0.15},
+  "brutus_punch": {"files":["impact_1","impact_2","impact_3"],"volume_db":-13,"cooldown":0.15},
+  "cell_unlock": {"files":["metal_2","metal_3"],"volume_db":-13,"cooldown":0.4},
+  "cellar_door": {"files":["gear_drop"],"volume_db":-15,"cooldown":0.4},
+  "boss_roar": {
+    "files": ["human_death_1", "human_death_2"],
+    "volume_db": -11,
+    "cooldown": 0.8,
+    "range": 26
+  },
+  "heavy_cleave": {
+    "files": ["swing_1", "swing_2"],
+    "volume_db": -13,
+    "cooldown": 0.3
+  },
+  "swing": {
+    "files": [
+      "swing_1",
+      "swing_2",
+      "swing_3"
+    ],
+    "volume_db": -17
+  },
+  "impact": {
+    "files": [
+      "impact_1",
+      "impact_2",
+      "impact_3"
+    ],
+    "volume_db": -15
+  },
+  "metal": {
+    "files": [
+      "metal_1",
+      "metal_2",
+      "metal_3"
+    ],
+    "volume_db": -17
+  },
+  "step": {
+    "files": [
+      "step_1",
+      "step_2",
+      "step_3"
+    ],
+    "volume_db": -23,
+    "range": 12,
+    "cooldown": 0.06
+  },
+  "paw": {
+    "files": [
+      "paw_1",
+      "paw_2",
+      "paw_3"
+    ],
+    "volume_db": -25,
+    "range": 10,
+    "cooldown": 0.08
+  },
+  "human_hurt": {
+    "files": [
+      "human_hurt_1",
+      "human_hurt_2",
+      "human_hurt_3"
+    ],
+    "volume_db": -14,
+    "cooldown": 0.13
+  },
+  "human_effort": {
+    "files": [
+      "human_effort_1",
+      "human_effort_2",
+      "human_effort_3"
+    ],
+    "volume_db": -18,
+    "cooldown": 0.22
+  },
+  "human_death": {
+    "files": [
+      "human_death_1",
+      "human_death_2"
+    ],
+    "volume_db": -15,
+    "cooldown": 0.1
+  },
+  "wolf_growl": {
+    "files": [
+      "wolf_growl"
+    ],
+    "volume_db": -18,
+    "cooldown": 0.7
+  },
+  "wolf_bite": {
+    "files": [
+      "wolf_bite"
+    ],
+    "volume_db": -19,
+    "cooldown": 0.13
+  },
+  "wolf_hurt": {
+    "files": [
+      "wolf_hurt_1",
+      "wolf_hurt_2"
+    ],
+    "volume_db": -17,
+    "cooldown": 0.16
+  },
+  "wolf_death": {
+    "files": [
+      "wolf_death"
+    ],
+    "volume_db": -18,
+    "cooldown": 0.15
+  },
+  "bow": {
+    "files": [
+      "bow_release"
+    ],
+    "volume_db": -16
+  },
+  "arrow_impact": {
+    "files": [
+      "arrow_impact"
+    ],
+    "volume_db": -17
+  },
+  "gold": {
+    "files": [
+      "gold_drop"
+    ],
+    "volume_db": -20
+  },
+  "gold_pickup": {
+    "files": [
+      "gold_pickup"
+    ],
+    "volume_db": -22
+  },
+  "gear": {
+    "files": [
+      "gear_drop"
+    ],
+    "volume_db": -19
+  },
+  "equip": {
+    "files": [
+      "equip"
+    ],
+    "volume_db": -24
+  },
+  "pack": {
+    "files": [
+      "pack"
+    ],
+    "volume_db": -25
+  },
+  "page": {
+    "files": [
+      "page"
+    ],
+    "volume_db": -26
+  },
+  "potion": {
+    "files": [
+      "potion"
+    ],
+    "volume_db": -18,
+    "cooldown": 0.3
+  },
+  "fire": {
+    "files": [
+      "fire_loop"
+    ],
+    "volume_db": -25
+  }
+}

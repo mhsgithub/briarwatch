@@ -8,27 +8,35 @@
 [ext_resource type="Resource" path="res://content/catalog.tres" id="catalog"]
 [sub_resource type="Environment" id="environment"]
 background_mode = 1
-background_color = Color(0.18, 0.23, 0.22, 1)
+background_color = Color(0.075, 0.105, 0.115, 1)
 ambient_light_source = 3
-ambient_light_color = Color(0.67, 0.75, 0.78, 1)
-ambient_light_energy = 0.5
+ambient_light_color = Color(0.48, 0.62, 0.72, 1)
+ambient_light_energy = 0.48
+fog_enabled = true
+fog_light_color = Color(0.17, 0.23, 0.25, 1)
+fog_density = 0.003
 tonemap_mode = 0
 [node name="Briarwatch" type="Node"]
 script = ExtResource("session")
 catalog = ExtResource("catalog")
+region_scenes = {
+"briar_march": "res://scenes/world/briar_march.tscn",
+"watchtower": "res://scenes/world/watchtower.tscn",
+"warwick_cellars": "res://scenes/world/warwick_cellars.tscn"
+}
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource("environment")
 [node name="Sun" type="DirectionalLight3D" parent="."]
 rotation_degrees = Vector3(-55, -32, 0)
-light_color = Color(1, 0.89, 0.7, 1)
-light_energy = 1.0
+light_color = Color(1, 0.80, 0.57, 1)
+light_energy = 0.8
 shadow_enabled = true
 directional_shadow_max_distance = 95.0
 [node name="Region" parent="." instance=ExtResource("region")]
 [node name="Player" parent="." instance=ExtResource("player")]
 [node name="Camera" type="Camera3D" parent="."]
 projection = 1
-size = 24.0
+size = 22.0
 near = 0.1
 far = 240.0
 current = true

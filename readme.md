@@ -2,9 +2,9 @@
 
 An original single-player PC action RPG set in a weathered frontier of timber
 villages, old stone defenses and dangerous woodland roads. This first milestone
-is a playable foundation: **one 160 × 144 metre region, 24 enemies in eight
-encounters, three useful NPCs, sword combat, loot, equipment, trading, recovery,
-and a small persistent quest**.
+is a playable foundation: **a 256 × 224 metre region with 76 enemies in nineteen
+encounters, watchtower and Warwick cellar instances, two bosses, two linked quests,
+levels 1–20 and fourteen Centurion talents**, alongside loot, gear and trading.
 
 Read [the game description](docs/GAME.md) for creative direction and scope, and
 [the architecture](docs/ARCHITECTURE.md) before extending systems.
@@ -45,34 +45,67 @@ optional bootstrap script downloads x64 only.
 | Shift + left click/hold | Attack toward the cursor without approaching |
 | Right click | Move / interact without targeting enemies |
 | E | Interact with nearest NPC or drop |
-| Q | Drink a field tonic |
-| I | Inventory and three equipment slots |
+| Q | Open / close the quest journal |
+| N | Centurion talents (unlocks at level 2) |
+| 1–6 | Use the corresponding assigned action slot |
+| I | Character, 20-cell pack and eleven equipment slots |
 | M | Region map |
 | Mouse wheel | Zoom |
 | Esc | Close a panel / pause menu |
 | F5 | Save journey |
 
-Speak with **Warden Elric**, then follow the road northeast to the Old Watchtower.
-Mara buys spare gear and sells upgrades and tonics. Iona heals freely and can
-refresh the region's encounters. Rest removes uncollected loot, as stated in her
-service panel. Enemies signal attacks before they land; arrows can be evaded.
-Death costs 10% of carried crowns, rounded up, and returns you to town with gear
-and objective progress intact. Inventory, dialogue and map panels pause combat.
+Speak with **Warden Elric** to accept **The Crow's Captive**, then follow the road
+northeast to the Old Watchtower. Click its north-facing door (or approach and press
+E), defeat Darius Crowbane inside and collect the Warwick Cellar Key. Return it to
+Elric for 50 gold. Accept **A Lord Beneath the Stones** from Elric next: enter
+Warwick's southeast ruins, defeat Jailor Brutus, unlock the rear cell and speak
+with Lord Kasparov. You return to town with the lord, 10 gold and his Green
+Family Seal (+5 vitality). Darius also drops the White +2 armor Outlaw's Mantle.
+Mara buys spare gear and sells upgrades and tonics. Iona heals freely; she no
+longer resets encounters. Elric's quest rewards 50 gold only. Enemies signal attacks before they land; arrows can be evaded.
+Death costs 10% of carried gold, rounded up, and returns you to town with gear
+and objective progress intact, including when dying inside the tower. Inventory,
+dialogue and map panels pause combat. Resting restores one vitality every two
+seconds after four seconds without combat, only while no enemy is chasing you.
+
+Click an item to inspect it; double-click or right-click to equip/use it. Drag
+pack items onto compatible gear slots, or drag equipped gear back to the pack.
+Six action slots start empty: click to assign a learned ability or consumable,
+drag an active talent from its tree or a potion from the pack, or
+right-click to clear. Drag between belt slots to swap bindings. Tonic heals 50
+vitality over five seconds; Greater Tonic heals 100 over five seconds. Recovery
+does not stack. See [current balance and item tables](docs/BALANCE.md).
+
+Slots cover head, shoulders, armor, gloves, belt, boots, amulet, two rings, main
+hand and off hand. Two-handed weapons reserve both hands, with safe pack-space
+checks before swapping. The M map reveals terrain as you explore and keeps only the active quest objective
+pin. There is no player marker or minimap. Exploration persists in your save.
+Gold balances appear in the inventory and vendor, not on the main HUD.
+Equipment is visible on the Centurion and the portrait.
+Targeted attacks continue closing on retreating enemies; Shift-click remains an
+attack in place.
 
 ## Saves
 
 The single local character uses Godot's `user://briarwatch_v1.json`, normally
 `%APPDATA%/Godot/app_userdata/Briarwatch/`. A previous valid save is kept as `.bak`.
-Loading resumes in town at full health. Inventory, equipment, crowns, quest state,
-defeated spawn IDs and uncollected drops persist. Injured living enemies reset.
+Loading resumes in town at full health. Inventory, equipment, gold, quest state,
+defeated spawn IDs, action bindings, explored map cells and uncollected drops persist
+separately for each region. The key has its own unsellable quest pouch and takes
+no bag space. Injured living
+enemies reset. Levels, EXP, ranks, cooldowns and the opened rescue cell persist.
+If the ring cannot fit, make space and use **Claim reward** in the pack header.
+Old saves receive one-time EXP credit for recorded kills; no progress reset is needed.
 No personal saves enter Git. Copy the save and backup separately between PCs if
 you want to continue the same character. To start over, close the game and move
 both files to a backup folder.
 
+Saves from earlier Briarwatch builds migrate old camp-clear quest state to the
+current key objective while preserving equipment, gold and outdoor defeats.
+
 ## Repository workflow
 
-The repository is initialized on `main`. Create a **private** empty remote on your
-preferred Git host, then run:
+The repository uses `main` as its default branch. For a private GitHub remote, run:
 
 ```text
 git remote add origin <your-private-repository-url>
@@ -83,15 +116,15 @@ On another PC: clone it, download the pinned Godot version (or run setup), impor
 `project.godot`, and press F5. Commit `.gd`, `.gd.uid`, `.tscn`, `.tres`, source
 assets and documentation. Do not commit `.godot/`, `.tools/`, test captures, exports
 or save files. Pull before editing; prefer feature branches. Avoid two people
-editing the same `.tscn` simultaneously. No remote or credentials are configured
-by this milestone.
+editing the same `.tscn` simultaneously. If `origin` already exists, use that
+configured remote rather than adding a duplicate. Never commit credentials.
 
 ## Layout and checks
 
 - `scenes/`: composition roots, reusable actors, visually authored region.
 - `src/`: focused gameplay components, AI, UI, presentation and persistence.
 - `content/`: Inspector-editable attack, enemy, item, NPC and quest resources.
-- `assets/`: original project icon; world art is original code-built geometry.
+- `assets/`: project icon, terrain/foliage shaders and painted UI textures.
 - `tools/`: pinned setup/launch scripts and Godot editor validation script.
 - `tests/`: integrated gameplay checks and rendered screenshot capture.
 - `docs/`: game direction, architecture, editing workflow and verification notes.
@@ -105,3 +138,16 @@ Tests use `--test` to isolate themselves from real player saves. Captures go to
 ignored `test-results/`. See [level editing](docs/LEVEL_EDITING.md) and
 [verification](docs/TESTING.md). Your supplied development instructions are
 preserved verbatim in `Project development instructions.txt`.
+
+The visual overhaul uses slate-roof timber buildings, layered stylized characters,
+jagged woodland silhouettes, wind-driven grass, warm lanterns and a bronze-framed
+interface. See [visual direction and asset prompts](docs/VISUAL_DIRECTION.md) and
+[asset provenance](docs/ASSETS.md) before extending the art library.
+
+## Levels and talents
+
+N opens two Centurion trees from level 2. Each level awards one point; every
+connected prerequisite must be fully ranked. Learned abilities bind to slots 1–6.
+The authored region provides 88 total EXP, enough to reach level 2 with 58/70 EXP
+when every current enemy and both bosses are defeated. The full level curve and
+talent rules are in [progression and combat rules](docs/PROGRESSION.md).

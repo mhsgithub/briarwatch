@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://src/data/attack_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"brutus_punch"
+damage = 15.0
+reach = 2.2
+windup = 0.3
+cooldown = 0.95
+arc_degrees = 100.0
+

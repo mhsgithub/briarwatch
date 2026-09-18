@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="NpcDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://src/data/npc_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"kasparov"
+display_name = "Lord Kasparov"
+title = "Lord of the March"
+service = "rescue"
+appearance = "lord"
+greeting = "I thought these stones would be my tomb. Briarwatch still stands? Then there is work yet for an old lord. Get me beyond these walls, and I will call every banner that still honours its oath."
+

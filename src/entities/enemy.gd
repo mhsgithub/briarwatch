@@ -18,16 +18,34 @@ var returning: bool = false
 var repath: float = 0
 var orbit_sign: float = 1
 var health_label: Label3D
+var retreat_left: float = 0.0
+var stand_left: float = 0.0
+var retreat_destination: Vector3
+var commander: CommanderCombat
+var statuses: StatusEffects
+var brute: BruteCombat
 
 func _ready() -> void:
 	add_to_group("enemies")
+	statuses = StatusEffects.new()
+	add_child(statuses)
 	home = global_position
 	orbit_sign = 1 if hash(spawn_id) % 2 == 0 else -1
 	health.configure(definition.max_health if health_override < 0 else health_override, definition.armor)
 	attack.definition = definition.attack
 	attack.damage_override = damage_override
 	attack.target_group = &"player"
+	attack.hit_chance = definition.hit_chance
+	# All enemy attacks retain a one-damage floor, including future types/arrows.
+	attack.minimum_damage = 1.0
+	attack.missed.connect(func(victim: Node3D):
+		var label := FloatingText.spawn(get_parent(), victim.global_position + Vector3.UP * 2, 0)
+		label.text = "Miss"
+		label.modulate = Color("b4b6aa"))
 	visual.style = definition.behavior
+	if definition.commander: visual.style = "commander"
+	if definition.brute: visual.style = "brutus"
+	visual.scale = Vector3.ONE * definition.visual_scale
 	visual.tint = definition.tint
 	visual.rebuild()
 	attack.started.connect(visual.attack_started)
@@ -36,10 +54,24 @@ func _ready() -> void:
 	health_label = Geometry.label(self, definition.display_name, Vector3(0, 2.3, 0), Color("e6c6ac"), 25)
 	health_label.visible = false
 	target = get_tree().get_first_node_in_group("player") as Player
+	if definition.commander:
+		commander = CommanderCombat.new()
+		commander.actor = self
+		add_child(commander)
+	if definition.brute:
+		brute = BruteCombat.new()
+		brute.actor = self
+		add_child(brute)
 
 func _physics_process(delta: float) -> void:
 	if health.current <= 0 or not is_instance_valid(target):
 		return
+	if statuses.has("stun"):
+		velocity = Vector3.ZERO
+		visual.moving = false
+		return
+	stand_left = maxf(0, stand_left - delta)
+	retreat_left = maxf(0, retreat_left - delta)
 	var offset := target.global_position - global_position
 	var distance := offset.length()
 	if target.dead:
@@ -50,11 +82,23 @@ func _physics_process(delta: float) -> void:
 	if global_position.distance_to(home) > definition.leash_radius:
 		aggro = false
 		returning = true
-	health_label.visible = aggro
+	health_label.visible = aggro and target.attack_target == self
 	health_label.text = "%s  %d / %d" % [definition.display_name, health.current, health.maximum]
+	if brute and brute.step(delta):
+		velocity = Vector3(0,-2,0)
+		move_and_slide()
+		visual.moving = false
+		return
+	if commander and commander.step(delta):
+		velocity = Vector3(0, -2, 0)
+		move_and_slide()
+		visual.moving = false
+		return
 	var destination := home
 	var wants_move := false
 	if returning:
+		retreat_left = 0
+		stand_left = 0
 		wants_move = true
 		if global_position.distance_to(home) < 1.2:
 			returning = false
@@ -64,13 +108,18 @@ func _physics_process(delta: float) -> void:
 		var sight := _has_sight(target.global_position)
 		match definition.behavior:
 			"archer":
-				if distance < definition.preferred_range - 1.2:
-					destination = global_position - offset.normalized() * 4
+				if distance < definition.preferred_range - 1.2 and retreat_left <= 0 and stand_left <= 0 and not attack.pending:
+					retreat_left = definition.retreat_seconds
+					stand_left = definition.retreat_seconds + definition.stand_seconds
+					retreat_destination = global_position - offset.normalized() * 4
+					repath = 0
+				if retreat_left > 0:
+					destination = retreat_destination
 					wants_move = true
-				elif distance > definition.attack.reach or not sight:
+				elif stand_left <= 0 and (distance > definition.attack.reach or not sight):
 					destination = target.global_position
 					wants_move = true
-				elif not attack.pending:
+				elif not attack.pending and sight and distance <= definition.attack.reach:
 					attack.request(offset)
 			"wolf":
 				if distance <= definition.attack.reach:
@@ -97,7 +146,7 @@ func _physics_process(delta: float) -> void:
 			repath = 0.25
 		var step := navigation.get_next_path_position() - global_position
 		step.y = 0
-		velocity = step.normalized() * definition.move_speed
+		velocity = step.normalized() * definition.move_speed * statuses.movement_factor()
 		if step.length() < 0.12:
 			velocity = Vector3.ZERO
 		if not aggro:
@@ -118,15 +167,26 @@ func receive_damage(packet: DamagePacket) -> void:
 	if returning:
 		return
 	aggro = true
+	if statuses.immune(str(packet.damage_type)): return
+	var before := health.current
 	health.receive(packet)
+	var dealt := before - health.current
+	if is_instance_valid(packet.source) and packet.source is Player:
+		packet.source.abilities.damage_dealt(dealt)
+	if health.current > 0 and packet.stun_seconds > 0 and not definition.is_boss:
+		statuses.apply("stun",packet.stun_seconds)
+		attack.cancel()
+		if commander: commander.cancel()
 
 func _damaged(amount: float) -> void:
 	visual.hit()
-	var text := Geometry.label(get_parent(), str(int(amount)), global_position + Vector3.UP * 2, Color("f7dba0"), 38)
-	text.set_script(preload("res://src/presentation/floating_text.gd"))
+	FloatingText.spawn(get_parent(), global_position + Vector3.UP * 2, amount)
 
 func _die() -> void:
 	attack.cancel()
+	if commander: commander.cancel()
+	if brute: brute.cancel()
+	statuses.reset()
 	remove_from_group("enemies")
 	collision_layer = 0
 	collision_mask = 0

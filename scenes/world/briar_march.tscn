@@ -1,4 +1,6 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
+[ext_resource type="Script" path="res://src/world/region_portal.gd" id="portal"]
+[ext_resource type="Script" path="res://src/world/warwick_ruins.gd" id="warwick"]
 [ext_resource type="Script" path="res://src/world/region.gd" id="region"]
 [ext_resource type="Script" path="res://src/world/terrain.gd" id="terrain"]
 [ext_resource type="Script" path="res://src/world/world_prop.gd" id="prop"]
@@ -25,28 +27,30 @@ agent_max_slope = 45.0
 
 [node name="BriarMarch" type="Node3D"]
 script = ExtResource("region")
+map_bounds = Rect2(-128, -112, 256, 224)
 [node name="NavigationRegion" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("navmesh")
 [node name="Terrain" type="Node3D" parent="NavigationRegion"]
 script = ExtResource("terrain")
+extent = Vector2(256, 224)
 [node name="Scenery" type="Node3D" parent="NavigationRegion"]
 
 [node name="KingsRoad" type="MeshInstance3D" parent="NavigationRegion"]
 script = ExtResource("road")
 elevation = 0.055
-points = PackedVector3Array(-35, 0, 62, -35, 0, 29, -35, 0, 10, -13, 0, 0, 10, 0, -9, 38, 0, -28, 48, 0, -40, 63, 0, -57)
+points = PackedVector3Array(-35, 0, 96, -35, 0, 29, -35, 0, 10, -13, 0, 0, 10, 0, -9, 30, 0, -28, 18, 0, -49, 45, 0, -68, 69, 0, -53, 90, 0, -68, 98, 0, -80, 111, 0, -96)
 width = 4.8
 tint = Color(0.48, 0.44, 0.34, 1)
 
 [node name="WestTrail" type="MeshInstance3D" parent="NavigationRegion"]
 script = ExtResource("road")
-points = PackedVector3Array(-13, 0, 0, -25, 0, -10, -39, 0, -30, -54, 0, -38)
+points = PackedVector3Array(-13, 0, 0, -40, 0, -12, -62, 0, -27, -72, 0, -52, -88, 0, -80)
 width = 3
 tint = Color(0.48, 0.44, 0.34, 1)
 
 [node name="EastTrail" type="MeshInstance3D" parent="NavigationRegion"]
 script = ExtResource("road")
-points = PackedVector3Array(10, 0, -9, 27, 0, 8, 43, 0, 24, 58, 0, 29)
+points = PackedVector3Array(10, 0, -9, 27, 0, 8, 43, 0, 24, 68, 0, 45, 100, 0, 63)
 width = 3
 tint = Color(0.48, 0.44, 0.34, 1)
 
@@ -407,7 +411,7 @@ tint = Color(0.37, 0.33, 0.23, 1)
 variation = 3
 
 [node name="fire_39" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-39, 0, -30)
+position = Vector3(-72, 0, -52)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -416,7 +420,7 @@ tint = Color(0.28, 0.39, 0.29, 1)
 variation = 4
 
 [node name="tent_40" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-44, 0, -33)
+position = Vector3(-77, 0, -55)
 rotation = Vector3(0, 0.2, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -425,7 +429,7 @@ tint = Color(0.56, 0.43, 0.27, 1)
 variation = 5
 
 [node name="tent_41" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-34, 0, -28)
+position = Vector3(-67, 0, -50)
 rotation = Vector3(0, -1.2, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -434,7 +438,7 @@ tint = Color(0.43, 0.31, 0.22, 1)
 variation = 6
 
 [node name="crate_42" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-36, 0, -34)
+position = Vector3(-69, 0, -56)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -443,7 +447,7 @@ tint = Color(0.51, 0.39, 0.26, 1)
 variation = 0
 
 [node name="banner_43" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-42, 0, -27)
+position = Vector3(-75, 0, -49)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -452,7 +456,7 @@ tint = Color(0.52, 0.23, 0.15, 1)
 variation = 1
 
 [node name="fire_44" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(43, 0, 24)
+position = Vector3(68, 0, 45)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -461,7 +465,7 @@ tint = Color(0.28, 0.39, 0.29, 1)
 variation = 2
 
 [node name="tent_45" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(38, 0, 21)
+position = Vector3(63, 0, 42)
 rotation = Vector3(0, 0.2, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -470,7 +474,7 @@ tint = Color(0.56, 0.43, 0.27, 1)
 variation = 3
 
 [node name="tent_46" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(48, 0, 26)
+position = Vector3(73, 0, 47)
 rotation = Vector3(0, -1.2, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -479,7 +483,7 @@ tint = Color(0.43, 0.31, 0.22, 1)
 variation = 4
 
 [node name="crate_47" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(46, 0, 20)
+position = Vector3(71, 0, 41)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -488,7 +492,7 @@ tint = Color(0.51, 0.39, 0.26, 1)
 variation = 5
 
 [node name="banner_48" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(40, 0, 27)
+position = Vector3(65, 0, 48)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -497,7 +501,7 @@ tint = Color(0.52, 0.23, 0.15, 1)
 variation = 6
 
 [node name="fire_49" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(48, 0, -40)
+position = Vector3(98, 0, -80)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -506,7 +510,7 @@ tint = Color(0.28, 0.39, 0.29, 1)
 variation = 0
 
 [node name="tent_50" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(43, 0, -43)
+position = Vector3(93, 0, -83)
 rotation = Vector3(0, 0.2, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -515,7 +519,7 @@ tint = Color(0.56, 0.43, 0.27, 1)
 variation = 1
 
 [node name="tent_51" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(53, 0, -38)
+position = Vector3(103, 0, -78)
 rotation = Vector3(0, -1.2, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -524,7 +528,7 @@ tint = Color(0.43, 0.31, 0.22, 1)
 variation = 2
 
 [node name="crate_52" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(51, 0, -44)
+position = Vector3(101, 0, -84)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -533,7 +537,7 @@ tint = Color(0.51, 0.39, 0.26, 1)
 variation = 3
 
 [node name="banner_53" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(45, 0, -37)
+position = Vector3(95, 0, -77)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -542,7 +546,7 @@ tint = Color(0.52, 0.23, 0.15, 1)
 variation = 4
 
 [node name="tower_54" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(48, 0, -49)
+position = Vector3(98, 0, -89)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -551,7 +555,7 @@ tint = Color(0.28, 0.39, 0.29, 1)
 variation = 5
 
 [node name="ruin_55" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(41, 0, -47)
+position = Vector3(91, 0, -87)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -560,7 +564,7 @@ tint = Color(0.28, 0.39, 0.29, 1)
 variation = 6
 
 [node name="ruin_56" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(55, 0, -43)
+position = Vector3(105, 0, -83)
 rotation = Vector3(0, 1.4, 0)
 scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
@@ -2495,7 +2499,7 @@ tint = Color(0.44, 0.48, 0.42, 1)
 variation = 4
 
 [node name="rock_271" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-78, 0, -70)
+position = Vector3(-119.34, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2504,7 +2508,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_272" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-78, 0, 70)
+position = Vector3(-119.34, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2513,7 +2517,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_273" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-69, 0, -70)
+position = Vector3(-105.57, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2522,7 +2526,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_274" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-69, 0, 70)
+position = Vector3(-105.57, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2531,7 +2535,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_275" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-60, 0, -70)
+position = Vector3(-91.8, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2540,7 +2544,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_276" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-60, 0, 70)
+position = Vector3(-91.8, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2549,7 +2553,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_277" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-51, 0, -70)
+position = Vector3(-78.03, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2558,7 +2562,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_278" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-51, 0, 70)
+position = Vector3(-78.03, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2567,7 +2571,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_279" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-42, 0, -70)
+position = Vector3(-64.26, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2576,7 +2580,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_280" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-42, 0, 70)
+position = Vector3(-64.26, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2585,7 +2589,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_281" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-33, 0, -70)
+position = Vector3(-50.49, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2594,7 +2598,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_282" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-33, 0, 70)
+position = Vector3(-50.49, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2603,7 +2607,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_283" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-24, 0, -70)
+position = Vector3(-36.72, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2612,7 +2616,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_284" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-24, 0, 70)
+position = Vector3(-36.72, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2621,7 +2625,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_285" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-15, 0, -70)
+position = Vector3(-22.95, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2630,7 +2634,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_286" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-15, 0, 70)
+position = Vector3(-22.95, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2639,7 +2643,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_287" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-6, 0, -70)
+position = Vector3(-9.18, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2648,7 +2652,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_288" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-6, 0, 70)
+position = Vector3(-9.18, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2657,7 +2661,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_289" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(3, 0, -70)
+position = Vector3(4.59, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2666,7 +2670,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_290" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(3, 0, 70)
+position = Vector3(4.59, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2675,7 +2679,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_291" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(12, 0, -70)
+position = Vector3(18.36, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2684,7 +2688,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_292" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(12, 0, 70)
+position = Vector3(18.36, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2693,7 +2697,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_293" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(21, 0, -70)
+position = Vector3(32.13, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2702,7 +2706,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_294" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(21, 0, 70)
+position = Vector3(32.13, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2711,7 +2715,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_295" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(30, 0, -70)
+position = Vector3(45.9, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2720,7 +2724,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_296" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(30, 0, 70)
+position = Vector3(45.9, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2729,7 +2733,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_297" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(39, 0, -70)
+position = Vector3(59.67, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2738,7 +2742,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_298" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(39, 0, 70)
+position = Vector3(59.67, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2747,7 +2751,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_299" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(48, 0, -70)
+position = Vector3(73.44, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2756,7 +2760,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_300" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(48, 0, 70)
+position = Vector3(73.44, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2765,7 +2769,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_301" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(57, 0, -70)
+position = Vector3(87.21, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2774,7 +2778,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_302" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(57, 0, 70)
+position = Vector3(87.21, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2783,7 +2787,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_303" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(66, 0, -70)
+position = Vector3(100.98, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2792,7 +2796,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_304" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(66, 0, 70)
+position = Vector3(100.98, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2801,7 +2805,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_305" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(75, 0, -70)
+position = Vector3(114.75, 0, -103.6)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2810,7 +2814,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_306" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(75, 0, 70)
+position = Vector3(114.75, 0, 103.6)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2819,7 +2823,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_307" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, -62)
+position = Vector3(-120.87, 0, -91.76)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2828,7 +2832,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_308" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, -62)
+position = Vector3(120.87, 0, -91.76)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2837,7 +2841,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_309" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, -53)
+position = Vector3(-120.87, 0, -78.44)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2846,7 +2850,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_310" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, -53)
+position = Vector3(120.87, 0, -78.44)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2855,7 +2859,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_311" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, -44)
+position = Vector3(-120.87, 0, -65.12)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2864,7 +2868,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_312" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, -44)
+position = Vector3(120.87, 0, -65.12)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2873,7 +2877,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_313" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, -35)
+position = Vector3(-120.87, 0, -51.8)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2882,7 +2886,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_314" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, -35)
+position = Vector3(120.87, 0, -51.8)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2891,7 +2895,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_315" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, -26)
+position = Vector3(-120.87, 0, -38.48)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2900,7 +2904,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_316" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, -26)
+position = Vector3(120.87, 0, -38.48)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2909,7 +2913,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_317" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, -17)
+position = Vector3(-120.87, 0, -25.16)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2918,7 +2922,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_318" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, -17)
+position = Vector3(120.87, 0, -25.16)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2927,7 +2931,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_319" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, -8)
+position = Vector3(-120.87, 0, -11.84)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2936,7 +2940,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_320" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, -8)
+position = Vector3(120.87, 0, -11.84)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2945,7 +2949,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_321" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, 1)
+position = Vector3(-120.87, 0, 1.48)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2954,7 +2958,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_322" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, 1)
+position = Vector3(120.87, 0, 1.48)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2963,7 +2967,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_323" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, 10)
+position = Vector3(-120.87, 0, 14.8)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2972,7 +2976,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_324" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, 10)
+position = Vector3(120.87, 0, 14.8)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2981,7 +2985,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_325" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, 19)
+position = Vector3(-120.87, 0, 28.12)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2990,7 +2994,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_326" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, 19)
+position = Vector3(120.87, 0, 28.12)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -2999,7 +3003,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_327" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, 28)
+position = Vector3(-120.87, 0, 41.44)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3008,7 +3012,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_328" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, 28)
+position = Vector3(120.87, 0, 41.44)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3017,7 +3021,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_329" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, 37)
+position = Vector3(-120.87, 0, 54.76)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3026,7 +3030,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 0
 
 [node name="rock_330" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, 37)
+position = Vector3(120.87, 0, 54.76)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3035,7 +3039,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 1
 
 [node name="rock_331" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, 46)
+position = Vector3(-120.87, 0, 68.08)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3044,7 +3048,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 2
 
 [node name="rock_332" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, 46)
+position = Vector3(120.87, 0, 68.08)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3053,7 +3057,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 3
 
 [node name="rock_333" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, 55)
+position = Vector3(-120.87, 0, 81.4)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3062,7 +3066,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 4
 
 [node name="rock_334" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, 55)
+position = Vector3(120.87, 0, 81.4)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3071,7 +3075,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 5
 
 [node name="rock_335" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-79, 0, 64)
+position = Vector3(-120.87, 0, 94.72)
 rotation = Vector3(0, 0, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3080,7 +3084,7 @@ tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
 [node name="rock_336" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(79, 0, 64)
+position = Vector3(120.87, 0, 94.72)
 rotation = Vector3(0, 1, 0)
 scale = Vector3(3, 3, 3)
 script = ExtResource("prop")
@@ -3155,7 +3159,7 @@ spawn_id = &"wood_wolves_3"
 definition = ExtResource("wolf")
 
 [node name="charcoal" type="Node3D" parent="Encounters"]
-position = Vector3(-39, 0, -30)
+position = Vector3(-72, 0, -52)
 script = ExtResource("encounter")
 encounter_id = &"charcoal"
 display_name = "Charcoal camp"
@@ -3179,7 +3183,7 @@ spawn_id = &"charcoal_3"
 definition = ExtResource("archer")
 
 [node name="eastroad" type="Node3D" parent="Encounters"]
-position = Vector3(43, 0, 24)
+position = Vector3(68, 0, 45)
 script = ExtResource("encounter")
 encounter_id = &"eastroad"
 display_name = "Eastroad camp"
@@ -3203,7 +3207,7 @@ spawn_id = &"eastroad_3"
 definition = ExtResource("archer")
 
 [node name="watchtower" type="Node3D" parent="Encounters"]
-position = Vector3(48, 0, -40)
+position = Vector3(98, 0, -80)
 script = ExtResource("encounter")
 encounter_id = &"watchtower"
 display_name = "Old Watchtower"
@@ -3213,8 +3217,6 @@ position = Vector3(-1, 0.05, 5)
 script = ExtResource("spawn")
 spawn_id = &"watchtower_1"
 definition = ExtResource("raider")
-health_override = 66.0
-damage_override = 15.0
 
 [node name="raider_2" type="Marker3D" parent="Encounters/watchtower"]
 position = Vector3(3, 0.05, 5)
@@ -3277,7 +3279,7 @@ spawn_id = &"south_wolves_2"
 definition = ExtResource("wolf")
 
 [node name="wolf_3" type="Marker3D" parent="Encounters/south_wolves"]
-position = Vector3(-4, 0.05, 2)
+position = Vector3(-3, 0.05, 4)
 script = ExtResource("spawn")
 spawn_id = &"south_wolves_3"
 definition = ExtResource("wolf")
@@ -3305,3 +3307,2430 @@ position = Vector3(-3, 0.05, 2)
 script = ExtResource("spawn")
 spawn_id = &"north_wolves_3"
 definition = ExtResource("wolf")
+[node name="MillTrack" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-72, 0, -52, -49, 0, -67, -32, 0, -65, 18, 0, -49)
+width = 3.2
+tint = Color(0.48, 0.44, 0.34, 1)
+
+[node name="SouthTrack" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-35, 0, 65, -12, 0, 72, 25, 0, 75, 68, 0, 45)
+width = 3.2
+tint = Color(0.48, 0.44, 0.34, 1)
+
+[node name="reinforcement" type="Marker3D" parent="Encounters/meadow_wolves"]
+position = Vector3(-4, 0.05, 0)
+script = ExtResource("spawn")
+spawn_id = &"meadow_wolves_reinforcement"
+definition = ExtResource("wolf")
+
+[node name="reinforcement" type="Marker3D" parent="Encounters/wood_wolves"]
+position = Vector3(4, 0.05, 4)
+script = ExtResource("spawn")
+spawn_id = &"wood_wolves_reinforcement"
+definition = ExtResource("wolf")
+
+[node name="reinforcement" type="Marker3D" parent="Encounters/charcoal"]
+position = Vector3(-5, 0.05, 5)
+script = ExtResource("spawn")
+spawn_id = &"charcoal_reinforcement"
+definition = ExtResource("raider")
+
+[node name="reinforcement" type="Marker3D" parent="Encounters/eastroad"]
+position = Vector3(-5, 0.05, 5)
+script = ExtResource("spawn")
+spawn_id = &"eastroad_reinforcement"
+definition = ExtResource("raider")
+
+[node name="reinforcement" type="Marker3D" parent="Encounters/watchtower"]
+position = Vector3(-5, 0.05, 5)
+script = ExtResource("spawn")
+spawn_id = &"watchtower_reinforcement"
+definition = ExtResource("raider")
+
+[node name="reinforcement" type="Marker3D" parent="Encounters/road_patrol"]
+position = Vector3(-3, 0.05, 2)
+script = ExtResource("spawn")
+spawn_id = &"road_patrol_reinforcement"
+definition = ExtResource("raider")
+
+[node name="reinforcement" type="Marker3D" parent="Encounters/south_wolves"]
+position = Vector3(1, 0.05, 5)
+script = ExtResource("spawn")
+spawn_id = &"south_wolves_reinforcement"
+definition = ExtResource("wolf")
+
+[node name="reinforcement" type="Marker3D" parent="Encounters/north_wolves"]
+position = Vector3(-5, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"north_wolves_reinforcement"
+definition = ExtResource("wolf")
+
+[node name="millroad" type="Node3D" parent="Encounters"]
+position = Vector3(-32, 0, -65)
+script = ExtResource("encounter")
+encounter_id = &"millroad"
+display_name = "Millroad raiders"
+
+[node name="spawn_1" type="Marker3D" parent="Encounters/millroad"]
+position = Vector3(-3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"millroad_1"
+definition = ExtResource("raider")
+
+[node name="spawn_2" type="Marker3D" parent="Encounters/millroad"]
+position = Vector3(3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"millroad_2"
+definition = ExtResource("raider")
+
+[node name="spawn_3" type="Marker3D" parent="Encounters/millroad"]
+position = Vector3(-3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"millroad_3"
+definition = ExtResource("archer")
+
+[node name="spawn_4" type="Marker3D" parent="Encounters/millroad"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"millroad_4"
+definition = ExtResource("archer")
+
+[node name="millroad_fire" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-32, 0, -65)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fire"
+variation = 0
+
+[node name="millroad_tent" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-39, 0, -70)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+variation = 1
+
+[node name="millroad_crate" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25, 0, -71)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+variation = 0
+
+[node name="millroad_banner" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-26, 0, -59)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+variation = 0
+
+[node name="crossroad" type="Node3D" parent="Encounters"]
+position = Vector3(37, 0, -26)
+script = ExtResource("encounter")
+encounter_id = &"crossroad"
+display_name = "Crossroad ambush"
+
+[node name="spawn_1" type="Marker3D" parent="Encounters/crossroad"]
+position = Vector3(-3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"crossroad_1"
+definition = ExtResource("raider")
+
+[node name="spawn_2" type="Marker3D" parent="Encounters/crossroad"]
+position = Vector3(3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"crossroad_2"
+definition = ExtResource("raider")
+
+[node name="spawn_3" type="Marker3D" parent="Encounters/crossroad"]
+position = Vector3(-3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"crossroad_3"
+definition = ExtResource("archer")
+
+[node name="spawn_4" type="Marker3D" parent="Encounters/crossroad"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"crossroad_4"
+definition = ExtResource("archer")
+
+[node name="crossroad_fire" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(37, 0, -26)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fire"
+variation = 0
+
+[node name="crossroad_tent" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(30, 0, -31)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+variation = 1
+
+[node name="crossroad_crate" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(44, 0, -32)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+variation = 0
+
+[node name="crossroad_banner" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(43, 0, -20)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+variation = 0
+
+[node name="briar_pass" type="Node3D" parent="Encounters"]
+position = Vector3(64, 0, -57)
+script = ExtResource("encounter")
+encounter_id = &"briar_pass"
+display_name = "Briar pass"
+
+[node name="spawn_1" type="Marker3D" parent="Encounters/briar_pass"]
+position = Vector3(-3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"briar_pass_1"
+definition = ExtResource("raider")
+
+[node name="spawn_2" type="Marker3D" parent="Encounters/briar_pass"]
+position = Vector3(0, 0.05, 4)
+script = ExtResource("spawn")
+spawn_id = &"briar_pass_2"
+definition = ExtResource("raider")
+
+[node name="spawn_3" type="Marker3D" parent="Encounters/briar_pass"]
+position = Vector3(-3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"briar_pass_3"
+definition = ExtResource("archer")
+
+[node name="spawn_4" type="Marker3D" parent="Encounters/briar_pass"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"briar_pass_4"
+definition = ExtResource("archer")
+
+[node name="briar_pass_fire" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(64, 0, -57)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fire"
+variation = 0
+
+[node name="briar_pass_tent" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(57, 0, -62)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+variation = 1
+
+[node name="briar_pass_crate" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(71, 0, -63)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+variation = 0
+
+[node name="briar_pass_banner" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(70, 0, -51)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+variation = 0
+
+[node name="low_wood" type="Node3D" parent="Encounters"]
+position = Vector3(-75, 0, 5)
+script = ExtResource("encounter")
+encounter_id = &"low_wood"
+display_name = "Lowwood pack"
+
+[node name="spawn_1" type="Marker3D" parent="Encounters/low_wood"]
+position = Vector3(-3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"low_wood_1"
+definition = ExtResource("wolf")
+
+[node name="spawn_2" type="Marker3D" parent="Encounters/low_wood"]
+position = Vector3(3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"low_wood_2"
+definition = ExtResource("wolf")
+
+[node name="spawn_3" type="Marker3D" parent="Encounters/low_wood"]
+position = Vector3(-3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"low_wood_3"
+definition = ExtResource("wolf")
+
+[node name="spawn_4" type="Marker3D" parent="Encounters/low_wood"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"low_wood_4"
+definition = ExtResource("wolf")
+
+[node name="eastwood" type="Node3D" parent="Encounters"]
+position = Vector3(96, 0, 14)
+script = ExtResource("encounter")
+encounter_id = &"eastwood"
+display_name = "Eastwood pack"
+
+[node name="spawn_1" type="Marker3D" parent="Encounters/eastwood"]
+position = Vector3(-3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"eastwood_1"
+definition = ExtResource("wolf")
+
+[node name="spawn_2" type="Marker3D" parent="Encounters/eastwood"]
+position = Vector3(3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"eastwood_2"
+definition = ExtResource("wolf")
+
+[node name="spawn_3" type="Marker3D" parent="Encounters/eastwood"]
+position = Vector3(-3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"eastwood_3"
+definition = ExtResource("wolf")
+
+[node name="spawn_4" type="Marker3D" parent="Encounters/eastwood"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"eastwood_4"
+definition = ExtResource("wolf")
+
+[node name="old_orchard" type="Node3D" parent="Encounters"]
+position = Vector3(-67, 0, 65)
+script = ExtResource("encounter")
+encounter_id = &"old_orchard"
+display_name = "Orchard pack"
+
+[node name="spawn_1" type="Marker3D" parent="Encounters/old_orchard"]
+position = Vector3(-3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"old_orchard_1"
+definition = ExtResource("wolf")
+
+[node name="spawn_2" type="Marker3D" parent="Encounters/old_orchard"]
+position = Vector3(3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"old_orchard_2"
+definition = ExtResource("wolf")
+
+[node name="spawn_3" type="Marker3D" parent="Encounters/old_orchard"]
+position = Vector3(-3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"old_orchard_3"
+definition = ExtResource("wolf")
+
+[node name="spawn_4" type="Marker3D" parent="Encounters/old_orchard"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"old_orchard_4"
+definition = ExtResource("wolf")
+
+[node name="rivertrail" type="Node3D" parent="Encounters"]
+position = Vector3(25, 0, 75)
+script = ExtResource("encounter")
+encounter_id = &"rivertrail"
+display_name = "Rivertrail camp"
+
+[node name="spawn_1" type="Marker3D" parent="Encounters/rivertrail"]
+position = Vector3(-3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"rivertrail_1"
+definition = ExtResource("raider")
+
+[node name="spawn_2" type="Marker3D" parent="Encounters/rivertrail"]
+position = Vector3(3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"rivertrail_2"
+definition = ExtResource("raider")
+
+[node name="spawn_3" type="Marker3D" parent="Encounters/rivertrail"]
+position = Vector3(-3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"rivertrail_3"
+definition = ExtResource("archer")
+
+[node name="spawn_4" type="Marker3D" parent="Encounters/rivertrail"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"rivertrail_4"
+definition = ExtResource("archer")
+
+[node name="rivertrail_fire" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25, 0, 75)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "fire"
+variation = 0
+
+[node name="rivertrail_tent" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(18, 0, 70)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tent"
+variation = 1
+
+[node name="rivertrail_crate" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(32, 0, 69)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "crate"
+variation = 0
+
+[node name="rivertrail_banner" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(31, 0, 81)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "banner"
+variation = 0
+
+[node name="north_ridge" type="Node3D" parent="Encounters"]
+position = Vector3(58, 0, -91)
+script = ExtResource("encounter")
+encounter_id = &"north_ridge"
+display_name = "High ridge pack"
+
+[node name="spawn_1" type="Marker3D" parent="Encounters/north_ridge"]
+position = Vector3(-3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"north_ridge_1"
+definition = ExtResource("wolf")
+
+[node name="spawn_2" type="Marker3D" parent="Encounters/north_ridge"]
+position = Vector3(3, 0.05, 3)
+script = ExtResource("spawn")
+spawn_id = &"north_ridge_2"
+definition = ExtResource("wolf")
+
+[node name="spawn_3" type="Marker3D" parent="Encounters/north_ridge"]
+position = Vector3(-3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"north_ridge_3"
+definition = ExtResource("wolf")
+
+[node name="spawn_4" type="Marker3D" parent="Encounters/north_ridge"]
+position = Vector3(3, 0.05, -3)
+script = ExtResource("spawn")
+spawn_id = &"north_ridge_4"
+definition = ExtResource("wolf")
+
+[node name="expansion_tree_0" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-104.2, 0, -21.4)
+scale = Vector3(1.26, 1.26, 1.26)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_1" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(21.4, 0, -98)
+scale = Vector3(1.39, 1.39, 1.39)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_2" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(116.4, 0, 44.3)
+scale = Vector3(1.19, 1.19, 1.19)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_3" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(96.8, 0, -58.7)
+scale = Vector3(1.4, 1.4, 1.4)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_4" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(28.6, 0, -88.1)
+scale = Vector3(1.17, 1.17, 1.17)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_5" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(109.9, 0, -72.3)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_6" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(113.3, 0, -44.4)
+scale = Vector3(1.28, 1.28, 1.28)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_7" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-107.6, 0, 80.3)
+scale = Vector3(1.28, 1.28, 1.28)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_8" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-75, 0, 80.3)
+scale = Vector3(1.01, 1.01, 1.01)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_9" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(48.3, 0, 80.3)
+scale = Vector3(1.41, 1.41, 1.41)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_10" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-75, 0, 75.8)
+scale = Vector3(1.14, 1.14, 1.14)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_11" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-118.2, 0, 14.2)
+scale = Vector3(0.89, 0.89, 0.89)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_12" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(59, 0, 79)
+scale = Vector3(0.91, 0.91, 0.91)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_13" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-116.2, 0, -92.5)
+scale = Vector3(0.89, 0.89, 0.89)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_14" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(100.9, 0, -3.2)
+scale = Vector3(0.89, 0.89, 0.89)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_15" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(30.1, 0, -79.8)
+scale = Vector3(1.15, 1.15, 1.15)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_16" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5.1, 0, 81.6)
+scale = Vector3(1.09, 1.09, 1.09)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_17" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(92.4, 0, -40.1)
+scale = Vector3(1.33, 1.33, 1.33)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_18" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-91.1, 0, 24.9)
+scale = Vector3(1.11, 1.11, 1.11)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_19" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19.2, 0, -85.6)
+scale = Vector3(1.19, 1.19, 1.19)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_20" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-81.1, 0, -85.2)
+scale = Vector3(1.22, 1.22, 1.22)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_21" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-104.7, 0, 4.9)
+scale = Vector3(1.44, 1.44, 1.44)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_22" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(102.8, 0, -65.8)
+scale = Vector3(1.13, 1.13, 1.13)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_23" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(59, 0, 91)
+scale = Vector3(1.14, 1.14, 1.14)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_24" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-80.1, 0, -15.9)
+scale = Vector3(0.96, 0.96, 0.96)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_25" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(83, 0, -12.4)
+scale = Vector3(1.29, 1.29, 1.29)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_26" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-72.4, 0, -103.5)
+scale = Vector3(0.9, 0.9, 0.9)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_27" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(3.1, 0, 97.6)
+scale = Vector3(1.4, 1.4, 1.4)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_28" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(66.6, 0, 70.8)
+scale = Vector3(0.99, 0.99, 0.99)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_29" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(77.2, 0, -94.3)
+scale = Vector3(1.17, 1.17, 1.17)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_30" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(102.6, 0, -22.1)
+scale = Vector3(1.08, 1.08, 1.08)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_31" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-76.6, 0, -31.4)
+scale = Vector3(1.01, 1.01, 1.01)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_32" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(27.6, 0, -84.4)
+scale = Vector3(1.43, 1.43, 1.43)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_33" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(111.1, 0, 3.1)
+scale = Vector3(1.17, 1.17, 1.17)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_34" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(80.9, 0, -102.4)
+scale = Vector3(1.42, 1.42, 1.42)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_35" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(7.6, 0, 93.6)
+scale = Vector3(1.4, 1.4, 1.4)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_36" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-106.7, 0, 51.7)
+scale = Vector3(1.01, 1.01, 1.01)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_37" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(63.4, 0, 103.9)
+scale = Vector3(1.28, 1.28, 1.28)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_38" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0.9, 0, 87.4)
+scale = Vector3(1.41, 1.41, 1.41)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_39" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(58, 0, 85)
+scale = Vector3(1.19, 1.19, 1.19)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_40" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(77.4, 0, -3.2)
+scale = Vector3(1.32, 1.32, 1.32)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_41" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(106, 0, 51.8)
+scale = Vector3(1.22, 1.22, 1.22)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_42" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(43.6, 0, -81.4)
+scale = Vector3(1.27, 1.27, 1.27)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_43" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-21.7, 0, 90.4)
+scale = Vector3(1.39, 1.39, 1.39)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_44" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-64.5, 0, 100.6)
+scale = Vector3(1.07, 1.07, 1.07)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_45" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-90.2, 0, -23.8)
+scale = Vector3(1.33, 1.33, 1.33)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_46" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-99.3, 0, 32.3)
+scale = Vector3(1.3, 1.3, 1.3)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_47" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-114.2, 0, 23)
+scale = Vector3(1.15, 1.15, 1.15)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_48" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(81.4, 0, -43.4)
+scale = Vector3(0.89, 0.89, 0.89)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_49" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-112.5, 0, -87.4)
+scale = Vector3(1.18, 1.18, 1.18)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_50" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-97.4, 0, 95.1)
+scale = Vector3(1.4, 1.4, 1.4)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_51" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-107.4, 0, -8.8)
+scale = Vector3(1.01, 1.01, 1.01)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_52" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-86.5, 0, 64.9)
+scale = Vector3(0.89, 0.89, 0.89)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_53" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-0.3, 0, -103.6)
+scale = Vector3(1.13, 1.13, 1.13)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_54" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(115.5, 0, -86.6)
+scale = Vector3(0.92, 0.92, 0.92)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_55" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(105, 0, -1.8)
+scale = Vector3(1.05, 1.05, 1.05)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_56" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(42.9, 0, 101.6)
+scale = Vector3(1.21, 1.21, 1.21)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_57" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-110.1, 0, 97.1)
+scale = Vector3(1.23, 1.23, 1.23)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_58" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-84.4, 0, 97.3)
+scale = Vector3(1.39, 1.39, 1.39)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_59" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(118.1, 0, -90.1)
+scale = Vector3(1.15, 1.15, 1.15)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_60" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-91.5, 0, 53.1)
+scale = Vector3(1.19, 1.19, 1.19)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_61" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(116.2, 0, -75.4)
+scale = Vector3(1.05, 1.05, 1.05)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_62" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(98.4, 0, -39.1)
+scale = Vector3(1.24, 1.24, 1.24)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_63" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(112.3, 0, 7.3)
+scale = Vector3(0.86, 0.86, 0.86)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_64" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-118.8, 0, -61.7)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_65" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(102.4, 0, -53.8)
+scale = Vector3(1.44, 1.44, 1.44)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_66" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19.9, 0, -71.3)
+scale = Vector3(1.42, 1.42, 1.42)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_67" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-87.8, 0, -14.4)
+scale = Vector3(0.92, 0.92, 0.92)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_68" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(52.9, 0, 86.3)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_69" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-93, 0, 96.4)
+scale = Vector3(0.91, 0.91, 0.91)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_70" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(119, 0, -73.3)
+scale = Vector3(1.31, 1.31, 1.31)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_71" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(17.5, 0, 96.5)
+scale = Vector3(1.11, 1.11, 1.11)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_72" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-113.9, 0, -12.4)
+scale = Vector3(0.85, 0.85, 0.85)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_73" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(26.9, 0, -101.5)
+scale = Vector3(0.97, 0.97, 0.97)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_74" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(26.3, 0, -67.9)
+scale = Vector3(1.45, 1.45, 1.45)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_75" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25.6, 0, 86.6)
+scale = Vector3(1.44, 1.44, 1.44)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_76" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-111.7, 0, 13.4)
+scale = Vector3(0.87, 0.87, 0.87)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_77" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(101.5, 0, -30.4)
+scale = Vector3(0.85, 0.85, 0.85)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_78" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-92.9, 0, -43.7)
+scale = Vector3(0.99, 0.99, 0.99)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_79" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(83.4, 0, -97.3)
+scale = Vector3(1.13, 1.13, 1.13)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_80" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(36.8, 0, 88.7)
+scale = Vector3(0.88, 0.88, 0.88)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_81" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(23.4, 0, 97.8)
+scale = Vector3(0.86, 0.86, 0.86)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_82" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(95.4, 0, -8.6)
+scale = Vector3(1.26, 1.26, 1.26)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_83" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-6.2, 0, -91.7)
+scale = Vector3(1.03, 1.03, 1.03)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_84" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-106.4, 0, -56)
+scale = Vector3(0.93, 0.93, 0.93)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_85" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(67.1, 0, -101.5)
+scale = Vector3(1.1, 1.1, 1.1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_86" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-96.7, 0, 99.8)
+scale = Vector3(0.88, 0.88, 0.88)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_87" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-105.4, 0, -52.2)
+scale = Vector3(1.06, 1.06, 1.06)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_88" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(82.8, 0, 44.5)
+scale = Vector3(0.9, 0.9, 0.9)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_89" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(113.9, 0, 59.5)
+scale = Vector3(0.93, 0.93, 0.93)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_90" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(112.3, 0, -24.1)
+scale = Vector3(0.99, 0.99, 0.99)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_91" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-8.6, 0, 102.4)
+scale = Vector3(1.31, 1.31, 1.31)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_92" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(115.3, 0, -18)
+scale = Vector3(1.19, 1.19, 1.19)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_93" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-49.6, 0, 68.1)
+scale = Vector3(1.09, 1.09, 1.09)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_94" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(91.2, 0, 99)
+scale = Vector3(1.31, 1.31, 1.31)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_95" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(116.7, 0, 4)
+scale = Vector3(1.38, 1.38, 1.38)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_96" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(47.4, 0, -74.9)
+scale = Vector3(1.39, 1.39, 1.39)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_97" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(94.3, 0, -94.9)
+scale = Vector3(1.37, 1.37, 1.37)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_98" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(61, 0, 74)
+scale = Vector3(1.42, 1.42, 1.42)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_99" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(105.8, 0, 101.1)
+scale = Vector3(1.3, 1.3, 1.3)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_100" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-97.7, 0, 12.6)
+scale = Vector3(0.93, 0.93, 0.93)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_101" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-90.9, 0, 17.7)
+scale = Vector3(1.31, 1.31, 1.31)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_102" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(101, 0, 75.9)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_103" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(102.4, 0, 32.4)
+scale = Vector3(0.87, 0.87, 0.87)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_104" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-96.6, 0, -13.1)
+scale = Vector3(0.87, 0.87, 0.87)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_105" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(108.5, 0, 36.4)
+scale = Vector3(1.21, 1.21, 1.21)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_106" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79.6, 0, -85.2)
+scale = Vector3(1.24, 1.24, 1.24)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_107" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-104, 0, -7.8)
+scale = Vector3(1.31, 1.31, 1.31)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_108" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(115.9, 0, -10.7)
+scale = Vector3(0.92, 0.92, 0.92)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_109" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-47, 0, 85.8)
+scale = Vector3(1.24, 1.24, 1.24)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_110" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15.4, 0, -99.8)
+scale = Vector3(1.09, 1.09, 1.09)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_111" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-83.6, 0, -40.9)
+scale = Vector3(1.02, 1.02, 1.02)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_112" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(95.1, 0, -34.9)
+scale = Vector3(0.89, 0.89, 0.89)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_113" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(57.4, 0, 96.1)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_114" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-90.3, 0, 67)
+scale = Vector3(1.09, 1.09, 1.09)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_115" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(99.3, 0, 69.8)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_116" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-76.2, 0, -86.1)
+scale = Vector3(1.16, 1.16, 1.16)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_117" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-47, 0, -102.9)
+scale = Vector3(1.08, 1.08, 1.08)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_118" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-58.4, 0, 90)
+scale = Vector3(0.98, 0.98, 0.98)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_119" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(90.9, 0, -96.2)
+scale = Vector3(0.92, 0.92, 0.92)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_120" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-74, 0, -68)
+scale = Vector3(1.21, 1.21, 1.21)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_121" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(53.1, 0, 77.9)
+scale = Vector3(1.44, 1.44, 1.44)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_122" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(58.6, 0, -69.2)
+scale = Vector3(0.99, 0.99, 0.99)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_123" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-96.3, 0, -71.5)
+scale = Vector3(0.85, 0.85, 0.85)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_124" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-27.6, 0, 73.8)
+scale = Vector3(1.31, 1.31, 1.31)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_125" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(3.1, 0, -99.5)
+scale = Vector3(1.17, 1.17, 1.17)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_126" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-77, 0, 28.8)
+scale = Vector3(1.28, 1.28, 1.28)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_127" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-115.2, 0, -84.8)
+scale = Vector3(0.95, 0.95, 0.95)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_128" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(91, 0, 96)
+scale = Vector3(1.14, 1.14, 1.14)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_129" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12.8, 0, -81.2)
+scale = Vector3(0.98, 0.98, 0.98)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_130" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15.4, 0, -85.7)
+scale = Vector3(0.95, 0.95, 0.95)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_131" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(115.4, 0, 79)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_132" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-117.8, 0, -57.6)
+scale = Vector3(1.1, 1.1, 1.1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_133" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-95.5, 0, 78.7)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_134" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12.6, 0, 82.7)
+scale = Vector3(0.85, 0.85, 0.85)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_135" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(109.8, 0, 29.7)
+scale = Vector3(0.92, 0.92, 0.92)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_136" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(49.1, 0, 96.9)
+scale = Vector3(0.98, 0.98, 0.98)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_137" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-102.8, 0, 38.7)
+scale = Vector3(1.39, 1.39, 1.39)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_138" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-106, 0, -28.8)
+scale = Vector3(0.9, 0.9, 0.9)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_139" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(40.9, 0, 82.8)
+scale = Vector3(1.25, 1.25, 1.25)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_140" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-52.6, 0, 89.6)
+scale = Vector3(1.01, 1.01, 1.01)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_141" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-67.4, 0, -72.3)
+scale = Vector3(1.43, 1.43, 1.43)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_142" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-90.9, 0, -99.1)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_143" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-7.8, 0, -80.3)
+scale = Vector3(1.18, 1.18, 1.18)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_144" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-83.9, 0, 59.6)
+scale = Vector3(1.12, 1.12, 1.12)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_145" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-6.9, 0, -99.7)
+scale = Vector3(1.28, 1.28, 1.28)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_146" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-51.9, 0, -87.5)
+scale = Vector3(1.03, 1.03, 1.03)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_147" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-97.1, 0, 50.6)
+scale = Vector3(1.25, 1.25, 1.25)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_148" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(74.9, 0, 102.3)
+scale = Vector3(1.42, 1.42, 1.42)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_149" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(114.3, 0, 72.9)
+scale = Vector3(1.09, 1.09, 1.09)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_150" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(110.7, 0, 57.7)
+scale = Vector3(0.88, 0.88, 0.88)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_151" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-89.5, 0, -92.1)
+scale = Vector3(0.94, 0.94, 0.94)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_152" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(108.1, 0, 19.2)
+scale = Vector3(1.18, 1.18, 1.18)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_153" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(83.1, 0, -83.1)
+scale = Vector3(1.15, 1.15, 1.15)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_154" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(51.5, 0, 68.3)
+scale = Vector3(1.17, 1.17, 1.17)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_155" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-96.1, 0, -91.3)
+scale = Vector3(1.36, 1.36, 1.36)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_156" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-101.2, 0, 20.8)
+scale = Vector3(1.2, 1.2, 1.2)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_157" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-60.2, 0, -76)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_158" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-101.6, 0, 52.3)
+scale = Vector3(1.42, 1.42, 1.42)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_159" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-84.9, 0, -88)
+scale = Vector3(1.35, 1.35, 1.35)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_160" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-93, 0, 11.4)
+scale = Vector3(0.95, 0.95, 0.95)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_161" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-108, 0, 43.5)
+scale = Vector3(1.07, 1.07, 1.07)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_162" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-47, 0, -77.2)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_163" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-71.3, 0, -97.3)
+scale = Vector3(0.92, 0.92, 0.92)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_164" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(31, 0, -91.3)
+scale = Vector3(1.21, 1.21, 1.21)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_165" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(27.3, 0, -96.1)
+scale = Vector3(1.23, 1.23, 1.23)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_166" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(34.5, 0, -101.5)
+scale = Vector3(1.05, 1.05, 1.05)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_167" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-100.4, 0, -2.9)
+scale = Vector3(1.3, 1.3, 1.3)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_168" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-114.1, 0, 97.1)
+scale = Vector3(1.39, 1.39, 1.39)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_169" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(24.9, 0, -78.3)
+scale = Vector3(1.43, 1.43, 1.43)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_170" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(99.5, 0, 95.6)
+scale = Vector3(1.33, 1.33, 1.33)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_171" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-21.8, 0, -82.9)
+scale = Vector3(0.86, 0.86, 0.86)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_172" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(34.9, 0, -91.3)
+scale = Vector3(0.97, 0.97, 0.97)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_173" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(108.2, 0, 44.9)
+scale = Vector3(1.1, 1.1, 1.1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_174" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-23.4, 0, -95.7)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_175" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-100.5, 0, -78.6)
+scale = Vector3(1.01, 1.01, 1.01)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_176" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(10.8, 0, -98.9)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_177" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(46.2, 0, 72.1)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_178" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-102.7, 0, -101.4)
+scale = Vector3(1.15, 1.15, 1.15)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_179" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-99.7, 0, 16.5)
+scale = Vector3(1.15, 1.15, 1.15)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_180" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(59.7, 0, 98.8)
+scale = Vector3(1.11, 1.11, 1.11)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_181" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(119, 0, 100)
+scale = Vector3(1.24, 1.24, 1.24)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_182" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-104.7, 0, 93.5)
+scale = Vector3(1.01, 1.01, 1.01)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_183" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(106.1, 0, -41.7)
+scale = Vector3(1.07, 1.07, 1.07)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_184" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-106.1, 0, 75.2)
+scale = Vector3(1.11, 1.11, 1.11)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_185" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(99.1, 0, 44.9)
+scale = Vector3(1.25, 1.25, 1.25)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_186" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(106.4, 0, 71.1)
+scale = Vector3(1.35, 1.35, 1.35)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_187" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(81.5, 0, -37.2)
+scale = Vector3(1.42, 1.42, 1.42)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_188" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(105.9, 0, -28.3)
+scale = Vector3(0.89, 0.89, 0.89)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_189" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-77.9, 0, 103.5)
+scale = Vector3(0.88, 0.88, 0.88)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_190" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(108, 0, -64.2)
+scale = Vector3(1.43, 1.43, 1.43)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_191" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-39.8, 0, -92.8)
+scale = Vector3(1.09, 1.09, 1.09)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_192" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(85.3, 0, 0.8)
+scale = Vector3(1.36, 1.36, 1.36)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_193" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-50.6, 0, 99.7)
+scale = Vector3(1.3, 1.3, 1.3)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_194" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(104.1, 0, 97.1)
+scale = Vector3(1.18, 1.18, 1.18)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_195" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(9.7, 0, -87.2)
+scale = Vector3(1.29, 1.29, 1.29)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_196" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(87.2, 0, 90.2)
+scale = Vector3(1.34, 1.34, 1.34)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_197" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(22.5, 0, -93.4)
+scale = Vector3(1.03, 1.03, 1.03)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_198" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(96.7, 0, -30)
+scale = Vector3(1.19, 1.19, 1.19)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_199" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(111.7, 0, 100.9)
+scale = Vector3(1.16, 1.16, 1.16)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_200" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-97.3, 0, -7.9)
+scale = Vector3(1.14, 1.14, 1.14)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_201" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-116.9, 0, 18.7)
+scale = Vector3(1.21, 1.21, 1.21)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_202" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-18.9, 0, 92.8)
+scale = Vector3(1.05, 1.05, 1.05)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_203" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-62, 0, -98.6)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_204" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-76.3, 0, -20.9)
+scale = Vector3(1.07, 1.07, 1.07)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_205" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(114.4, 0, 89.5)
+scale = Vector3(1.36, 1.36, 1.36)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_206" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-56.7, 0, 74.9)
+scale = Vector3(0.98, 0.98, 0.98)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_207" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(79, 0, 10.3)
+scale = Vector3(1.15, 1.15, 1.15)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_208" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(80, 0, -19.4)
+scale = Vector3(0.97, 0.97, 0.97)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_209" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-87.2, 0, 88)
+scale = Vector3(0.93, 0.93, 0.93)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_210" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-88.3, 0, -38.6)
+scale = Vector3(1.34, 1.34, 1.34)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_211" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(109.6, 0, -1.2)
+scale = Vector3(1.23, 1.23, 1.23)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_212" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-85.2, 0, 52.9)
+scale = Vector3(1.38, 1.38, 1.38)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_213" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-92.4, 0, 61.9)
+scale = Vector3(1.37, 1.37, 1.37)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_214" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-102.5, 0, -30.3)
+scale = Vector3(1.02, 1.02, 1.02)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_215" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-13.4, 0, -71.8)
+scale = Vector3(0.92, 0.92, 0.92)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_216" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(10.5, 0, -77.3)
+scale = Vector3(0.93, 0.93, 0.93)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_217" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-7.7, 0, -73.3)
+scale = Vector3(1.33, 1.33, 1.33)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_218" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(114.3, 0, -67)
+scale = Vector3(0.95, 0.95, 0.95)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_219" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-107.5, 0, 67.5)
+scale = Vector3(1.11, 1.11, 1.11)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_220" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(3.1, 0, 103.2)
+scale = Vector3(0.93, 0.93, 0.93)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_221" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(107.5, 0, 80.5)
+scale = Vector3(1.44, 1.44, 1.44)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_222" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-112.2, 0, -57)
+scale = Vector3(1.05, 1.05, 1.05)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_223" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-17.6, 0, 87.5)
+scale = Vector3(0.96, 0.96, 0.96)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_224" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(53.4, 0, 95.1)
+scale = Vector3(0.85, 0.85, 0.85)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_225" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19.5, 0, 96.7)
+scale = Vector3(1.3, 1.3, 1.3)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_226" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-80.6, 0, 94.2)
+scale = Vector3(1.07, 1.07, 1.07)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_227" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(85.2, 0, -29.2)
+scale = Vector3(1.08, 1.08, 1.08)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_228" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-101.3, 0, -26)
+scale = Vector3(0.89, 0.89, 0.89)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_229" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-97.6, 0, -37.4)
+scale = Vector3(1.45, 1.45, 1.45)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_230" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-114.1, 0, -0.9)
+scale = Vector3(1.38, 1.38, 1.38)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_231" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-81.1, 0, 26)
+scale = Vector3(1.33, 1.33, 1.33)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_232" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(95.8, 0, 73.8)
+scale = Vector3(1.03, 1.03, 1.03)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_233" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(118.9, 0, 81.2)
+scale = Vector3(1.35, 1.35, 1.35)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_234" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-65.8, 0, -94.1)
+scale = Vector3(1.44, 1.44, 1.44)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_235" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(8.1, 0, -82.8)
+scale = Vector3(0.96, 0.96, 0.96)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_236" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-71.2, 0, 88.9)
+scale = Vector3(1.24, 1.24, 1.24)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_237" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-43.8, 0, 67.5)
+scale = Vector3(1.3, 1.3, 1.3)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_238" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(118.4, 0, -30.6)
+scale = Vector3(1.16, 1.16, 1.16)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_239" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-104.8, 0, -41.3)
+scale = Vector3(0.88, 0.88, 0.88)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_240" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-109.9, 0, 55.4)
+scale = Vector3(1.4, 1.4, 1.4)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_241" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(72.3, 0, 67.6)
+scale = Vector3(1.32, 1.32, 1.32)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_242" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(90, 0, 81)
+scale = Vector3(1.4, 1.4, 1.4)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_243" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(117.6, 0, 59.2)
+scale = Vector3(1.25, 1.25, 1.25)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_244" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-117.8, 0, 100.4)
+scale = Vector3(1.01, 1.01, 1.01)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_245" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(95.6, 0, 78.6)
+scale = Vector3(0.97, 0.97, 0.97)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_246" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-118.3, 0, -30.8)
+scale = Vector3(1.26, 1.26, 1.26)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_247" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-104.1, 0, 64.7)
+scale = Vector3(1.26, 1.26, 1.26)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_248" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(118, 0, -81.8)
+scale = Vector3(0.97, 0.97, 0.97)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_249" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(99.1, 0, -13.6)
+scale = Vector3(0.88, 0.88, 0.88)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_250" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(80.7, 0, 19.9)
+scale = Vector3(1.2, 1.2, 1.2)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_251" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-93.8, 0, 33.7)
+scale = Vector3(1.08, 1.08, 1.08)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_252" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(116.4, 0, 67.3)
+scale = Vector3(1.32, 1.32, 1.32)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_253" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(114.7, 0, 15.7)
+scale = Vector3(1.31, 1.31, 1.31)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_254" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(76.2, 0, -100)
+scale = Vector3(1.14, 1.14, 1.14)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_255" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-61.7, 0, -80.1)
+scale = Vector3(1.3, 1.3, 1.3)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_256" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-117.6, 0, 1.3)
+scale = Vector3(1.19, 1.19, 1.19)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_257" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12.1, 0, 86.2)
+scale = Vector3(1.38, 1.38, 1.38)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_258" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(116.7, 0, -98.5)
+scale = Vector3(1.11, 1.11, 1.11)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_259" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(101.5, 0, -8.7)
+scale = Vector3(0.98, 0.98, 0.98)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_260" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(41.6, 0, 88.8)
+scale = Vector3(0.94, 0.94, 0.94)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_261" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(59.8, 0, 66.1)
+scale = Vector3(1.06, 1.06, 1.06)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_262" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15.5, 0, 90.8)
+scale = Vector3(0.86, 0.86, 0.86)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="expansion_tree_263" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-29.7, 0, -97.2)
+scale = Vector3(1.13, 1.13, 1.13)
+script = ExtResource("prop")
+kind = "tree"
+variation = 4
+
+[node name="expansion_tree_264" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-102.7, 0, -62.1)
+scale = Vector3(1.35, 1.35, 1.35)
+script = ExtResource("prop")
+kind = "tree"
+variation = 5
+
+[node name="expansion_tree_265" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-98.4, 0, 43.1)
+scale = Vector3(1.16, 1.16, 1.16)
+script = ExtResource("prop")
+kind = "tree"
+variation = 6
+
+[node name="expansion_tree_266" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(78.4, 0, -80.9)
+scale = Vector3(1.04, 1.04, 1.04)
+script = ExtResource("prop")
+kind = "tree"
+variation = 0
+
+[node name="expansion_tree_267" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-113, 0, 51.8)
+scale = Vector3(1.14, 1.14, 1.14)
+script = ExtResource("prop")
+kind = "tree"
+variation = 1
+
+[node name="expansion_tree_268" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-78.2, 0, 48.4)
+scale = Vector3(0.9, 0.9, 0.9)
+script = ExtResource("prop")
+kind = "tree"
+variation = 2
+
+[node name="expansion_tree_269" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(117.1, 0, -35.4)
+scale = Vector3(1.37, 1.37, 1.37)
+script = ExtResource("prop")
+kind = "tree"
+variation = 3
+
+[node name="north_ruins_a" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(47, 0, -91)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "ruin"
+variation = 0
+
+[node name="north_ruins_b" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(49, 0, -94)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "ruin"
+variation = 0
+
+[node name="orchard_well" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-77, 0, 64)
+scale = Vector3(1, 1, 1)
+script = ExtResource("prop")
+kind = "well"
+variation = 0
+
+[node name="Portals" type="Node3D" parent="."]
+[node name="Tower" type="Node3D" parent="Portals"]
+position = Vector3(98, 0, -91.65)
+script = ExtResource("portal")
+destination = &"watchtower"
+[node name="Arrivals" type="Node3D" parent="."]
+[node name="tower" type="Marker3D" parent="Arrivals"]
+position = Vector3(98, 0.1, -94.7)
+[node name="westroad_scouts" type="Node3D" parent="Encounters"]
+position = Vector3(-52, 0, -28)
+script = ExtResource("encounter")
+encounter_id = &"westroad_scouts"
+display_name = "Westroad scouts"
+[node name="enemy_0" type="Marker3D" parent="Encounters/westroad_scouts"]
+position = Vector3(-2.7, 0.1, 0)
+script = ExtResource("spawn")
+spawn_id = &"westroad_scouts_0"
+definition = ExtResource("raider")
+[node name="enemy_1" type="Marker3D" parent="Encounters/westroad_scouts"]
+position = Vector3(0, 0.1, 2.5)
+script = ExtResource("spawn")
+spawn_id = &"westroad_scouts_1"
+definition = ExtResource("raider")
+[node name="enemy_2" type="Marker3D" parent="Encounters/westroad_scouts"]
+position = Vector3(2.7, 0.1, 0)
+script = ExtResource("spawn")
+spawn_id = &"westroad_scouts_2"
+definition = ExtResource("archer")
+[node name="easttrail_pack" type="Node3D" parent="Encounters"]
+position = Vector3(89, 0, 58)
+script = ExtResource("encounter")
+encounter_id = &"easttrail_pack"
+display_name = "Easttrail pack"
+[node name="enemy_0" type="Marker3D" parent="Encounters/easttrail_pack"]
+position = Vector3(-2.7, 0.1, 0)
+script = ExtResource("spawn")
+spawn_id = &"easttrail_pack_0"
+definition = ExtResource("wolf")
+[node name="enemy_1" type="Marker3D" parent="Encounters/easttrail_pack"]
+position = Vector3(0, 0.1, 2.5)
+script = ExtResource("spawn")
+spawn_id = &"easttrail_pack_1"
+definition = ExtResource("wolf")
+[node name="enemy_2" type="Marker3D" parent="Encounters/easttrail_pack"]
+position = Vector3(2.7, 0.1, 0)
+script = ExtResource("spawn")
+spawn_id = &"easttrail_pack_2"
+definition = ExtResource("wolf")
+[node name="road_reinforcement" type="Marker3D" parent="Encounters/road_patrol"]
+position = Vector3(3, 0.1, 2)
+script = ExtResource("spawn")
+spawn_id = &"road_reinforcement"
+definition = ExtResource("raider")
+[node name="wood_reinforcement" type="Marker3D" parent="Encounters/wood_wolves"]
+position = Vector3(-4, 0.1, 2)
+script = ExtResource("spawn")
+spawn_id = &"wood_reinforcement"
+definition = ExtResource("wolf")
+
+[node name="Warwick" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(74,0,88)
+script = ExtResource("warwick")
+[node name="WarwickTrail" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(80,0,54,77,0,68,74,0,79,74,0,85)
+width = 3.5
+[node name="WarwickCourtyard" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(74,0,79,74,0,97)
+width = 19.0
+elevation = 0.018
+[node name="WarwickCellar" type="Node3D" parent="Portals"]
+position = Vector3(74,0,87.4)
+script = ExtResource("portal")
+display_name = "Enter Warwick's cellars"
+destination = &"warwick_cellars"
+required_quest = &"warwick_rescue"
+[node name="warwick" type="Marker3D" parent="Arrivals"]
+position = Vector3(74,0.1,83)
+[node name="warwick_guards" type="Node3D" parent="Encounters"]
+position = Vector3(74,0,82)
+script = ExtResource("encounter")
+encounter_id = &"warwick_guards"
+display_name = "Warwick's Occupiers"
+[node name="guard_0" type="Marker3D" parent="Encounters/warwick_guards"]
+position = Vector3(-3,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"warwick_guard_0"
+definition = ExtResource("raider")
+[node name="guard_1" type="Marker3D" parent="Encounters/warwick_guards"]
+position = Vector3(3,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"warwick_guard_1"
+definition = ExtResource("raider")
+[node name="guard_2" type="Marker3D" parent="Encounters/warwick_guards"]
+position = Vector3(-5,0.1,5)
+script = ExtResource("spawn")
+spawn_id = &"warwick_guard_2"
+definition = ExtResource("archer")
+[node name="guard_3" type="Marker3D" parent="Encounters/warwick_guards"]
+position = Vector3(5,0.1,5)
+script = ExtResource("spawn")
+spawn_id = &"warwick_guard_3"
+definition = ExtResource("archer")

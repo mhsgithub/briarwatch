@@ -2,15 +2,22 @@
 
 [ext_resource type="Script" path="res://src/data/item_definition.gd" id="1"]
 
-
 [resource]
 script = ExtResource("1")
 id = &"old_sword"
 display_name = "Watch sword"
 description = "An old blade with an honest edge."
 slot = "weapon"
+icon_index = 0
 price = 8
+sell_price = 2
 damage_bonus = 4.0
 armor_bonus = 0.0
+vitality_bonus = 0.0
+tier = "white"
+appearance = "sword"
+swing_seconds = 0.8
+two_handed = false
 heal_amount = 0.0
-tint = Color(0.84, 0.73, 0.48, 1)
+heal_seconds = 5.0
+tint = Color(0.32, 0.48, 0.48, 1)

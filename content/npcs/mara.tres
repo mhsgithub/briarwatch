@@ -1,12 +1,16 @@
-[gd_resource type="Resource" script_class="NpcDefinition" load_steps=7 format=3]
-
+[gd_resource type="Resource" script_class="NpcDefinition" load_steps=13 format=3]
 [ext_resource type="Script" path="res://src/data/npc_definition.gd" id="1"]
 [ext_resource type="Script" path="res://src/data/item_definition.gd" id="item_script"]
 [ext_resource type="Resource" path="res://content/items/tonic.tres" id="i0"]
-[ext_resource type="Resource" path="res://content/items/forged_sword.tres" id="i1"]
-[ext_resource type="Resource" path="res://content/items/iron_shield.tres" id="i2"]
-[ext_resource type="Resource" path="res://content/items/mail.tres" id="i3"]
-
+[ext_resource type="Resource" path="res://content/items/greater_tonic.tres" id="i1"]
+[ext_resource type="Resource" path="res://content/items/mail.tres" id="i2"]
+[ext_resource type="Resource" path="res://content/items/warden_blade.tres" id="i3"]
+[ext_resource type="Resource" path="res://content/items/iron_shield.tres" id="i4"]
+[ext_resource type="Resource" path="res://content/items/watchkeeper_helmet.tres" id="i5"]
+[ext_resource type="Resource" path="res://content/items/outrider_gloves.tres" id="i6"]
+[ext_resource type="Resource" path="res://content/items/outrider_belt.tres" id="i7"]
+[ext_resource type="Resource" path="res://content/items/outrider_boots.tres" id="i8"]
+[ext_resource type="Resource" path="res://content/items/guardian_amulet.tres" id="i9"]
 [resource]
 script = ExtResource("1")
 id = &"mara"
@@ -14,5 +18,5 @@ display_name = "Mara"
 title = "Smith & supplies"
 service = "vendor"
 greeting = "Steel, shelter, a road worth walking. That is all a town needs. Bring me what you find out there."
-stock = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3")])
+stock = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7"), ExtResource("i8"), ExtResource("i9")])
 tint = Color(0.55, 0.36, 0.22, 1)

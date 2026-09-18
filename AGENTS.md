@@ -18,3 +18,6 @@ The user's original instructions are preserved in `Project development instructi
 - Run `tools/launch.ps1 -Mode test` after relevant gameplay changes. Use `-Mode capture`
   and inspect images after visible UI/presentation changes. `--test` isolates saves.
 - Keep documentation consistent with the implementation and leave Git understandable.
+- Preserve the approved stylized dark-medieval world and bronze/enamel inventory UI.
+  Diablo II is the gameplay/pacing inspiration, never a source of copied assets.
+  Retain the character/pack layout and interactions when expanding functionality.

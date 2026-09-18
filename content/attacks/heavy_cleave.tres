@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AttackDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://src/data/attack_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"heavy_cleave"
+damage = 20.0
+reach = 3.8
+windup = 1.0
+cooldown = 1.8
+arc_degrees = 140.0
+bleed_damage = 3.0
+bleed_ticks = 5

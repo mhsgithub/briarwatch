@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3]
+[ext_resource type="Script" path="res://src/world/region.gd" id="region"]
+[ext_resource type="Script" path="res://src/world/tower_interior.gd" id="interior"]
+[ext_resource type="Script" path="res://src/world/region_portal.gd" id="portal"]
+[ext_resource type="Script" path="res://src/world/encounter.gd" id="encounter"]
+[ext_resource type="Script" path="res://src/world/enemy_spawn.gd" id="spawn"]
+[ext_resource type="Resource" path="res://content/enemies/darius.tres" id="darius"]
+[ext_resource type="Resource" path="res://content/enemies/archer.tres" id="archer"]
+[sub_resource type="NavigationMesh" id="navmesh"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 1
+cell_size = 0.3
+cell_height = 0.1
+agent_height = 2.0
+agent_radius = 0.6
+agent_max_climb = 0.5
+[node name="Watchtower" type="Node3D"]
+script = ExtResource("region")
+region_id = &"watchtower"
+display_name = "Crowbane's Watchtower"
+interior = true
+map_bounds = Rect2(-15, -15, 30, 30)
+[node name="NavigationRegion" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("navmesh")
+[node name="Scenery" type="Node3D" parent="NavigationRegion"]
+[node name="Masonry" type="Node3D" parent="NavigationRegion/Scenery"]
+script = ExtResource("interior")
+[node name="Actors" type="Node3D" parent="."]
+[node name="NPCs" type="Node3D" parent="."]
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+position = Vector3(0, 0.1, 9)
+[node name="Portals" type="Node3D" parent="."]
+[node name="Exit" type="Node3D" parent="Portals"]
+position = Vector3(0, 0, 12.4)
+script = ExtResource("portal")
+display_name = "Return to the March"
+destination = &"briar_march"
+arrival = &"tower"
+[node name="Encounters" type="Node3D" parent="."]
+[node name="crowbane" type="Node3D" parent="Encounters"]
+position = Vector3(0, 0, -3)
+script = ExtResource("encounter")
+encounter_id = &"crowbane"
+display_name = "Darius Crowbane"
+[node name="darius" type="Marker3D" parent="Encounters/crowbane"]
+position = Vector3(0, 0.1, 0)
+script = ExtResource("spawn")
+spawn_id = &"tower_darius"
+definition = ExtResource("darius")
+[node name="bowman_west" type="Marker3D" parent="Encounters/crowbane"]
+position = Vector3(-5.8, 0.1, -1)
+script = ExtResource("spawn")
+spawn_id = &"tower_bowman_west"
+definition = ExtResource("archer")
+[node name="bowman_east" type="Marker3D" parent="Encounters/crowbane"]
+position = Vector3(5.8, 0.1, -1)
+script = ExtResource("spawn")
+spawn_id = &"tower_bowman_east"
+definition = ExtResource("archer")

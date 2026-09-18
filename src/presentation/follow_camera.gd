@@ -8,7 +8,9 @@ func _process(delta: float) -> void:
 		return
 	var desired := target.global_position + offset
 	global_position = global_position.lerp(desired, 1 - exp(-delta * 9)) if initialized else desired
-	look_at(target.global_position + Vector3.UP * 0.4)
+	# Aim relative to the camera, not the moving target: follow lag must never
+	# change yaw/pitch and cause motion sickness.
+	look_at(global_position - offset + Vector3.UP * 0.4)
 	initialized = true
 
 func _unhandled_input(event: InputEvent) -> void:

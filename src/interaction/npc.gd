@@ -19,7 +19,7 @@ func _build() -> void:
 	if not definition:
 		return
 	var visual := ActorVisual.new()
-	visual.style = "npc"
+	visual.style = definition.appearance
 	visual.tint = definition.tint
 	add_child(visual)
 	Geometry.label(self, "%s\n%s" % [definition.display_name, definition.title], Vector3(0, 2.5, 0), Color("ecd39b"), 25)

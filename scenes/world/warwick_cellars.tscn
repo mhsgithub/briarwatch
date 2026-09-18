@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=3]
+[ext_resource type="Script" path="res://src/world/region.gd" id="region"]
+[ext_resource type="Script" path="res://src/world/cellar_interior.gd" id="interior"]
+[ext_resource type="Script" path="res://src/world/region_portal.gd" id="portal"]
+[ext_resource type="Script" path="res://src/world/encounter.gd" id="encounter"]
+[ext_resource type="Script" path="res://src/world/enemy_spawn.gd" id="spawn"]
+[ext_resource type="Resource" path="res://content/enemies/brutus.tres" id="brutus"]
+[ext_resource type="Script" path="res://src/interaction/npc.gd" id="npc"]
+[ext_resource type="Resource" path="res://content/npcs/kasparov.tres" id="lord"]
+[ext_resource type="Script" path="res://src/world/prison_gate.gd" id="gate"]
+[sub_resource type="NavigationMesh" id="navmesh"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 1
+cell_size = 0.3
+cell_height = 0.1
+agent_height = 2.0
+agent_radius = 0.6
+agent_max_climb = 0.5
+[node name="WarwickCellars" type="Node3D"]
+script = ExtResource("region")
+region_id = &"warwick_cellars"
+display_name = "The Cellars of Warwick"
+interior = true
+interior_ambient = 0.19
+interior_sun = 0.12
+map_bounds = Rect2(-11,-16,22,32)
+[node name="NavigationRegion" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("navmesh")
+[node name="Scenery" type="Node3D" parent="NavigationRegion"]
+[node name="Masonry" type="Node3D" parent="NavigationRegion/Scenery"]
+script = ExtResource("interior")
+[node name="Actors" type="Node3D" parent="."]
+[node name="NPCs" type="Node3D" parent="."]
+[node name="kasparov" type="Node3D" parent="NPCs"]
+position = Vector3(0,0.1,-12)
+rotation = Vector3(0,3.14159,0)
+script = ExtResource("npc")
+definition = ExtResource("lord")
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+position = Vector3(0,0.1,11)
+[node name="PrisonGate" type="Node3D" parent="."]
+position = Vector3(0,0,-9)
+script = ExtResource("gate")
+[node name="Portals" type="Node3D" parent="."]
+[node name="Exit" type="Node3D" parent="Portals"]
+position = Vector3(0,0,14.1)
+script = ExtResource("portal")
+display_name = "Leave the cellars"
+destination = &"briar_march"
+arrival = &"warwick"
+[node name="Encounters" type="Node3D" parent="."]
+[node name="brutus" type="Node3D" parent="Encounters"]
+position = Vector3(0,0,-2)
+script = ExtResource("encounter")
+encounter_id = &"brutus"
+display_name = "Jailor Brutus"
+[node name="jailor" type="Marker3D" parent="Encounters/brutus"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"cellars_brutus"
+definition = ExtResource("brutus")

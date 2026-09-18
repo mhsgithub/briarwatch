@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=17 format=3]
+[ext_resource type="Script" path="res://src/data/loot_table.gd" id="table"]
+[ext_resource type="Script" path="res://src/data/loot_entry.gd" id="entry"]
+[ext_resource type="Resource" path="res://content/items/worn_gloves.tres" id="i0"]
+[ext_resource type="Resource" path="res://content/items/worn_belt.tres" id="i1"]
+[ext_resource type="Resource" path="res://content/items/ragged_hood.tres" id="i2"]
+[ext_resource type="Resource" path="res://content/items/stitched_vest.tres" id="i3"]
+[ext_resource type="Resource" path="res://content/items/ragged_boots.tres" id="i4"]
+[ext_resource type="Resource" path="res://content/items/pitchfork.tres" id="i5"]
+[ext_resource type="Resource" path="res://content/items/tonic.tres" id="tonic"]
+[sub_resource type="Resource" id="e0"]
+script = ExtResource("entry")
+item = ExtResource("i0")
+chance = 0.035
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("entry")
+item = ExtResource("i1")
+chance = 0.035
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("entry")
+item = ExtResource("i2")
+chance = 0.035
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("entry")
+item = ExtResource("i3")
+chance = 0.025
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("entry")
+item = ExtResource("i4")
+chance = 0.035
+
+[sub_resource type="Resource" id="e5"]
+script = ExtResource("entry")
+item = ExtResource("i5")
+chance = 0.015
+[sub_resource type="Resource" id="tonic_entry"]
+script = ExtResource("entry")
+item = ExtResource("tonic")
+chance = 0.02
+[resource]
+script = ExtResource("table")
+gold_weights = PackedFloat32Array(0.55, 0.27, 0.12, 0.06)
+entries = Array[ExtResource("entry")]([SubResource("e0"), SubResource("e1"), SubResource("e2"), SubResource("e3"), SubResource("e4"), SubResource("e5"), SubResource("tonic_entry")])

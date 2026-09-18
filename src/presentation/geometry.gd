@@ -2,8 +2,12 @@
 class_name Geometry
 extends RefCounted
 ## Small original art vocabulary. Generated visuals never own gameplay state.
+static var materials: Dictionary = {}
 
 static func material(color: Color, glow: float = 0.0) -> StandardMaterial3D:
+	var key := str(color) + ":" + str(glow)
+	if materials.has(key):
+		return materials[key]
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = color
 	mat.roughness = 0.9
@@ -11,7 +15,27 @@ static func material(color: Color, glow: float = 0.0) -> StandardMaterial3D:
 		mat.emission_enabled = true
 		mat.emission = color
 		mat.emission_energy_multiplier = glow
+	materials[key] = mat
 	return mat
+
+static func beam(parent: Node3D, a: Vector3, b: Vector3, width: float, color: Color) -> MeshInstance3D:
+	var node := box(parent, (a + b) * 0.5, Vector3(width, a.distance_to(b), width), color)
+	var axis := (b - a).normalized()
+	var right := axis.cross(Vector3.FORWARD).normalized()
+	if right.length_squared() < 0.01:
+		right = Vector3.RIGHT
+	node.basis = Basis(right, axis, right.cross(axis).normalized())
+	return node
+
+static func ring(parent: Node3D, radius: float, color: Color, thickness: float = 0.035) -> MeshInstance3D:
+	var shape := TorusMesh.new()
+	shape.inner_radius = radius - thickness
+	shape.outer_radius = radius + thickness
+	shape.rings = 32
+	shape.ring_segments = 6
+	var node := mesh_node(parent, shape, Vector3(0, 0.055, 0), color)
+	node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return node
 
 static func mesh_node(parent: Node3D, mesh: Mesh, pos: Vector3, color: Color) -> MeshInstance3D:
 	var node := MeshInstance3D.new()

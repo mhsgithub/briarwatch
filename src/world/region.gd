@@ -4,6 +4,10 @@ extends Node3D
 signal enemy_defeated(enemy: Enemy)
 signal encounter_cleared(id: StringName)
 @export var display_name: String = "The Briar March"
+@export var region_id: StringName = &"briar_march"
+@export var interior: bool = false
+@export var interior_ambient: float = 0.42
+@export var interior_sun: float = 0.35
 @export var map_bounds := Rect2(-80, -72, 160, 144)
 @onready var navigation_region: NavigationRegion3D = $NavigationRegion
 @onready var actors: Node3D = $Actors
@@ -11,6 +15,14 @@ signal encounter_cleared(id: StringName)
 var defeated_ids: Array[String] = []
 var encounter_counts: Dictionary = {}
 var rng := RandomNumberGenerator.new()
+
+func _enter_tree() -> void:
+	# The active region owns the world map's rasterization settings. Configure
+	# before its NavigationRegion enters, including cached meshes on re-entry.
+	var nav := get_node("NavigationRegion") as NavigationRegion3D
+	var map := get_world_3d().navigation_map
+	NavigationServer3D.map_set_cell_size(map, nav.navigation_mesh.cell_size)
+	NavigationServer3D.map_set_cell_height(map, nav.navigation_mesh.cell_height)
 
 func initialize(defeated: Array) -> void:
 	rng.randomize()
@@ -40,16 +52,21 @@ func initialize(defeated: Array) -> void:
 func _on_defeated(enemy: Enemy) -> void:
 	defeated_ids.append(str(enemy.spawn_id))
 	encounter_counts[enemy.encounter_id] -= 1
-	var drop := LootDrop.new()
-	drop.gold = rng.randi_range(enemy.definition.gold_min, enemy.definition.gold_max)
-	actors.add_child(drop)
-	drop.global_position = enemy.global_position
-	for entry in enemy.definition.loot:
-		if entry.item and rng.randf() <= entry.chance:
+	var table := enemy.definition.loot_table
+	if table:
+		var rolled := table.roll(rng)
+		if rolled.gold > 0:
+			var drop := LootDrop.new()
+			drop.gold = rolled.gold
+			actors.add_child(drop)
+			drop.global_position = enemy.global_position
+			GameAudio.play_drop(actors, drop.global_position, false)
+		for item in rolled.items:
 			var item_drop := LootDrop.new()
-			item_drop.item = entry.item
+			item_drop.item = item
 			actors.add_child(item_drop)
 			item_drop.global_position = enemy.global_position + Vector3(rng.randf_range(-0.8, 0.8), 0, 0.8)
+			GameAudio.play_drop(actors, item_drop.global_position, true)
 	if encounter_counts[enemy.encounter_id] <= 0:
 		encounter_cleared.emit(enemy.encounter_id)
 	enemy_defeated.emit(enemy)

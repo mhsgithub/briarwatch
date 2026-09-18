@@ -1,18 +1,30 @@
-[gd_resource type="Resource" script_class="ContentCatalog" load_steps=12 format=3]
-
+[gd_resource type="Resource" script_class="ContentCatalog" load_steps=25 format=3]
 [ext_resource type="Script" path="res://src/data/content_catalog.gd" id="1"]
 [ext_resource type="Script" path="res://src/data/item_definition.gd" id="item_script"]
 [ext_resource type="Resource" path="res://content/quests/open_road.tres" id="quest"]
 [ext_resource type="Resource" path="res://content/items/old_sword.tres" id="i0"]
 [ext_resource type="Resource" path="res://content/items/oak_shield.tres" id="i1"]
 [ext_resource type="Resource" path="res://content/items/coat.tres" id="i2"]
-[ext_resource type="Resource" path="res://content/items/forged_sword.tres" id="i3"]
-[ext_resource type="Resource" path="res://content/items/iron_shield.tres" id="i4"]
-[ext_resource type="Resource" path="res://content/items/mail.tres" id="i5"]
-[ext_resource type="Resource" path="res://content/items/tonic.tres" id="i6"]
+[ext_resource type="Resource" path="res://content/items/tonic.tres" id="i3"]
+[ext_resource type="Resource" path="res://content/items/greater_tonic.tres" id="i4"]
+[ext_resource type="Resource" path="res://content/items/iron_shield.tres" id="i5"]
+[ext_resource type="Resource" path="res://content/items/mail.tres" id="i6"]
 [ext_resource type="Resource" path="res://content/items/warden_blade.tres" id="i7"]
-
+[ext_resource type="Resource" path="res://content/items/watchkeeper_helmet.tres" id="i8"]
+[ext_resource type="Resource" path="res://content/items/outrider_gloves.tres" id="i9"]
+[ext_resource type="Resource" path="res://content/items/outrider_belt.tres" id="i10"]
+[ext_resource type="Resource" path="res://content/items/outrider_boots.tres" id="i11"]
+[ext_resource type="Resource" path="res://content/items/guardian_amulet.tres" id="i12"]
+[ext_resource type="Resource" path="res://content/items/worn_gloves.tres" id="i13"]
+[ext_resource type="Resource" path="res://content/items/worn_belt.tres" id="i14"]
+[ext_resource type="Resource" path="res://content/items/ragged_hood.tres" id="i15"]
+[ext_resource type="Resource" path="res://content/items/stitched_vest.tres" id="i16"]
+[ext_resource type="Resource" path="res://content/items/ragged_boots.tres" id="i17"]
+[ext_resource type="Resource" path="res://content/items/pitchfork.tres" id="i18"]
+[ext_resource type="Resource" path="res://content/items/cellar_key.tres" id="key"]
+[ext_resource type="Resource" path="res://content/items/outlaw_mantle.tres" id="mantle"]
+[ext_resource type="Resource" path="res://content/items/kasparov_seal.tres" id="seal"]
 [resource]
 script = ExtResource("1")
-items = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7")])
+items = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7"), ExtResource("i8"), ExtResource("i9"), ExtResource("i10"), ExtResource("i11"), ExtResource("i12"), ExtResource("i13"), ExtResource("i14"), ExtResource("i15"), ExtResource("i16"), ExtResource("i17"), ExtResource("i18"), ExtResource("key"), ExtResource("mantle"), ExtResource("seal")])
 quest = ExtResource("quest")

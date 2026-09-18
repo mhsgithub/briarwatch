@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"greater_tonic"
+display_name = "Greater Tonic"
+description = "Restores 100 vitality over 5 seconds."
+slot = "consumable"
+icon_index = 16
+price = 40
+sell_price = 8
+damage_bonus = 0.0
+armor_bonus = 0.0
+vitality_bonus = 0.0
+tier = "white"
+appearance = "plain"
+swing_seconds = 0.8
+two_handed = false
+heal_amount = 100.0
+heal_seconds = 5.0
+tint = Color(0.32, 0.48, 0.48, 1)

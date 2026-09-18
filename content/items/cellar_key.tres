@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/icons/cellar_key.svg" id="icon"]
+[resource]
+script = ExtResource("1")
+id = &"cellar_key"
+display_name = "Warwick Cellar Key"
+description = "Crowbane's iron key to the cellars beneath Warwick Castle. Bring it to Warden Elric. Kept safely in your quest pouch."
+slot = "quest"
+icon = ExtResource("icon")
+price = 0
+sell_price = 0

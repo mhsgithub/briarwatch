@@ -27,9 +27,16 @@ func build() -> void:
 		var a := points[i] + Vector3.UP * elevation
 		var b := points[i + 1] + Vector3.UP * elevation
 		var side := (b - a).normalized().cross(Vector3.UP) * width * 0.5
-		for vertex in [a - side, a + side, b + side, a - side, b + side, b - side]:
-			surface.add_vertex(vertex)
+		var vertices := [a - side, a + side, b + side, a - side, b + side, b - side]
+		var uvs := [Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(1, 0)]
+		for index in range(6):
+			surface.set_uv(uvs[index])
+			surface.add_vertex(vertices[index])
 	surface.generate_normals()
 	mesh = surface.commit()
-	material_override = Geometry.material(tint)
-	material_override.cull_mode = BaseMaterial3D.CULL_DISABLED
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://assets/shaders/ground.gdshader")
+	material.set_shader_parameter("road", true)
+	material.set_shader_parameter("paving", width > 10)
+	material.set_shader_parameter("base_color", tint.darkened(0.18))
+	material_override = material

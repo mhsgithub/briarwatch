@@ -5,6 +5,9 @@ extends Resource
 @export var quest: QuestDefinition
 
 func find_item(id: String) -> ItemDefinition:
+	# Retired content migrates to an existing starter weapon, never a dangling ID.
+	if id == "forged_sword":
+		id = "old_sword"
 	for item in items:
 		if str(item.id) == id:
 			return item

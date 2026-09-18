@@ -2,15 +2,22 @@
 
 [ext_resource type="Script" path="res://src/data/item_definition.gd" id="1"]
 
-
 [resource]
 script = ExtResource("1")
 id = &"iron_shield"
-display_name = "Riveted shield"
+display_name = "Riveted Shield"
 description = "A broad iron face turns aside the worst of a blow."
 slot = "shield"
-price = 35
+icon_index = 5
+price = 65
+sell_price = 10
 damage_bonus = 0.0
 armor_bonus = 4.0
+vitality_bonus = 0.0
+tier = "white"
+appearance = "iron"
+swing_seconds = 0.8
+two_handed = false
 heal_amount = 0.0
-tint = Color(0.84, 0.73, 0.48, 1)
+heal_seconds = 5.0
+tint = Color(0.32, 0.48, 0.48, 1)

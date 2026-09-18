@@ -1,0 +1,223 @@
+{
+  "thresholds": [
+    30,
+    70,
+    90,
+    110,
+    150,
+    210,
+    290,
+    380,
+    500,
+    600,
+    720,
+    830,
+    950,
+    1100,
+    1300,
+    1550,
+    1800,
+    2200,
+    2750
+  ],
+  "talents": [
+    {
+      "id": "block",
+      "name": "Block",
+      "tree": "Battle Mastery",
+      "tier": 1,
+      "max_rank": 3,
+      "parents": [],
+      "active": false,
+      "cooldown": 0,
+      "icon": 0,
+      "description": "Melee block chance: 2 / 4 / 6%. Doubled while wearing a shield."
+    },
+    {
+      "id": "whirlwind",
+      "name": "Whirlwind",
+      "tree": "Battle Mastery",
+      "tier": 2,
+      "max_rank": 1,
+      "parents": [
+        "block"
+      ],
+      "active": true,
+      "cooldown": 10,
+      "icon": 1,
+      "description": "Spin once, striking enemies within 3 metres for 200% weapon damage."
+    },
+    {
+      "id": "impale",
+      "name": "Impale",
+      "tree": "Battle Mastery",
+      "tier": 2,
+      "max_rank": 1,
+      "parents": [
+        "block"
+      ],
+      "active": true,
+      "cooldown": 30,
+      "icon": 2,
+      "description": "For 10 seconds, your next basic swing stuns enemies it hits for 3 seconds. Bosses resist the stun."
+    },
+    {
+      "id": "bloodthirst",
+      "name": "Bloodthirst",
+      "tree": "Battle Mastery",
+      "tier": 3,
+      "max_rank": 3,
+      "parents": [
+        "whirlwind"
+      ],
+      "active": false,
+      "cooldown": 0,
+      "icon": 3,
+      "description": "Attacks and abilities restore 1 / 2 / 3% of actual damage dealt as vitality."
+    },
+    {
+      "id": "retaliate",
+      "name": "Retaliate",
+      "tree": "Battle Mastery",
+      "tier": 3,
+      "max_rank": 2,
+      "parents": [
+        "whirlwind",
+        "impale"
+      ],
+      "active": true,
+      "cooldown": 0,
+      "icon": 4,
+      "description": "After a block, you have 5 seconds to activate. Your next basic swing within 10 seconds deals 150 / 200% weapon damage. One activation per block."
+    },
+    {
+      "id": "rampage",
+      "name": "Rampage",
+      "tree": "Battle Mastery",
+      "tier": 3,
+      "max_rank": 1,
+      "parents": [
+        "impale"
+      ],
+      "active": true,
+      "cooldown": 60,
+      "icon": 5,
+      "description": "For 10 seconds: attack 20% faster, move 20% faster and take 10% more damage."
+    },
+    {
+      "id": "bladestorm",
+      "name": "Bladestorm",
+      "tree": "Battle Mastery",
+      "tier": 4,
+      "max_rank": 1,
+      "parents": [
+        "bloodthirst",
+        "retaliate",
+        "rampage"
+      ],
+      "active": true,
+      "cooldown": 120,
+      "icon": 6,
+      "description": "Spin for 6 seconds. Strike enemies within 3 metres for 100% weapon damage once each second. Immune to stun and movement impairments. You may move, but cannot make basic attacks or Leap."
+    },
+    {
+      "id": "momentum",
+      "name": "Momentum",
+      "tree": "Pathfinder",
+      "tier": 1,
+      "max_rank": 3,
+      "parents": [],
+      "active": false,
+      "cooldown": 0,
+      "icon": 7,
+      "description": "Movement speed increased by 3 / 6 / 9%."
+    },
+    {
+      "id": "leap",
+      "name": "Leap",
+      "tree": "Pathfinder",
+      "tier": 2,
+      "max_rank": 1,
+      "parents": [
+        "momentum"
+      ],
+      "active": true,
+      "cooldown": 30,
+      "icon": 8,
+      "description": "Leap forward up to 10 metres. Solid obstacles stop your leap."
+    },
+    {
+      "id": "unshackled",
+      "name": "Unshackled",
+      "tree": "Pathfinder",
+      "tier": 2,
+      "max_rank": 1,
+      "parents": [
+        "momentum"
+      ],
+      "active": true,
+      "cooldown": 45,
+      "icon": 9,
+      "description": "Remove roots, slows and knockback. Does not remove stun or knockdown. Can be used while rooted, but not stunned."
+    },
+    {
+      "id": "iron_constitution",
+      "name": "Iron Constitution",
+      "tree": "Pathfinder",
+      "tier": 3,
+      "max_rank": 3,
+      "parents": [
+        "leap"
+      ],
+      "active": false,
+      "cooldown": 0,
+      "icon": 10,
+      "description": "Vitality granted by equipment increased by 5 / 10 / 15%. Does not change base vitality or potion healing."
+    },
+    {
+      "id": "elemental_resolve",
+      "name": "Elemental Resolve",
+      "tree": "Pathfinder",
+      "tier": 3,
+      "max_rank": 2,
+      "parents": [
+        "leap",
+        "unshackled"
+      ],
+      "active": true,
+      "cooldown": 60,
+      "icon": 11,
+      "description": "Remove poison, fire and frost effects. Immune to damage and effects of those elements for 3 / 6 seconds."
+    },
+    {
+      "id": "fleetfooted",
+      "name": "Fleetfooted",
+      "tree": "Pathfinder",
+      "tier": 3,
+      "max_rank": 3,
+      "parents": [
+        "unshackled"
+      ],
+      "active": false,
+      "cooldown": 0,
+      "icon": 12,
+      "description": "Enemy hit chance reduced by 3 / 6 / 9 percentage points. Includes a chance to evade arrows that physically reach you."
+    },
+    {
+      "id": "blood_and_breath",
+      "name": "Blood and Breath",
+      "tree": "Pathfinder",
+      "tier": 4,
+      "max_rank": 1,
+      "parents": [
+        "iron_constitution",
+        "elemental_resolve",
+        "fleetfooted"
+      ],
+      "active": false,
+      "cooldown": 0,
+      "icon": 13,
+      "description": "Above 80% vitality: move 20% faster. Below 20%: heal 1% of maximum vitality each second. Neither effect at 20–80%."
+    }
+  ]
+}

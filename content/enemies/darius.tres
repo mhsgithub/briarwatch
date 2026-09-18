@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=8 format=3]
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="1"]
+[ext_resource type="Script" path="res://src/data/commander_definition.gd" id="kit"]
+[ext_resource type="Resource" path="res://content/attacks/commander.tres" id="attack"]
+[ext_resource type="Resource" path="res://content/attacks/heavy_cleave.tres" id="cleave"]
+[ext_resource type="Resource" path="res://content/attacks/kick.tres" id="kick"]
+[ext_resource type="Resource" path="res://content/loot/darius.tres" id="loot"]
+[sub_resource type="Resource" id="abilities"]
+script = ExtResource("kit")
+cleave = ExtResource("cleave")
+kick = ExtResource("kick")
+[resource]
+script = ExtResource("1")
+experience = 5
+is_boss = true
+id = &"darius"
+display_name = "Darius Crowbane"
+max_health = 125.0
+move_speed = 2.4
+aggro_radius = 13.0
+leash_radius = 28.0
+attack = ExtResource("attack")
+loot_table = ExtResource("loot")
+commander = SubResource("abilities")
+visual_scale = 1.22
+tint = Color(0.39, 0.19, 0.18, 1)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"outlaw_mantle"
+display_name = "Outlaw's Mantle"
+description = "A weathered hide mantle taken from Darius Crowbane. Thick shoulders turn aside a glancing blow."
+slot = "shoulders"
+icon_index = 9
+price = 55
+sell_price = 8
+armor_bonus = 2.0
+tint = Color(0.31, 0.28, 0.23, 1)

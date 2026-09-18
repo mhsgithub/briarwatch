@@ -19,7 +19,10 @@ func configure(hp: float, defense: float = 0.0) -> void:
 func receive(packet: DamagePacket) -> void:
 	if current <= 0 or invulnerable:
 		return
-	var dealt := maxf(1, packet.amount - armor)
+	var defense := armor if packet.damage_type in [&"physical", &"melee", &"ranged"] else 0.0
+	var dealt := maxf(packet.minimum_damage, (packet.amount - defense) * packet.taken_multiplier)
+	if dealt <= 0:
+		return
 	current = maxf(0, current - dealt)
 	damaged.emit(dealt)
 	changed.emit(current, maximum)
@@ -34,4 +37,9 @@ func heal(amount: float) -> void:
 
 func revive() -> void:
 	current = maximum
+	changed.emit(current, maximum)
+
+func set_maximum(value: float) -> void:
+	maximum = maxf(1, value)
+	current = minf(current, maximum)
 	changed.emit(current, maximum)
