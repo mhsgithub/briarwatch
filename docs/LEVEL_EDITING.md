@@ -133,3 +133,33 @@ exposes interior sun/ambient values. QuestDefinition.next_quest, handin_npc,
 handin_region and entrance_label supply chain/UI/map routing. Keep stable IDs.
 Talent IDs/ranks/tree/tier/cooldowns/icon cells/parents live in
 content/progression/centurion.json. Keep it topologically ordered and run tests.
+
+## Dark Woods authoring
+
+dark_woods.tscn contains the full fixed maze, 18 ordinary patrol markers, two
+boss markers, trails, clearing, cage, chest and exit. Thicket length/width and
+transforms define impassable tree-wall segments; keep the approximately 6-metre
+corridors clear. Tree variants are deterministically seeded per segment and
+batched; no runtime maze regeneration changes saved encounters.
+
+The northwest entrance is at (-104,-90) in briar_march.tscn, with the return
+arrival at (-104,-84). WestTrail leads directly to it. Quest-gated portals use
+required_quest and locked_message; completed quests retain access.
+
+DenEncounter's cage_path points to the authored BeastCage. Keep the cage below
+NavigationRegion/Scenery: its sides bake normally, while the gate changes
+physical collision after the bake. Boss markers retain woods_garrick and
+woods_bloodfang; quest completion targets the bloodfang encounter. Do not put
+regular patrols in the clearing. DenBossDefinition exposes both bosses' tuning.
+
+TreasureChest.chest_id is persistent identity; changing it grants a new chest.
+The woods_cache chest drops 15 gold as floor loot. TreasureChest.items supports
+optional item drops through the same collection/persistence path. Preserve IDs
+when moving content. Dark Woods disables Region.map_enabled.
+
+WoodsEntrance builds an irregular forest edge from 155 seeded trees with varied
+scale and rotation. Its exported seed, count, width and depth control the grove;
+the central approach remains clear. DarkThicket keeps collision separate from
+its exposed-root tree mesh and proximity fade.
+Run dark_woods.gd tests after path/wall/cage changes; they include actual
+player traversal, spawn reachability, release sprint and wall collision.

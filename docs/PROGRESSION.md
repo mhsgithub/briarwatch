@@ -28,9 +28,13 @@ level-up, discarding overflow from that kill.
 |19|2200|
 |20|2750|
 
-Current ordinary enemies grant 1 EXP; Darius and Brutus grant 5 each. New definitions
-default to zero until configured. The finite current content totals 88 EXP:
-78 ordinary enemies plus two bosses, reaching level 2 and 58/70 EXP. No repeatable
+Ordinary enemies grant 1 EXP, Elite Bandits grant 2, Darius/Brutus/Garrick grant 5,
+and Bloodfang grants 10. New definitions
+default to zero until configured. The finite current content totals 130 EXP before
+summons: 87 ordinary enemies (87), nine Elite Bandits (18), Darius/Brutus/Garrick
+(15) and Bloodfang (10). His two pairs of Greyfangs add four EXP for a total of
+134. The content reaches level 3; the exact remainder depends on kill order
+because level-up discards overflow. No repeatable
 XP service or altered curve was added. Higher builds are verified in isolated tests.
 
 Old saves without progression receive one-time credit for recorded defeats,
@@ -66,7 +70,7 @@ to fire an ability. Consumables retain the existing pack/belt behavior.
   move and use ready utility actions, but not Leap or make basic attacks.
 - Impale and Retaliate empower the next **committed basic swing** within ten seconds.
   They combine; a missed swing still consumes them. Impale stuns ordinary targets
-  for three seconds; both boss definitions explicitly resist it.
+  for three seconds; all boss definitions explicitly resist it.
 - Each melee block opens one five-second Retaliate activation opportunity.
   Activating consumes it. No conventional cooldown applies.
 - Block is melee only: 2/4/6%, doubled by an actual equipped shield.
@@ -103,14 +107,16 @@ Kasparov wears a noble robe and clasp, not military equipment.
 Brutus has 120 health, 15 base melee damage, 0.3-second windup / 0.95-second punch
 interval, 2.35 m/s movement and short successful-hit knockback. At half health,
 once per fight, he roars and plants his feet for eight seconds. His red 2.8-metre
-boundary and pulsing light mark sixteen 30-damage pulses at 0.5-second intervals.
-Hits can be evaded/blocked and knock back. His ordinary attack pauses during rage,
+ring and pulsing light accompany five knives every 0.25 seconds, thrown in
+random directions at 15.5 m/s. Each collision deals 20 physical ranged damage
+before armor and can be evaded; melee Block does not apply. Knives stop at walls
+and do not knock back. His ordinary attack pauses during rage,
 then recovers for one second. Death cancels attacks. Disengaging cancels rage;
 a full leash reset restores another attempt.
 
 Defeat grants 5 EXP and permits opening the rear cell. Talking to Kasparov
 completes the quest: 10 gold and the Green **Kasparov Family Seal**, +5 vitality,
-ring slot, sell value 12. Both return to town; Kasparov stays without a new service.
+ring slot, sell value 12. Both return to town; Kasparov offers Into the Lion's Den.
 A full bag reserves the ring persistently, claimable from the pack header after
 making room. Rewards cannot be repeated; travel/load cannot resurrect the boss
 or duplicate the rescued prisoner.

@@ -18,3 +18,8 @@ extends Resource
 @export var entrance_label: String = "Enter the watchtower"
 @export var accept_text: String = "I will find Crowbane's key"
 @export_multiline var offer_dialogue: String
+@export var giver_npc: String = "elric"
+@export var offer_objective: String = "Speak with Warden Elric in Briarwatch."
+@export_multiline var progress_dialogue: String
+@export_multiline var handin_dialogue: String
+@export_multiline var completed_dialogue: String

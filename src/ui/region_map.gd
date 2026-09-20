@@ -23,6 +23,8 @@ func bind_region(value: Region) -> void:
 				line.append(Vector2(world.x,world.z))
 			roads.append(line)
 	for prop in region.get_node("NavigationRegion/Scenery").get_children():
+		if prop is DarkThicket:
+			trees.append(Vector2(prop.global_position.x,prop.global_position.z))
 		if prop is WorldProp:
 			var p:=Vector2(prop.global_position.x,prop.global_position.z)
 			if prop.kind=="tree": trees.append(p)
@@ -69,6 +71,11 @@ func _draw() -> void:
 		for i in range(65):
 			outline.append(point(Vector2(sin(i * TAU / 64), cos(i * TAU / 64)) * 13.3))
 		draw_polyline(outline, Color("a7946b"), 3, true)
+	elif region.region_id==&"dark_woods":
+		var outline := PackedVector2Array()
+		for i in range(65):
+			outline.append(point(Vector2(sin(i*TAU/64)*18,-51+cos(i*TAU/64)*18)))
+		draw_polyline(outline,Color("a7946b"),2,true)
 	elif region.interior:
 		draw_rect(Rect2(point(Vector2(-10,-15)),point(Vector2(10,15))-point(Vector2(-10,-15))),Color("a7946b"),false,3)
 		for x in [-5.0,5.0]:

@@ -62,7 +62,7 @@ func status_text() -> String:
 	if rewarded:
 		return definition.completion_text
 	if not accepted:
-		return "Speak with Warden Elric in Briarwatch."
+		return definition.offer_objective
 	if cleared:
 		return definition.return_objective
 	return definition.objective

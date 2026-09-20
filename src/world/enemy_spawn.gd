@@ -26,6 +26,7 @@ func _preview() -> void:
 	visual.style = definition.behavior
 	if definition.commander: visual.style = "commander"
 	if definition.brute: visual.style = "brutus"
+	if not definition.appearance.is_empty(): visual.style = definition.appearance
 	visual.scale = Vector3.ONE * definition.visual_scale
 	visual.tint = definition.tint
 	add_child(visual)

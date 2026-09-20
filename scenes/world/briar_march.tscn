@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 [ext_resource type="Script" path="res://src/world/region_portal.gd" id="portal"]
+[ext_resource type="Script" path="res://src/world/woods_entrance.gd" id="woods"]
 [ext_resource type="Script" path="res://src/world/warwick_ruins.gd" id="warwick"]
 [ext_resource type="Script" path="res://src/world/region.gd" id="region"]
 [ext_resource type="Script" path="res://src/world/terrain.gd" id="terrain"]
@@ -27,6 +28,9 @@ agent_max_slope = 45.0
 
 [node name="BriarMarch" type="Node3D"]
 script = ExtResource("region")
+music_track = &"wilderness"
+local_music_track = &"town"
+local_music_bounds = Rect2(-54, 8, 38, 38)
 map_bounds = Rect2(-128, -112, 256, 224)
 [node name="NavigationRegion" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("navmesh")
@@ -44,7 +48,7 @@ tint = Color(0.48, 0.44, 0.34, 1)
 
 [node name="WestTrail" type="MeshInstance3D" parent="NavigationRegion"]
 script = ExtResource("road")
-points = PackedVector3Array(-13, 0, 0, -40, 0, -12, -62, 0, -27, -72, 0, -52, -88, 0, -80)
+points = PackedVector3Array(-13, 0, 0, -40, 0, -12, -62, 0, -27, -72, 0, -52, -88, 0, -80, -98, 0, -84, -104, 0, -90)
 width = 3
 tint = Color(0.48, 0.44, 0.34, 1)
 
@@ -2516,15 +2520,6 @@ kind = "rock"
 tint = Color(0.33, 0.39, 0.35, 1)
 variation = 6
 
-[node name="rock_273" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-105.57, 0, -103.6)
-rotation = Vector3(0, 0, 0)
-scale = Vector3(3, 3, 3)
-script = ExtResource("prop")
-kind = "rock"
-tint = Color(0.33, 0.39, 0.35, 1)
-variation = 0
-
 [node name="rock_274" type="Node3D" parent="NavigationRegion/Scenery"]
 position = Vector3(-105.57, 0, 103.6)
 rotation = Vector3(0, 1, 0)
@@ -4062,13 +4057,6 @@ script = ExtResource("prop")
 kind = "tree"
 variation = 6
 
-[node name="expansion_tree_49" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-112.5, 0, -87.4)
-scale = Vector3(1.18, 1.18, 1.18)
-script = ExtResource("prop")
-kind = "tree"
-variation = 0
-
 [node name="expansion_tree_50" type="Node3D" parent="NavigationRegion/Scenery"]
 position = Vector3(-97.4, 0, 95.1)
 scale = Vector3(1.4, 1.4, 1.4)
@@ -4804,13 +4792,6 @@ script = ExtResource("prop")
 kind = "tree"
 variation = 0
 
-[node name="expansion_tree_155" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-96.1, 0, -91.3)
-scale = Vector3(1.36, 1.36, 1.36)
-script = ExtResource("prop")
-kind = "tree"
-variation = 1
-
 [node name="expansion_tree_156" type="Node3D" parent="NavigationRegion/Scenery"]
 position = Vector3(-101.2, 0, 20.8)
 scale = Vector3(1.2, 1.2, 1.2)
@@ -4944,13 +4925,6 @@ script = ExtResource("prop")
 kind = "tree"
 variation = 6
 
-[node name="expansion_tree_175" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-100.5, 0, -78.6)
-scale = Vector3(1.01, 1.01, 1.01)
-script = ExtResource("prop")
-kind = "tree"
-variation = 0
-
 [node name="expansion_tree_176" type="Node3D" parent="NavigationRegion/Scenery"]
 position = Vector3(10.8, 0, -98.9)
 scale = Vector3(1.04, 1.04, 1.04)
@@ -4964,13 +4938,6 @@ scale = Vector3(1, 1, 1)
 script = ExtResource("prop")
 kind = "tree"
 variation = 2
-
-[node name="expansion_tree_178" type="Node3D" parent="NavigationRegion/Scenery"]
-position = Vector3(-102.7, 0, -101.4)
-scale = Vector3(1.15, 1.15, 1.15)
-script = ExtResource("prop")
-kind = "tree"
-variation = 3
 
 [node name="expansion_tree_179" type="Node3D" parent="NavigationRegion/Scenery"]
 position = Vector3(-99.7, 0, 16.5)
@@ -5734,3 +5701,17 @@ position = Vector3(5,0.1,5)
 script = ExtResource("spawn")
 spawn_id = &"warwick_guard_3"
 definition = ExtResource("archer")
+
+[node name="DarkWoodsEntrance" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-104,0,-90)
+script = ExtResource("woods")
+[node name="DarkWoods" type="Node3D" parent="Portals"]
+position = Vector3(-104,0,-90)
+script = ExtResource("portal")
+appearance = "woods"
+display_name = "Enter the Dark Woods"
+destination = &"dark_woods"
+required_quest = &"lions_den"
+locked_message = "Lord Kasparov has news of the northwest woods. Speak with him in Briarwatch."
+[node name="dark_woods" type="Marker3D" parent="Arrivals"]
+position = Vector3(-104,0.1,-84)

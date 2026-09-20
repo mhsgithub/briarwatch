@@ -5,13 +5,15 @@ extends Node3D
 @export var flame_height: float = 1.2
 @export var light_energy: float = 2.0
 @export var light_range: float = 7.0
+@export var sound_enabled: bool = true
+@export var embers_enabled: bool = true
 var elapsed: float = 0
 var phase: float = 0
 var flames: Array[MeshInstance3D] = []
 var light: OmniLight3D
 
 func _ready() -> void:
-	if not Engine.is_editor_hint(): AudioLibrary.attach_fire(self)
+	if not Engine.is_editor_hint() and sound_enabled: AudioLibrary.attach_fire(self)
 	phase = fposmod(global_position.x * 0.71 + global_position.z * 0.43, TAU)
 	for i in range(5):
 		var flame := Geometry.cylinder(self,Vector3.ZERO,0.25 if i<3 else 0.15,1.0,Color("f08a35"),0,5)
@@ -23,6 +25,9 @@ func _ready() -> void:
 	light.light_color=Color("ffb85f")
 	light.omni_range=light_range
 	add_child(light)
+	if not embers_enabled:
+		_animate()
+		return
 	var sparks:=CPUParticles3D.new()
 	sparks.amount=20
 	sparks.lifetime=2.1

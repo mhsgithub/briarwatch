@@ -89,6 +89,7 @@ static func item_properties(item: ItemDefinition) -> String:
 		lines.append("+%d melee damage  ·  %.1f s / swing" % [item.damage_bonus,item.swing_seconds])
 	if item.armor_bonus > 0: lines.append("+%d armor" % item.armor_bonus)
 	if item.vitality_bonus > 0: lines.append("+%d vitality" % item.vitality_bonus)
+	if item.strength_bonus > 0: lines.append("+%d strength" % item.strength_bonus)
 	if item.heal_amount > 0: lines.append("Restores %d vitality over %.0f seconds" % [item.heal_amount,item.heal_seconds])
 	if item.two_handed: lines.append("Two-handed · Main & off hand")
 	return "\n".join(lines)

@@ -21,6 +21,7 @@ script = ExtResource("region")
 region_id = &"warwick_cellars"
 display_name = "The Cellars of Warwick"
 interior = true
+music_track = &"cellars"
 interior_ambient = 0.19
 interior_sun = 0.12
 map_bounds = Rect2(-11,-16,22,32)

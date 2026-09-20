@@ -24,12 +24,20 @@ var retreat_destination: Vector3
 var commander: CommanderCombat
 var statuses: StatusEffects
 var brute: BruteCombat
+var den_combat: DenBossCombat
+var dormant: bool = false
+var corpse_consumed: bool = false
 
 func _ready() -> void:
 	add_to_group("enemies")
 	statuses = StatusEffects.new()
 	add_child(statuses)
 	home = global_position
+	var capsule := CapsuleShape3D.new()
+	capsule.radius = definition.collision_radius
+	capsule.height = definition.collision_height
+	$Collision.shape = capsule
+	$Collision.position.y = definition.collision_height * 0.5
 	orbit_sign = 1 if hash(spawn_id) % 2 == 0 else -1
 	health.configure(definition.max_health if health_override < 0 else health_override, definition.armor)
 	attack.definition = definition.attack
@@ -45,13 +53,14 @@ func _ready() -> void:
 	visual.style = definition.behavior
 	if definition.commander: visual.style = "commander"
 	if definition.brute: visual.style = "brutus"
+	if not definition.appearance.is_empty(): visual.style = definition.appearance
 	visual.scale = Vector3.ONE * definition.visual_scale
 	visual.tint = definition.tint
 	visual.rebuild()
 	attack.started.connect(visual.attack_started)
 	health.died.connect(_die)
 	health.damaged.connect(_damaged)
-	health_label = Geometry.label(self, definition.display_name, Vector3(0, 2.3, 0), Color("e6c6ac"), 25)
+	health_label = Geometry.label(self, definition.display_name, Vector3(0, maxf(2.3,definition.collision_height+0.7), 0), Color("e6c6ac"), 25)
 	health_label.visible = false
 	target = get_tree().get_first_node_in_group("player") as Player
 	if definition.commander:
@@ -62,9 +71,13 @@ func _ready() -> void:
 		brute = BruteCombat.new()
 		brute.actor = self
 		add_child(brute)
+	if definition.den_boss:
+		den_combat = DenBossCombat.new()
+		den_combat.actor = self
+		add_child(den_combat)
 
 func _physics_process(delta: float) -> void:
-	if health.current <= 0 or not is_instance_valid(target):
+	if dormant or health.current <= 0 or not is_instance_valid(target):
 		return
 	if statuses.has("stun"):
 		velocity = Vector3.ZERO
@@ -84,6 +97,8 @@ func _physics_process(delta: float) -> void:
 		returning = true
 	health_label.visible = aggro and target.attack_target == self
 	health_label.text = "%s  %d / %d" % [definition.display_name, health.current, health.maximum]
+	if den_combat and den_combat.step(delta):
+		return
 	if brute and brute.step(delta):
 		velocity = Vector3(0,-2,0)
 		move_and_slide()
@@ -164,7 +179,7 @@ func _has_sight(point: Vector3) -> bool:
 	return get_world_3d().direct_space_state.intersect_ray(ray).is_empty()
 
 func receive_damage(packet: DamagePacket) -> void:
-	if returning:
+	if returning or dormant:
 		return
 	aggro = true
 	if statuses.immune(str(packet.damage_type)): return
@@ -186,6 +201,7 @@ func _die() -> void:
 	attack.cancel()
 	if commander: commander.cancel()
 	if brute: brute.cancel()
+	if den_combat: den_combat.cancel()
 	statuses.reset()
 	remove_from_group("enemies")
 	collision_layer = 0
@@ -194,6 +210,17 @@ func _die() -> void:
 	defeated.emit(self)
 	var tween := create_tween()
 	tween.tween_property(visual, "rotation:z", PI * 0.5, 0.25)
+	if definition.edible_corpse:
+		add_to_group("wolf_corpses")
+		visual.moving = false
+		return
 	tween.tween_interval(1.5)
 	tween.tween_property(self, "scale", Vector3.ONE * 0.01, 0.5)
+	tween.tween_callback(queue_free)
+
+func consume_corpse() -> void:
+	corpse_consumed = true
+	remove_from_group("wolf_corpses")
+	var tween := create_tween()
+	tween.tween_property(visual,"scale",Vector3.ONE * 0.05,0.6)
 	tween.tween_callback(queue_free)

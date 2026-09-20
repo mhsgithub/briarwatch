@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=6 format=3]
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="script"]
+[ext_resource type="Script" path="res://src/data/den_boss_definition.gd" id="kit"]
+[ext_resource type="Resource" path="res://content/attacks/garrick.tres" id="attack"]
+[ext_resource type="Resource" path="res://content/loot/garrick.tres" id="loot"]
+
+[sub_resource type="Resource" id="boss"]
+script = ExtResource("kit")
+role = "garrick"
+
+[resource]
+script = ExtResource("script")
+id = &"garrick"
+display_name = "Garrick Vane"
+appearance = "garrick"
+max_health = 160.0
+hit_chance = 1.0
+move_speed = 3.5
+aggro_radius = 16.0
+leash_radius = 43.2
+visual_scale = 1.08
+attack = ExtResource("attack")
+loot_table = ExtResource("loot")
+den_boss = SubResource("boss")
+experience = 5
+is_boss = true
+audio_profile = "bandit"
+tint = Color(0.24,0.22,0.26,1)

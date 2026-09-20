@@ -68,7 +68,21 @@ different starting offsets at different campfires.
 
 Other events: bow release/arrow collision, gold/gear drop and collection, trades,
 equipping, pack opening, map/journal pages and successful potion use. Rejected
-potion use is silent. There is no new music or voiced NPC dialogue.
+potion use is silent. NPC dialogue remains written rather than recorded speech.
+
+## Music
+
+Five complete composed tracks provide distinct area identities. Calm harp and
+recorders play inside Briarwatch; a fuller medieval theme follows wilderness
+exploration; tomb ambience serves the Watchtower and Warwick cellars; orchestral
+unease scores the Dark Woods; and frantic strings, horns and drums begin when
+Garrick's encounter starts. MusicDirector checks authored Region music fields,
+the town bounds and the den encounter state, then crossfades for 1.75 seconds.
+Music continues under paused panels and all tracks loop locally.
+
+The tracks, authors, source pages and license links are recorded in
+`assets/music/LICENSES.md`. Four are CC0. **RPG Ambient 4 (The Dark Woods)** is
+CC BY 3.0 by **HitCtrl**. Source audio is committed; playback needs no network.
 
 Darius's cleave warning reuses the licensed human vocal recordings through a
 dedicated `boss_roar` cue at a lower pitch and clearer gain. A dedicated
@@ -85,3 +99,24 @@ talent_learn (equipment foley), brutus_punch (impact variants), cell_unlock
 and roar use lower-pitched human recordings. Spins/leaps use swings and impacts;
 wards/empowerments use bottle/gear textures. Existing mix/voice/range limits apply.
 No external recordings or licenses were added.
+
+## Dark Woods cues
+
+The encounter reuses the committed CC0 recordings through new content cue IDs:
+bloodfang_howl (low-pitched canine vocal), bloodfang_fury (growl/bite),
+bloodfang_feed (bite), torch_cast (swing), cage_release (metal), and chest_open
+(gear). These are spatial cues with controlled retrigger intervals and range.
+The howl is accompanied by a raised head/arms; fury adds rapid jaw/head motion
+and red light; feeding uses a hunched animation with audible bites. No mechanic
+names or explanatory combat text are shown. Each fire patch has one looping
+source and one ember emitter shared among its flame clusters.
+
+Bloodfang's ordinary attack, hurt and death vocals use the enemy resource's
+0.63 voice-pitch multiplier; his special howls, growls and feeding cues also
+use lowered pitch. Garrick's narrative dialogue is displayed above him with
+a low human vocal cue at encounter start and cage release.
+
+fire_hurt and fire_impact use the original fire_hurt.wav synthesized hiss and
+crackle. The hurt cue plays only when ground fire removes health; an elemental
+ward suppresses it. The brand impact uses a quieter version. This source is
+reproducible through tools/build_fire_sfx.ps1 and has no external license.

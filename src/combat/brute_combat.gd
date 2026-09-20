@@ -6,7 +6,9 @@ var rage_left: float = 0
 var tick_left: float = 0
 var warning: MeshInstance3D
 var rage_light: OmniLight3D
+var rng := RandomNumberGenerator.new()
 func _ready() -> void:
+	rng.randomize()
 	actor.attack.knockback = actor.definition.brute.knockback_speed
 	actor.health.damaged.connect(_damaged)
 func _damaged(_amount: float) -> void:
@@ -42,11 +44,17 @@ func step(delta: float) -> bool:
 		tick_left += kit.rage_interval
 		actor.visual.attack_started(Vector3.FORWARD,0.12)
 		AudioLibrary.play_world(actor,actor.global_position,"brutus_punch",0.8)
-		if actor.target.global_position.distance_to(actor.global_position) <= kit.rage_radius and actor._has_sight(actor.target.global_position):
-			var packet := DamagePacket.new(kit.rage_damage,actor,&"melee",1)
-			packet.knockback = kit.knockback_speed
-			packet.accuracy = 1.0
-			actor.target.receive_damage(packet)
+		var phase := rng.randf()*TAU
+		for i in range(kit.knives_per_volley):
+			var angle := phase+i*TAU/kit.knives_per_volley+rng.randf_range(-0.15,0.15)
+			var knife := KnifeProjectile.new()
+			knife.direction=Vector3(sin(angle),0,cos(angle))
+			knife.speed=kit.knife_speed
+			knife.packet=DamagePacket.new(kit.knife_damage,actor,&"ranged",1)
+			knife.packet.attack_kind=&"ranged"
+			knife.packet.accuracy=1
+			actor.get_parent().add_child(knife)
+			knife.global_position=actor.global_position+Vector3.UP*1.0+knife.direction*0.8
 	if rage_left <= 0:
 		cancel()
 		actor.attack.remaining = 1.0

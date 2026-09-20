@@ -9,9 +9,10 @@ credentials or environment variables.
 
 The game contains the Briar March, a 256 × 224 metre authored region with a
 town, roads, meadows, woodland, raider camps, Warwick ruins and the Old
-Watchtower. The watchtower and Warwick cellars are separate instanced regions.
-The current story has two linked quests: retrieving Darius Crowbane's cellar
-key, then freeing Lord Kasparov from Jailor Brutus.
+Watchtower. The watchtower, Warwick cellars and Dark Woods are separate instances.
+The three linked quests retrieve Darius Crowbane's cellar key, free Lord Kasparov
+from Jailor Brutus, and stop Garrick Vane and Bloodfang in the Dark Woods.
+Into the Lion's Den concludes the first map's story.
 
 The Centurion is the only playable class. The slice includes basic melee combat,
 enemy AI, ranged arrows, damage and status effects, equipment, loot, vendors,

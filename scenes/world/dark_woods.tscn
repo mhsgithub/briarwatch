@@ -1,0 +1,2289 @@
+[gd_scene load_steps=17 format=3]
+[ext_resource type="Script" path="res://src/world/region.gd" id="region"]
+[ext_resource type="Script" path="res://src/world/woods_ground.gd" id="ground"]
+[ext_resource type="Script" path="res://src/world/dark_thicket.gd" id="thicket"]
+[ext_resource type="Script" path="res://src/world/road.gd" id="road"]
+[ext_resource type="Script" path="res://src/world/region_portal.gd" id="portal"]
+[ext_resource type="Script" path="res://src/world/enemy_spawn.gd" id="spawn"]
+[ext_resource type="Script" path="res://src/world/encounter.gd" id="encounter"]
+[ext_resource type="Script" path="res://src/world/treasure_chest.gd" id="chest"]
+[ext_resource type="Script" path="res://src/world/beast_cage.gd" id="cage"]
+[ext_resource type="Script" path="res://src/world/den_encounter.gd" id="den"]
+[ext_resource type="Resource" path="res://content/enemies/wolf.tres" id="wolf"]
+[ext_resource type="Resource" path="res://content/enemies/elite_bandit.tres" id="elite"]
+[ext_resource type="Resource" path="res://content/enemies/garrick.tres" id="garrick"]
+[ext_resource type="Resource" path="res://content/enemies/bloodfang.tres" id="bloodfang"]
+[ext_resource type="Script" path="res://src/world/woods_clearing.gd" id="clearing"]
+[sub_resource type="NavigationMesh" id="navmesh"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 1
+cell_size = 0.3
+cell_height = 0.1
+agent_height = 2.0
+agent_radius = 0.6
+agent_max_climb = 0.4
+agent_max_slope = 35.0
+[node name="DarkWoods" type="Node3D"]
+script = ExtResource("region")
+region_id = &"dark_woods"
+map_enabled = false
+display_name = "The Dark Woods"
+interior = true
+music_track = &"dark_woods"
+encounter_music_track = &"vanes_den"
+interior_ambient = 0.32
+interior_sun = 0.28
+map_bounds = Rect2(-56,-80,112,164)
+[node name="NavigationRegion" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("navmesh")
+[node name="Ground" type="Node3D" parent="NavigationRegion"]
+script = ExtResource("ground")
+[node name="Scenery" type="Node3D" parent="NavigationRegion"]
+[node name="Thicket0" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,-10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 71
+[node name="Thicket1" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-20,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 142
+[node name="Thicket2" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 213
+[node name="Thicket3" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,-10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 284
+[node name="Thicket4" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,0)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 355
+[node name="Thicket5" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-30,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 426
+[node name="Thicket6" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,0)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 497
+[node name="Thicket7" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,0)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 568
+[node name="Thicket8" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 639
+[node name="Thicket9" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,0)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 710
+[node name="Thicket10" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(10,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 781
+[node name="Thicket11" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,0)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 852
+[node name="Thicket12" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,0)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 923
+[node name="Thicket13" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 994
+[node name="Thicket14" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1065
+[node name="Thicket15" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-10,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1136
+[node name="Thicket16" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1207
+[node name="Thicket17" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1278
+[node name="Thicket18" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1349
+[node name="Thicket19" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1420
+[node name="Thicket20" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-40,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1491
+[node name="Thicket21" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,20)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1562
+[node name="Thicket22" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-30,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1633
+[node name="Thicket23" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,20)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1704
+[node name="Thicket24" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,20)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1775
+[node name="Thicket25" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1846
+[node name="Thicket26" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(10,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1917
+[node name="Thicket27" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,20)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 1988
+[node name="Thicket28" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(20,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2059
+[node name="Thicket29" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,20)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2130
+[node name="Thicket30" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-40,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2201
+[node name="Thicket31" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,30)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2272
+[node name="Thicket32" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-20,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2343
+[node name="Thicket33" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,30)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2414
+[node name="Thicket34" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(10,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2485
+[node name="Thicket35" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(20,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2556
+[node name="Thicket36" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,30)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2627
+[node name="Thicket37" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(30,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2698
+[node name="Thicket38" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-30,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2769
+[node name="Thicket39" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,40)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2840
+[node name="Thicket40" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,40)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2911
+[node name="Thicket41" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,40)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 2982
+[node name="Thicket42" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,40)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3053
+[node name="Thicket43" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(40,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3124
+[node name="Thicket44" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3195
+[node name="Thicket45" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3266
+[node name="Thicket46" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3337
+[node name="Thicket47" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3408
+[node name="Thicket48" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3479
+[node name="Thicket49" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3550
+[node name="Thicket50" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3621
+[node name="Thicket51" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(20,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3692
+[node name="Thicket52" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3763
+[node name="Thicket53" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,60)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3834
+[node name="Thicket54" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-30,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3905
+[node name="Thicket55" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,60)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 3976
+[node name="Thicket56" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-20,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4047
+[node name="Thicket57" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,60)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4118
+[node name="Thicket58" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,60)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4189
+[node name="Thicket59" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,60)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4260
+[node name="Thicket60" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,60)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4331
+[node name="Thicket61" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,70)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4402
+[node name="Thicket62" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,70)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4473
+[node name="Thicket63" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,70)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4544
+[node name="Thicket64" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,-10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4615
+[node name="Thicket65" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,-10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4686
+[node name="Thicket66" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-40,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4757
+[node name="Thicket67" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-40,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4828
+[node name="Thicket68" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,0)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4899
+[node name="Thicket69" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,0)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 4970
+[node name="Thicket70" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-30,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5041
+[node name="Thicket71" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-30,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5112
+[node name="Thicket72" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5183
+[node name="Thicket73" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,10)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5254
+[node name="Thicket74" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-20,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5325
+[node name="Thicket75" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-20,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5396
+[node name="Thicket76" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,20)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5467
+[node name="Thicket77" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,20)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5538
+[node name="Thicket78" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-10,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5609
+[node name="Thicket79" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-10,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5680
+[node name="Thicket80" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,30)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5751
+[node name="Thicket81" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,30)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5822
+[node name="Thicket82" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,40)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5893
+[node name="Thicket83" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,40)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 5964
+[node name="Thicket84" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(10,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6035
+[node name="Thicket85" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(10,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6106
+[node name="Thicket86" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6177
+[node name="Thicket87" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,50)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6248
+[node name="Thicket88" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(20,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6319
+[node name="Thicket89" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(20,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6390
+[node name="Thicket90" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,60)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6461
+[node name="Thicket91" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,60)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6532
+[node name="Thicket92" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(30,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6603
+[node name="Thicket93" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(30,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6674
+[node name="Thicket94" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,70)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6745
+[node name="Thicket95" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,70)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6816
+[node name="Thicket96" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(40,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6887
+[node name="Thicket97" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(40,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 10
+width = 3.6
+seed_value = 6958
+[node name="Thicket98" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7029
+[node name="Thicket99" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7100
+[node name="Thicket100" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7171
+[node name="Thicket101" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7242
+[node name="Thicket102" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7313
+[node name="Thicket103" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7384
+[node name="Thicket104" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7455
+[node name="Thicket105" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7526
+[node name="Thicket106" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7597
+[node name="Thicket107" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,-15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7668
+[node name="Thicket108" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7739
+[node name="Thicket109" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7810
+[node name="Thicket110" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7881
+[node name="Thicket111" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 7952
+[node name="Thicket112" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8023
+[node name="Thicket113" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8094
+[node name="Thicket114" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8165
+[node name="Thicket115" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8236
+[node name="Thicket116" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8307
+[node name="Thicket117" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,-5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8378
+[node name="Thicket118" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8449
+[node name="Thicket119" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8520
+[node name="Thicket120" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8591
+[node name="Thicket121" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8662
+[node name="Thicket122" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8733
+[node name="Thicket123" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8804
+[node name="Thicket124" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8875
+[node name="Thicket125" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 8946
+[node name="Thicket126" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9017
+[node name="Thicket127" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,5)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9088
+[node name="Thicket128" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9159
+[node name="Thicket129" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9230
+[node name="Thicket130" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9301
+[node name="Thicket131" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9372
+[node name="Thicket132" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9443
+[node name="Thicket133" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9514
+[node name="Thicket134" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9585
+[node name="Thicket135" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9656
+[node name="Thicket136" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9727
+[node name="Thicket137" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,15)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9798
+[node name="Thicket138" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9869
+[node name="Thicket139" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 9940
+[node name="Thicket140" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10011
+[node name="Thicket141" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10082
+[node name="Thicket142" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10153
+[node name="Thicket143" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10224
+[node name="Thicket144" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10295
+[node name="Thicket145" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10366
+[node name="Thicket146" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10437
+[node name="Thicket147" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,25)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10508
+[node name="Thicket148" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10579
+[node name="Thicket149" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10650
+[node name="Thicket150" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10721
+[node name="Thicket151" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10792
+[node name="Thicket152" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10863
+[node name="Thicket153" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 10934
+[node name="Thicket154" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11005
+[node name="Thicket155" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11076
+[node name="Thicket156" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11147
+[node name="Thicket157" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,35)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11218
+[node name="Thicket158" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11289
+[node name="Thicket159" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11360
+[node name="Thicket160" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11431
+[node name="Thicket161" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11502
+[node name="Thicket162" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11573
+[node name="Thicket163" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11644
+[node name="Thicket164" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11715
+[node name="Thicket165" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11786
+[node name="Thicket166" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11857
+[node name="Thicket167" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,45)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11928
+[node name="Thicket168" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 11999
+[node name="Thicket169" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12070
+[node name="Thicket170" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12141
+[node name="Thicket171" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12212
+[node name="Thicket172" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12283
+[node name="Thicket173" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12354
+[node name="Thicket174" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12425
+[node name="Thicket175" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12496
+[node name="Thicket176" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12567
+[node name="Thicket177" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,55)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12638
+[node name="Thicket178" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12709
+[node name="Thicket179" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12780
+[node name="Thicket180" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12851
+[node name="Thicket181" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12922
+[node name="Thicket182" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 12993
+[node name="Thicket183" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13064
+[node name="Thicket184" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13135
+[node name="Thicket185" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13206
+[node name="Thicket186" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13277
+[node name="Thicket187" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,65)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13348
+[node name="Thicket188" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-45,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13419
+[node name="Thicket189" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-35,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13490
+[node name="Thicket190" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-25,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13561
+[node name="Thicket191" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13632
+[node name="Thicket192" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13703
+[node name="Thicket193" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13774
+[node name="Thicket194" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13845
+[node name="Thicket195" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(25,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13916
+[node name="Thicket196" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(35,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 13987
+[node name="Thicket197" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(45,0,75)
+rotation = Vector3(0,0,0)
+script = ExtResource("thicket")
+length = 3.6
+width = 3.6
+seed_value = 14058
+[node name="Thicket198" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-4,0,-24)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 18
+width = 2
+seed_value = 14129
+[node name="Thicket199" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(4,0,-24)
+rotation = Vector3(0,1.5707963267948966,0)
+script = ExtResource("thicket")
+length = 18
+width = 2
+seed_value = 14200
+[node name="Thicket200" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5.806,0,-31.861)
+rotation = Vector3(0,0.2945243112740431,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14271
+[node name="Thicket201" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(9.428,0,-33.362)
+rotation = Vector3(0,0.4908738521234052,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14342
+[node name="Thicket202" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(12.688,0,-35.54)
+rotation = Vector3(0,0.6872233929727672,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14413
+[node name="Thicket203" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15.46,0,-38.312)
+rotation = Vector3(0,0.8835729338221293,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14484
+[node name="Thicket204" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(17.638,0,-41.572)
+rotation = Vector3(0,1.0799224746714913,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14555
+[node name="Thicket205" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(19.139,0,-45.194)
+rotation = Vector3(0,1.2762720155208536,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14626
+[node name="Thicket206" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(19.904,0,-49.04)
+rotation = Vector3(0,1.4726215563702154,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14697
+[node name="Thicket207" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(19.904,0,-52.96)
+rotation = Vector3(0,1.6689710972195777,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14768
+[node name="Thicket208" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(19.139,0,-56.806)
+rotation = Vector3(0,1.8653206380689396,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14839
+[node name="Thicket209" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(17.638,0,-60.428)
+rotation = Vector3(0,2.061670178918302,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14910
+[node name="Thicket210" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(15.46,0,-63.688)
+rotation = Vector3(0,2.2580197197676637,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 14981
+[node name="Thicket211" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(12.688,0,-66.46)
+rotation = Vector3(0,2.454369260617026,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15052
+[node name="Thicket212" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(9.428,0,-68.638)
+rotation = Vector3(0,2.650718801466388,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15123
+[node name="Thicket213" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(5.806,0,-70.139)
+rotation = Vector3(0,2.84706834231575,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15194
+[node name="Thicket214" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(1.96,0,-70.904)
+rotation = Vector3(0,3.043417883165112,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15265
+[node name="Thicket215" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-1.96,0,-70.904)
+rotation = Vector3(0,3.2397674240144743,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15336
+[node name="Thicket216" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5.806,0,-70.139)
+rotation = Vector3(0,3.436116964863836,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15407
+[node name="Thicket217" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-9.428,0,-68.638)
+rotation = Vector3(0,3.6324665057131984,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15478
+[node name="Thicket218" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12.688,0,-66.46)
+rotation = Vector3(0,3.8288160465625602,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15549
+[node name="Thicket219" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15.46,0,-63.688)
+rotation = Vector3(0,4.025165587411922,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15620
+[node name="Thicket220" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-17.638,0,-60.428)
+rotation = Vector3(0,4.221515128261284,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15691
+[node name="Thicket221" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19.139,0,-56.806)
+rotation = Vector3(0,4.417864669110647,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15762
+[node name="Thicket222" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19.904,0,-52.96)
+rotation = Vector3(0,4.614214209960009,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15833
+[node name="Thicket223" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19.904,0,-49.04)
+rotation = Vector3(0,4.81056375080937,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15904
+[node name="Thicket224" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-19.139,0,-45.194)
+rotation = Vector3(0,5.006913291658733,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 15975
+[node name="Thicket225" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-17.638,0,-41.572)
+rotation = Vector3(0,5.203262832508095,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 16046
+[node name="Thicket226" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-15.46,0,-38.312)
+rotation = Vector3(0,5.399612373357457,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 16117
+[node name="Thicket227" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12.688,0,-35.54)
+rotation = Vector3(0,5.595961914206819,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 16188
+[node name="Thicket228" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-9.428,0,-33.362)
+rotation = Vector3(0,5.792311455056181,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 16259
+[node name="Thicket229" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-5.806,0,-31.861)
+rotation = Vector3(0,5.988660995905543,0)
+script = ExtResource("thicket")
+length = 4.4
+width = 3.6
+seed_value = 16330
+[node name="Trail0" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,60,0,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail1" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,50,0,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail2" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,40,0,0,50)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail3" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,30,0,0,40)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail4" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,30,10,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail5" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,30,20,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail6" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(20,0,30,30,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail7" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,20,30,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail8" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,10,30,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail9" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,0,30,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail10" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,-10,30,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail11" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(20,0,-10,30,0,-10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail12" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(20,0,-10,20,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail13" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(20,0,0,20,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail14" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(20,0,10,20,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail15" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,20,20,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail16" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,10,10,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail17" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,10,10,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail18" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,10,0,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail19" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,0,-10,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail20" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,-10,-10,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail21" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-20,0,-10,-10,0,-10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail22" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,-10,-20,0,-10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail23" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,-10,-30,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail24" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,0,-30,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail25" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,-10,-40,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail26" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,0,-40,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail27" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,10,-40,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail28" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,20,-30,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail29" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,10,-30,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail30" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,10,-20,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail31" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-20,0,10,-20,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail32" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-20,0,20,-20,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail33" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-20,0,30,-10,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail34" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,20,-10,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail35" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,20,0,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail36" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,30,-10,0,40)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail37" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,40,-10,0,50)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail38" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,50,-10,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail39" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,60,-10,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail40" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-20,0,70,-10,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail41" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,70,-20,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail42" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,70,-30,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail43" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,60,-40,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail44" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,50,-40,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail45" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,40,-40,0,50)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail46" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,40,-30,0,40)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail47" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,40,-20,0,40)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail48" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-20,0,40,-20,0,50)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail49" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-20,0,50,-20,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail50" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,60,-20,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail51" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,50,-30,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail52" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-30,0,30,-30,0,40)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail53" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-40,0,30,-30,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail54" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-20,0,0,-20,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail55" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(-10,0,-10,0,0,-10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail56" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,-10,10,0,-10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail57" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,-10,10,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail58" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,0,10,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail59" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,-10,40,0,-10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail60" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(40,0,-10,40,0,0)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail61" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(40,0,0,40,0,10)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail62" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(40,0,10,40,0,20)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail63" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(40,0,20,40,0,30)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail64" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(40,0,30,40,0,40)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail65" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,40,40,0,40)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail66" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,40,30,0,50)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail67" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,50,30,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail68" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,60,30,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail69" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(20,0,70,30,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail70" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(20,0,60,20,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail71" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,60,20,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail72" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,60,10,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail73" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,50,10,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail74" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,40,10,0,50)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail75" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(10,0,40,20,0,40)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail76" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(20,0,40,20,0,50)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail77" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(30,0,70,40,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail78" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(40,0,60,40,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail79" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(40,0,50,40,0,60)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail80" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,79,0,0,70)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Trail81" type="MeshInstance3D" parent="NavigationRegion"]
+script = ExtResource("road")
+points = PackedVector3Array(0,0,-10,0,0,-36)
+width = 4.8
+tint = Color(0.34,0.35,0.29,1)
+[node name="Clearing" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0,0,-51)
+script = ExtResource("clearing")
+[node name="Actors" type="Node3D" parent="."]
+[node name="NPCs" type="Node3D" parent="."]
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+position = Vector3(0,0.1,71)
+[node name="Portals" type="Node3D" parent="."]
+[node name="Exit" type="Node3D" parent="Portals"]
+position = Vector3(0,0,78)
+script = ExtResource("portal")
+appearance = "woods"
+display_name = "Return to the Briar March"
+destination = &"briar_march"
+arrival = &"dark_woods"
+[node name="Cache" type="Node3D" parent="."]
+position = Vector3(-30,0,50)
+script = ExtResource("chest")
+chest_id = "woods_cache"
+gold = 15
+[node name="Cage" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0,0,-61)
+script = ExtResource("cage")
+[node name="DenEncounter" type="Node3D" parent="."]
+position = Vector3(0,0,-51)
+script = ExtResource("den")
+cage_path = NodePath("../NavigationRegion/Scenery/Cage")
+[node name="Encounters" type="Node3D" parent="."]
+[node name="Patrol0" type="Node3D" parent="Encounters"]
+position = Vector3(30,0,10)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_0"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol0"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_0_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol1" type="Node3D" parent="Encounters"]
+position = Vector3(30,0,-10)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_1"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol1"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_1_enemy"
+definition = ExtResource("elite")
+[node name="Patrol2" type="Node3D" parent="Encounters"]
+position = Vector3(20,0,20)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_2"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol2"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_2_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol3" type="Node3D" parent="Encounters"]
+position = Vector3(30,0,40)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_3"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol3"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_3_enemy"
+definition = ExtResource("elite")
+[node name="Patrol4" type="Node3D" parent="Encounters"]
+position = Vector3(-10,0,-10)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_4"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol4"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_4_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol5" type="Node3D" parent="Encounters"]
+position = Vector3(10,0,-10)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_5"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol5"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_5_enemy"
+definition = ExtResource("elite")
+[node name="Patrol6" type="Node3D" parent="Encounters"]
+position = Vector3(20,0,60)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_6"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol6"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_6_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol7" type="Node3D" parent="Encounters"]
+position = Vector3(-30,0,0)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_7"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol7"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_7_enemy"
+definition = ExtResource("elite")
+[node name="Patrol8" type="Node3D" parent="Encounters"]
+position = Vector3(10,0,60)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_8"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol8"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_8_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol9" type="Node3D" parent="Encounters"]
+position = Vector3(10,0,70)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_9"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol9"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_9_enemy"
+definition = ExtResource("elite")
+[node name="Patrol10" type="Node3D" parent="Encounters"]
+position = Vector3(-40,0,20)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_10"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol10"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_10_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol11" type="Node3D" parent="Encounters"]
+position = Vector3(20,0,40)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_11"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol11"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_11_enemy"
+definition = ExtResource("elite")
+[node name="Patrol12" type="Node3D" parent="Encounters"]
+position = Vector3(20,0,50)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_12"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol12"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_12_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol13" type="Node3D" parent="Encounters"]
+position = Vector3(-20,0,30)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_13"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol13"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_13_enemy"
+definition = ExtResource("elite")
+[node name="Patrol14" type="Node3D" parent="Encounters"]
+position = Vector3(-10,0,30)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_14"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol14"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_14_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol15" type="Node3D" parent="Encounters"]
+position = Vector3(-40,0,70)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_15"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol15"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_15_enemy"
+definition = ExtResource("elite")
+[node name="Patrol16" type="Node3D" parent="Encounters"]
+position = Vector3(-40,0,60)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_16"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol16"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_16_enemy"
+definition = ExtResource("wolf")
+[node name="Patrol17" type="Node3D" parent="Encounters"]
+position = Vector3(-40,0,30)
+script = ExtResource("encounter")
+encounter_id = &"woods_patrol_17"
+display_name = "Dark Woods patrol"
+[node name="Enemy" type="Marker3D" parent="Encounters/Patrol17"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_patrol_17_enemy"
+definition = ExtResource("elite")
+[node name="garrick" type="Node3D" parent="Encounters"]
+position = Vector3(0,0,-46)
+script = ExtResource("encounter")
+encounter_id = &"garrick"
+display_name = "garrick"
+[node name="Boss" type="Marker3D" parent="Encounters/garrick"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_garrick"
+definition = ExtResource("garrick")
+[node name="bloodfang" type="Node3D" parent="Encounters"]
+position = Vector3(0,0,-61)
+script = ExtResource("encounter")
+encounter_id = &"bloodfang"
+display_name = "bloodfang"
+[node name="Boss" type="Marker3D" parent="Encounters/bloodfang"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"woods_bloodfang"
+definition = ExtResource("bloodfang")

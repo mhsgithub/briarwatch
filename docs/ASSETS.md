@@ -23,8 +23,10 @@ to run or edit the game with these assets. The imagegen skill informed their
 production use, readability constraints and portable save locations.
 
 World geometry is built by `Geometry`, `WorldProp`, `ActorVisual`, `Terrain` and
-`Road`. Recorded audio is routed through `GameAudio` and `AudioLibrary`; final
-WAVs are included under `assets/audio/`. Body UI uses Godot's bundled
+`Road`. Recorded effects are routed through `GameAudio` and `AudioLibrary`; final
+WAVs are included under `assets/audio/`. Complete composed music and its licensing
+record are included under `assets/music/` and routed through `MusicDirector`.
+Body UI uses Godot's bundled
 fallback font. Headings request the installed system fonts Georgia, Noto Serif,
 then serif, with Godot fallback when unavailable; no system font files are copied
 or redistributed. Exact heading metrics can therefore differ between PCs.
@@ -51,3 +53,22 @@ Leap, Unshackled, Iron Constitution, Elemental Resolve; Fleetfooted, Blood and
 Breath, Kasparov Family Seal, spare star. No original inventory art was replaced.
 The exact prompt is in TALENT_ART_PROMPT.md. Warwick/Brutus/Kasparov and their
 animations use original native geometry and code.
+
+## Dark Woods assets
+
+The twisted tree mesh, batched thickets, forest edge, circular clearing, cage,
+chest, Elite Bandit, Garrick Vane and articulated Bloodfang are original native
+geometry and code. The tree shader provides wind and local visibility fading.
+Bloodfang's jaw, head and arms animate fury/feeding/howls; rage adds red light.
+
+Dark trees have exposed roots without a ground slab. The northwest forest edge
+uses seeded irregular placement, rotation and scale. Vane's thrown brand and
+the player's brief burn effect use the native FireVisual; Brutus's knives use
+small steel-and-wood geometry aligned with their travel direction.
+assets/audio/fire_hurt.wav is an original synthesized PCM hiss/crackle made for
+Briarwatch. tools/build_fire_sfx.ps1 reproduces it without external dependencies.
+
+assets/ui/blackroad_belt.svg and bloodclaw.svg are original vector item icons.
+Bloodclaw also has a dedicated hooked, blood-streaked world/portrait model.
+All sources are committed and editable; no external downloads, generated binary
+dependency or third-party art license is introduced.

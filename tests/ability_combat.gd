@@ -181,7 +181,8 @@ func run() -> void:
 	for i in range(16):
 		p.position=brute.position+Vector3(0,0,1.5)
 		brute.brute.step(0.5)
-	check(p.health.current==520,"Eight-second rage produces exactly sixteen thirty-damage hits")
+	check(p.health.current==1000 and get_nodes_in_group("brutus_knives").size()==160,"Eight-second rage creates 160 projectiles without instant area damage")
+	for knife in get_nodes_in_group("brutus_knives"): knife.queue_free()
 	check(not brute.attack.pending and brute.attack.remaining>0,"Rage ends with recovery rather than an overlapping ordinary punch")
 	# Gate protects the actual route, including Leap.
 	var gate: PrisonGate=session.region.get_node("PrisonGate")

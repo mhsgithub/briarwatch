@@ -3,7 +3,7 @@
 An original single-player PC action RPG set in a weathered frontier of timber
 villages, old stone defenses and dangerous woodland roads. This first milestone
 is a playable foundation: **a 256 × 224 metre region with 76 enemies in nineteen
-encounters, watchtower and Warwick cellar instances, two bosses, two linked quests,
+encounters, watchtower, Warwick cellar and Dark Woods instances, four bosses, three linked quests,
 levels 1–20 and fourteen Centurion talents**, alongside loot, gear and trading.
 
 Read [the game description](docs/GAME.md) for creative direction and scope, and
@@ -34,6 +34,21 @@ An already installed engine can be passed as `-GodotPath` to the launch script.
 For Windows ARM64, use the matching official engine directly in the editor; the
 optional bootstrap script downloads x64 only.
 
+## Build for Windows
+
+Double-click `build.cmd`, or run the following from PowerShell:
+
+```powershell
+.\tools\build.ps1
+```
+
+The first build downloads the official Godot 4.7.2 export templates, verifies
+their pinned SHA-256 checksum, runs the complete test suite, exports an embedded
+Windows x64 executable and smoke-tests that exported game. The distributable
+package is written to `builds/Briarwatch-Windows-x64.zip`. A player only needs to
+extract that ZIP and run `Briarwatch.exe`; Godot and the project sources are not
+required. Build outputs and downloaded templates remain ignored by Git.
+
 ## Play
 
 | Input | Action |
@@ -49,7 +64,8 @@ optional bootstrap script downloads x64 only.
 | N | Centurion talents (unlocks at level 2) |
 | 1–6 | Use the corresponding assigned action slot |
 | I | Character, 20-cell pack and eleven equipment slots |
-| M | Region map |
+| M | Region map (unavailable in the Dark Woods) |
+| U | Testing shortcut: grant 15 talent points |
 | Mouse wheel | Zoom |
 | Esc | Close a panel / pause menu |
 | F5 | Save journey |
@@ -79,7 +95,7 @@ does not stack. See [current balance and item tables](docs/BALANCE.md).
 Slots cover head, shoulders, armor, gloves, belt, boots, amulet, two rings, main
 hand and off hand. Two-handed weapons reserve both hands, with safe pack-space
 checks before swapping. The M map reveals terrain as you explore and keeps only the active quest objective
-pin. There is no player marker or minimap. Exploration persists in your save.
+pin. The Dark Woods has no map. There is no player marker or minimap. Exploration persists in your save.
 Gold balances appear in the inventory and vendor, not on the main HUD.
 Equipment is visible on the Centurion and the portrait.
 Targeted attacks continue closing on retreating enemies; Shift-click remains an
@@ -93,7 +109,10 @@ Loading resumes in town at full health. Inventory, equipment, gold, quest state,
 defeated spawn IDs, action bindings, explored map cells and uncollected drops persist
 separately for each region. The key has its own unsellable quest pouch and takes
 no bag space. Injured living
-enemies reset. Levels, EXP, ranks, cooldowns and the opened rescue cell persist.
+enemies reset. Levels, EXP, ranks, testing talent-point grants, cooldowns and the opened rescue cell persist.
+Death during an unfinished Garrick/Bloodfang fight resets both bosses and locks
+Bloodfang back in his cage. Maze kills, opened chests and floor loot remain;
+bosses and summoned wolves only grant their loot and EXP once per character.
 If the ring cannot fit, make space and use **Claim reward** in the pack header.
 Old saves receive one-time EXP credit for recorded kills; no progress reset is needed.
 No personal saves enter Git. Copy the save and backup separately between PCs if
@@ -148,6 +167,7 @@ interface. See [visual direction and asset prompts](docs/VISUAL_DIRECTION.md) an
 
 N opens two Centurion trees from level 2. Each level awards one point; every
 connected prerequisite must be fully ranked. Learned abilities bind to slots 1–6.
-The authored region provides 88 total EXP, enough to reach level 2 with 58/70 EXP
-when every current enemy and both bosses are defeated. The full level curve and
+The current content provides 130 EXP before Bloodfang's summoned packs, or 134 EXP
+including both pairs of Greyfangs. Clearing the available content reaches level 3;
+overflow is discarded at each level-up. The full level curve and
 talent rules are in [progression and combat rules](docs/PROGRESSION.md).

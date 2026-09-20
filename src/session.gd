@@ -12,6 +12,7 @@ var save_pending: bool = false
 var exploration: Exploration
 var exploration_save_pending: bool = false
 var travel: RegionTravel
+var music: MusicDirector
 
 func _ready() -> void:
 	testing = "--test" in OS.get_cmdline_user_args()
@@ -29,6 +30,7 @@ func _ready() -> void:
 	hud.catalog = catalog
 	hud.bind(player, quest)
 	hud.large_map.bind_region(region)
+	hud.map_button.visible = region.map_enabled
 	player.interaction_requested.connect(_interact)
 	player.feedback.connect(hud.toast)
 	player.died.connect(_on_player_died)
@@ -51,6 +53,9 @@ func _ready() -> void:
 	add_child(travel)
 	travel.restore(saved)
 	travel.changed.connect(_region_changed)
+	music=MusicDirector.new()
+	music.session=self
+	add_child(music)
 	if saved.is_empty():
 		player.inventory.gold = 0
 		for id in ["old_sword", "oak_shield", "coat"]:
@@ -70,6 +75,7 @@ func _ready() -> void:
 	# Loading is a safe-town recovery, including vitality supplied by saved gear.
 	player.health.revive()
 	var region_state := travel.state("briar_march")
+	region.world_state = travel.world_state("briar_march")
 	exploration.restore(region_state.get("exploration", {}))
 	exploration.reveal(Vector2(player.global_position.x, player.global_position.z))
 	exploration.changed.connect(_exploration_changed)
@@ -84,11 +90,13 @@ func _ready() -> void:
 func _interact(target: Node) -> void:
 	if target is RegionPortal:
 		if player.dead or player.combat_state.knockdown_left > 0: return
-		if not target.required_quest.is_empty() and (quest.definition.id!=target.required_quest or not quest.accepted):
-			hud.toast("Speak with Warden Elric about Kasparov's rescue first.")
+		if not target.required_quest.is_empty() and not quest.is_completed(str(target.required_quest)) and (quest.definition.id!=target.required_quest or not quest.accepted):
+			hud.toast(target.locked_message)
 			return
 		AudioLibrary.play_world(player,player.global_position,"cellar_door")
 		call_deferred("_travel_to", target.destination, target.arrival)
+	elif target is TreasureChest:
+		if target.open(): _schedule_save()
 	elif target is PrisonGate:
 		if not quest.accepted or quest.definition.id!=&"warwick_rescue" or not quest.cleared:
 			hud.toast("Brutus guards the lock. Defeat him first.")
@@ -125,13 +133,13 @@ func _service(action: String, index: int) -> void:
 			player.health.heal(player.health.maximum)
 			hud.toast("Your wounds are healed.")
 		"accept":
-			quest.accept()
+			if str(npc.definition.id) == quest.offered().giver_npc: quest.accept()
 		"claim":
 			if quest.definition.handin_npc==str(npc.definition.id) and quest.claim(player.inventory):
-				hud.toast("Elric has the key. Reward received.")
+				hud.toast(quest.definition.completion_text)
 				AudioLibrary.play_ui(self,"gold_pickup")
 			else:
-				hud.toast("Retrieve Crowbane's cellar key first.")
+				hud.toast(quest.status_text())
 		"rescue":
 			if npc.definition.id==&"kasparov" and quest.definition.id==&"warwick_rescue" and quest.flags.get("kasparov_cell_open",false) and quest.claim(player.inventory):
 				hud.close_panel()
@@ -141,6 +149,11 @@ func _service(action: String, index: int) -> void:
 	_schedule_save()
 
 func _on_player_died() -> void:
+	var den := region.get_node_or_null("DenEncounter") as DenEncounter
+	if den and den.reset_after_player_death():
+		if quest.definition.target_encounter==&"bloodfang" and not quest.rewarded:
+			quest.cleared=false
+			quest.changed.emit()
 	player.inventory.gold -= int(ceil(player.inventory.gold * 0.1))
 	player.inventory.changed.emit()
 	hud.show_death()
@@ -164,6 +177,7 @@ func _region_changed(value: Region) -> void:
 	region.encounter_cleared.connect(quest.encounter_cleared)
 	region.enemy_defeated.connect(_enemy_defeated)
 	hud.large_map.bind_region(region)
+	hud.map_button.visible = region.map_enabled
 	$Camera.initialized = false
 	$Sun.light_energy = region.interior_sun if region.interior else 0.8
 	$Environment.environment.ambient_light_energy = region.interior_ambient if region.interior else 0.48

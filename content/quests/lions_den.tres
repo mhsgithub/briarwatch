@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="QuestDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://src/data/quest_definition.gd" id="script"]
+[resource]
+script = ExtResource("script")
+id = &"lions_den"
+title = "Into the Lion's Den"
+giver_npc = "kasparov"
+offer_objective = "Speak with Lord Kasparov in Briarwatch."
+offer_dialogue = "You brought me out of Warwick when hope had all but left me. Now our scouts bring darker news. The bandit leaders have gathered in the woods northwest of Briarwatch. Garrick Vane commands them, and the men who watched their fires heard something no man should hear. Crowbane and Brutus were keeping me from my banners while Vane prepared this. I fear he means to loose an evil upon Briar. Find what they are hiding, and stop them before these roads run red."
+description = "Freed from Warwick, Lord Kasparov has learned that the bandit leaders are gathering in the dark woods northwest of Briarwatch. He fears his captivity bought them time to prepare something far worse than raids.\n\nFollow the old northwest track into the Dark Woods. Search the tangled paths, uncover Garrick Vane's purpose and stop the evil he intends to release upon Briar. Return to Kasparov when the threat is ended."
+target_encounter = &"bloodfang"
+target_region = &"dark_woods"
+objective = "Find Garrick Vane in the Dark Woods to the northwest. Stop the threat to Briar."
+return_objective = "Bloodfang is dead. Return to Lord Kasparov in Briarwatch."
+handin_region = &"briar_march"
+handin_npc = "kasparov"
+entrance_label = "The Dark Woods"
+accept_text = "I will find Vane and stop him"
+progress_dialogue = "The scouts dare go no farther. Find Vane in the northwest woods. Whatever he has brought there must never reach Briarwatch."
+handin_dialogue = "A werewolf, held in iron? So that was the terror Vane meant to turn upon us. Crowbane kept me from my people, Brutus sealed my prison, and Vane would have broken those still willing to stand. You have ended it. Briarwatch is free of their shadow. I will gather my armies and drive the remaining bandits from these lands. Take this, with the thanks of every soul behind our walls."
+completed_dialogue = "The messengers have ridden. My banners will gather, and the remaining gangs will answer for what they have done. Briarwatch can breathe again because of you."
+completion_text = "Briarwatch is free. Kasparov gathers his armies against the remaining bandits."
+reward_gold = 50

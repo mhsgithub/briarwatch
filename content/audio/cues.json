@@ -1,17 +1,56 @@
 {
-  "level_up": {"files":["metal_1"],"volume_db":-15,"cooldown":0.4},
-  "talent_learn": {"files":["equip"],"volume_db":-17,"cooldown":0.15},
-  "brutus_punch": {"files":["impact_1","impact_2","impact_3"],"volume_db":-13,"cooldown":0.15},
-  "cell_unlock": {"files":["metal_2","metal_3"],"volume_db":-13,"cooldown":0.4},
-  "cellar_door": {"files":["gear_drop"],"volume_db":-15,"cooldown":0.4},
+  "level_up": {
+    "files": [
+      "metal_1"
+    ],
+    "volume_db": -15,
+    "cooldown": 0.4
+  },
+  "talent_learn": {
+    "files": [
+      "equip"
+    ],
+    "volume_db": -17,
+    "cooldown": 0.15
+  },
+  "brutus_punch": {
+    "files": [
+      "impact_1",
+      "impact_2",
+      "impact_3"
+    ],
+    "volume_db": -13,
+    "cooldown": 0.15
+  },
+  "cell_unlock": {
+    "files": [
+      "metal_2",
+      "metal_3"
+    ],
+    "volume_db": -13,
+    "cooldown": 0.4
+  },
+  "cellar_door": {
+    "files": [
+      "gear_drop"
+    ],
+    "volume_db": -15,
+    "cooldown": 0.4
+  },
   "boss_roar": {
-    "files": ["human_death_1", "human_death_2"],
+    "files": [
+      "human_death_1",
+      "human_death_2"
+    ],
     "volume_db": -11,
     "cooldown": 0.8,
     "range": 26
   },
   "heavy_cleave": {
-    "files": ["swing_1", "swing_2"],
+    "files": [
+      "swing_1",
+      "swing_2"
+    ],
     "volume_db": -13,
     "cooldown": 0.3
   },
@@ -174,5 +213,68 @@
       "fire_loop"
     ],
     "volume_db": -25
+  },
+  "bloodfang_howl": {
+    "range": 35,
+    "cooldown": 0.7,
+    "volume_db": -10,
+    "files": [
+      "wolf_growl"
+    ]
+  },
+  "bloodfang_fury": {
+    "range": 28,
+    "cooldown": 0.7,
+    "volume_db": -11,
+    "files": [
+      "wolf_growl",
+      "wolf_bite"
+    ]
+  },
+  "bloodfang_feed": {
+    "cooldown": 0.5,
+    "volume_db": -14,
+    "files": [
+      "wolf_bite"
+    ]
+  },
+  "torch_cast": {
+    "cooldown": 0.6,
+    "volume_db": -12,
+    "files": [
+      "swing_2"
+    ]
+  },
+  "cage_release": {
+    "range": 30,
+    "cooldown": 0.5,
+    "volume_db": -10,
+    "files": [
+      "metal_2",
+      "metal_3"
+    ]
+  },
+  "chest_open": {
+    "cooldown": 0.5,
+    "volume_db": -15,
+    "files": [
+      "gear_drop"
+    ]
+  },
+  "fire_hurt": {
+    "volume_db": -15,
+    "files": [
+      "fire_hurt"
+    ],
+    "range": 12,
+    "cooldown": 0.35
+  },
+  "fire_impact": {
+    "volume_db": -19,
+    "files": [
+      "fire_hurt"
+    ],
+    "range": 18,
+    "cooldown": 0.3
   }
 }

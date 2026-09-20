@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttackDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://src/data/attack_definition.gd" id="script"]
+[resource]
+script = ExtResource("script")
+id = &"garrick"
+damage = 20.0
+windup = 0.45
+cooldown = 1.35
+reach = 2.4
+arc_degrees = 105.0
+bleed_damage = 2.0
+bleed_ticks = 5
+bleed_chance = 0.3

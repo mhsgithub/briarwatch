@@ -170,18 +170,19 @@ func run() -> void:
 	p.health.revive()
 	boss.aggro=true
 	var old_hp:=p.health.current
-	boss.brute.step(0.49)
-	check(p.health.current==old_hp,"Rage waits for the half-second punch interval")
+	boss.brute.step(0.24)
+	check(p.health.current==old_hp and get_nodes_in_group("brutus_knives").is_empty(),"Rage waits for its first knife volley")
 	boss.brute.step(0.01)
-	check(p.health.current==old_hp-30 and p.abilities.push_velocity.length()>0,"Rage hits for thirty and knocks back")
+	check(p.health.current==old_hp and get_nodes_in_group("brutus_knives").size()==5,"Rage launches five traveling knives instead of instant area damage")
 	p.position=Vector3(0,0.1,4)
 	old_hp=p.health.current
 	boss.brute.step(0.5)
-	check(p.health.current==old_hp,"Leaving rage radius avoids damage")
-	boss.brute.step(7)
+	check(p.health.current==old_hp,"Knife damage requires actual projectile contact")
+	boss.brute.step(7.25)
 	check(boss.brute.rage_left==0 and not boss.visual.raging,"Rage ends after eight seconds")
 	boss.receive_damage(DamagePacket.new(1,p))
 	check(boss.brute.rage_left==0,"Rage does not retrigger below half health")
+	for knife in get_nodes_in_group("brutus_knives"): knife.queue_free()
 	# Real player click movement in the actual instance.
 	p.position=Vector3(0,0.1,11)
 	p.abilities.push_velocity=Vector3.ZERO

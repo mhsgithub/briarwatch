@@ -6,9 +6,14 @@ extends Node3D
 @export var destination: StringName
 @export var arrival: StringName
 @export var required_quest: StringName
+@export var locked_message: String = "Speak with Warden Elric about Kasparov's rescue first."
+@export_enum("door", "woods") var appearance: String = "door"
 
 func _ready() -> void:
 	if not Engine.is_editor_hint(): add_to_group("interactables")
+	if appearance == "woods":
+		Geometry.label(self, display_name + "  [E]", Vector3(0, 2.3, 0), Color("d6bc85"), 23)
+		return
 	for side in [-1, 1]:
 		Geometry.box(self, Vector3(side * 1.12, 1.45, 0.06), Vector3(0.32, 2.9, 0.4), Color("64716a"))
 	Geometry.box(self, Vector3(0, 2.92, 0.06), Vector3(2.55, 0.35, 0.45), Color("748076"))

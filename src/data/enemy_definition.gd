@@ -10,7 +10,7 @@ extends Resource
 @export_range(0.0, 1.0) var hit_chance: float = 1.0
 @export_enum("bandit", "wolf") var audio_profile: String = "bandit"
 @export var aggro_radius: float = 11.0
-@export var leash_radius: float = 19.0
+@export var leash_radius: float = 23.0
 @export var preferred_range: float = 7.0
 @export var retreat_seconds: float = 0.65
 @export var stand_seconds: float = 2.4
@@ -22,3 +22,9 @@ extends Resource
 @export var experience: int = 0
 @export var is_boss: bool = false
 @export var brute: BruteDefinition
+@export var appearance: String = ""
+@export var den_boss: DenBossDefinition
+@export var edible_corpse: bool = false
+@export var collision_radius: float = 0.4
+@export var collision_height: float = 1.7
+@export var voice_pitch: float = 1.0

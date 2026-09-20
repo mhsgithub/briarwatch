@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ContentCatalog" load_steps=25 format=3]
+[gd_resource type="Resource" script_class="ContentCatalog" load_steps=29 format=3]
 [ext_resource type="Script" path="res://src/data/content_catalog.gd" id="1"]
 [ext_resource type="Script" path="res://src/data/item_definition.gd" id="item_script"]
 [ext_resource type="Resource" path="res://content/quests/open_road.tres" id="quest"]
@@ -24,7 +24,9 @@
 [ext_resource type="Resource" path="res://content/items/cellar_key.tres" id="key"]
 [ext_resource type="Resource" path="res://content/items/outlaw_mantle.tres" id="mantle"]
 [ext_resource type="Resource" path="res://content/items/kasparov_seal.tres" id="seal"]
+[ext_resource type="Resource" path="res://content/items/blackroad_belt.tres" id="blackroad"]
+[ext_resource type="Resource" path="res://content/items/bloodclaw.tres" id="bloodclaw"]
 [resource]
 script = ExtResource("1")
-items = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7"), ExtResource("i8"), ExtResource("i9"), ExtResource("i10"), ExtResource("i11"), ExtResource("i12"), ExtResource("i13"), ExtResource("i14"), ExtResource("i15"), ExtResource("i16"), ExtResource("i17"), ExtResource("i18"), ExtResource("key"), ExtResource("mantle"), ExtResource("seal")])
+items = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7"), ExtResource("i8"), ExtResource("i9"), ExtResource("i10"), ExtResource("i11"), ExtResource("i12"), ExtResource("i13"), ExtResource("i14"), ExtResource("i15"), ExtResource("i16"), ExtResource("i17"), ExtResource("i18"), ExtResource("key"), ExtResource("mantle"), ExtResource("seal"), ExtResource("blackroad"), ExtResource("bloodclaw")])
 quest = ExtResource("quest")

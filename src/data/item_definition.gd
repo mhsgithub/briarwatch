@@ -11,10 +11,11 @@ extends Resource
 @export var sell_price: int = 2
 @export_enum("white", "green", "blue", "legendary") var tier: String = "white"
 @export var vitality_bonus: float = 0.0
+@export var strength_bonus: float = 0.0
 @export_range(0.1, 5) var swing_seconds: float = 0.8
 @export var two_handed: bool = false
 ## Shared presentation vocabulary, not gameplay behavior.
-@export_enum("plain", "quilted", "mail", "leather", "reinforced", "hood", "helmet", "sword", "pitchfork", "oak", "iron", "amulet") var appearance: String = "plain"
+@export_enum("plain", "quilted", "mail", "leather", "reinforced", "hood", "helmet", "sword", "bloodclaw", "pitchfork", "oak", "iron", "amulet") var appearance: String = "plain"
 @export_range(0.1, 30) var heal_seconds: float = 5.0
 @export var damage_bonus: float = 0.0
 @export var armor_bonus: float = 0.0

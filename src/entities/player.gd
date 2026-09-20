@@ -27,9 +27,12 @@ var combat_state: PlayerCombatState
 var progression: CharacterProgression
 var statuses: StatusEffects
 var abilities: PlayerAbilities
+var burn_visual: PlayerBurn
 
 func _ready() -> void:
 	add_to_group("player")
+	burn_visual=PlayerBurn.new()
+	add_child(burn_visual)
 	progression = CharacterProgression.new()
 	add_child(progression)
 	statuses = StatusEffects.new()
@@ -60,7 +63,7 @@ func _ready() -> void:
 	add_child(combat_state)
 
 func _equipment_changed() -> void:
-	attack.damage_bonus = inventory.bonus("damage_bonus")
+	attack.damage_bonus = inventory.bonus("damage_bonus") + strength()
 	health.armor = inventory.bonus("armor_bonus")
 	health.set_maximum(base_health + inventory.bonus("vitality_bonus") * (1.0 + progression.rank("iron_constitution") * 0.05))
 	attack.cooldown_override = swing_seconds()
@@ -210,8 +213,17 @@ func receive_damage(packet: DamagePacket) -> void:
 func _damaged(_amount: float) -> void:
 	visual.hit()
 
+func receive_ground_fire(packet: DamagePacket) -> void:
+	if dead: return
+	burn_visual.ignite()
+	var before := health.current
+	receive_damage(packet)
+	if health.current<before:
+		AudioLibrary.play_world(self,global_position,"fire_hurt")
+
 func _die() -> void:
 	dead = true
+	burn_visual.clear()
 	combat_state.reset()
 	abilities.reset()
 	statuses.reset()
@@ -222,6 +234,7 @@ func _die() -> void:
 	died.emit()
 
 func respawn(point: Vector3) -> void:
+	burn_visual.clear()
 	global_position = point
 	dead = false
 	combat_state.reset()
@@ -246,7 +259,10 @@ func interact_nearest() -> void:
 		feedback.emit("Move closer to a person or a dropped item.")
 
 func melee_damage() -> float:
-	return basic_attack.damage + inventory.bonus("damage_bonus")
+	return basic_attack.damage + inventory.bonus("damage_bonus") + strength()
+
+func strength() -> float:
+	return inventory.bonus("strength_bonus")
 
 func swing_seconds() -> float:
 	var weapon_item: ItemDefinition = inventory.equipment.weapon

@@ -10,11 +10,13 @@ Do not copy its characters, maps, names or assets.
 ## Character and combat
 
 The only playable class is **Centurion**. Naked base stats are **0 melee damage,
-0 armor, 100 vitality**. A new character starts with Watch sword, Padded Coat,
+0 Strength, 0 armor, 100 vitality**. A new character starts with Watch sword, Padded Coat,
 Oak shield, one Tonic and zero gold: 4 melee damage, 3 armor, 100 vitality.
 Existing saves retain their character state while using the current item definitions.
 
-Melee damage is exactly base plus equipped bonuses before the target's armor.
+Melee damage is base plus equipped damage bonuses plus Strength, before the
+target's armor. Each point of Strength adds one melee damage, including the
+weapon-scaled Centurion abilities. Base Strength is zero.
 One armor subtracts one incoming melee/ranged physical damage, with a floor of
 zero for ordinary/player damage. Enemy attacks carry an explicit minimum of one
 damage after armor on a successful hit; a miss deals no damage. Block is a learned passive; Elemental Resolve gives temporary elemental immunity. Weapon attack speed is **seconds between swing starts**,
@@ -57,7 +59,8 @@ abilities while the current Centurion talents use the same action belt.
 ## Items
 
 Values below are gold. Sell prices are explicit and independent of buy prices.
-All items are White except Guardian’s Amulet (Green). Names use White → Green →
+Green items are Guardian’s Amulet, Kasparov Family Seal, Blackroad Belt and
+Bloodclaw; the remaining populated equipment is White. Names use White → Green →
 Blue → Legendary (orange) colors in item details, tooltips, shops and world drops.
 Blue/Legendary are supported tiers, not additional items in the present catalog.
 
@@ -93,7 +96,7 @@ the retired `forged_sword` ID migrate it to Watch sword so the item is not lost.
 
 ## Enemy loot
 
-Only the three ordinary enemy resources explicitly reference
+The Bandit, Archer, Greyfang and Elite Bandit resources explicitly reference
 `content/loot/march_enemies.tres`. A new EnemyDefinition defaults to no loot table.
 
 Gold weights: **0: 55%, 1: 27%, 2: 12%, 3: 6%**. Expected gold per ordinary
@@ -183,15 +186,74 @@ effects pause with menus and clear on death. Defeating Darius drops his key and
 mantle exactly once. Retreating through the door preserves drops/defeats but living
 enemies reset health on re-entry, matching load behavior.
 
-## Progression / Warwick addition
+## Progression and Warwick
 
 PROGRESSION.md records all level thresholds, fourteen talents and interaction
 rules. Ordinary
-current enemies give 1 EXP; Darius and Brutus give 5. Four new outdoor guards use
+enemies give 1 EXP; Elite Bandits give 2; Darius, Brutus and Garrick give 5;
+Bloodfang gives 10. Four outdoor guards use
 the existing raider/bowman definitions.
 
 Brutus: 120 HP, 15 damage, 0.95 seconds per punch, 2.35 m/s. At half health he
-performs sixteen 30-damage pulses over eight seconds within 2.8 metres, stationary.
-Successful punches/pulses knock back. He does not inherit ordinary enemy loot.
+plants his feet for eight seconds, throwing five knives every 0.25 seconds in
+randomly rotated directions (160 knives in a full rage). Knives travel at 15.5 m/s
+and deal 20 physical ranged damage on collision, reduced by armor. Their swept
+0.055-metre tips hit the player or stop at scenery; nearby misses do no damage.
+The 2.8-metre ring, fist animation, light and sounds accompany the rage.
+Only ordinary punches knock back. He does not inherit ordinary enemy loot.
 Rescue rewards 10 gold and a Green ring, Kasparov Family Seal (+5 vitality,
 sell value 12, nominal value 30, not stocked).
+
+## Dark Woods and the final March quest
+
+The Dark Woods is 112 × 164 metres. Its authored nine-by-nine maze uses 10-metre
+cells, roughly 6-metre walkable corridors, 230 tree-wall segments and a circular
+boss clearing about 37 metres across. The direct navigable route through the
+maze is about 206 metres; deeper branches reward exploration. Nine Greyfangs and
+nine Elite Bandits start outside the boss room. The once-only side chest drops
+15 gold onto the floor for collection. The Dark Woods has no map.
+Kasparov's Into the Lion's Den pays 50 gold after Bloodfang dies.
+
+| Enemy | Health | Base melee | Accuracy | EXP |
+|---|---:|---:|---:|---:|
+| Elite Bandit | 80 | 15 | 80% | 2 |
+| Garrick Vane | 160 | 20 | 100% | 5 |
+| Bloodfang | 200 | 23 | 100% | 10 |
+
+Elite Bandits use the ordinary March loot table. Garrick guarantees one Green
+Blackroad Belt: +2 armor, +10 vitality, sell 12, valuation 100. Bloodfang guarantees
+one Green Bloodclaw: one-handed, 10 damage, 0.8 s/swing, +1 Strength, sell 16,
+valuation 180. Neither item is stocked by Mara.
+
+Garrick throws a burning brand through a 0.45-second arc after a visible
+0.85-second windup, igniting a 2.7-metre-radius fire on landing, with
+5–10 seconds between casts. Each patch lasts 40 gameplay seconds and deals 20
+armor-ignoring fire damage every 0.5 seconds. The bosses are unaffected. Patches
+remain after Garrick dies; remaining duration and tick phase survive region
+snapshots. Inactive-region timers pause. Elemental Resolve's fire ward applies.
+
+His basic sword has a 30% bleed chance on an accepted hit: 2 damage per second
+for five seconds. Bleeds do not stack; a weaker bleed cannot replace a stronger
+active bleed. At 25% health he abandons his attack and sprints to the cage at
+7.5 m/s. A lethal threshold-crossing blow still releases the beast, preventing
+a blocked quest.
+
+Bloodfang's 66% and 33% thresholds each trigger a howl and two Greyfangs. These
+ordinary wolves grant 1 EXP and normal loot; stable summon IDs prevent repeated
+rewards on revisit. Fury has a 1.2-second windup, four seconds of accelerated
+chasing and biting, and a 20-second cooldown between activations. Being within
+2.7 metres with clear line of sight applies a single 12 × 5-second bleed per fury.
+
+A Greyfang corpse within 1.8 metres makes Bloodfang stop and feed:
+15 healing each second for three seconds, then the corpse is consumed. He does
+not seek corpses independently. Lunge has a 0.65-second crouch, locked heading,
+a collision-constrained 0.45-second rush at 15 m/s, one 23-base-melee hit and
+4 m/s initial knockback. It is selected at 3.2–9 metres with line of sight and
+a 7–11-second cooldown. Bosses remain stun-immune.
+
+Leash distances are 24 metres for ordinary March enemies, 23 for Elite Bandits,
+33.6 for Darius, 42 for Brutus and 43.2 for Garrick and Bloodfang.
+Death during an unfinished den encounter resets both bosses, the cage and
+encounter hazards; reward credits prevent duplicate EXP and loot on retries.
+The U testing shortcut adds 15 spendable talent points, including at level 1;
+normal rank caps and prerequisites still apply, and grants persist in saves.

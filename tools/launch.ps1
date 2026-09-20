@@ -43,11 +43,23 @@ try {
             if ($LASTEXITCODE -eq 0) {
                 & $GodotPath --headless --path . --script res://tests/talent_ui.gd -- --test
             }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/dark_woods.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/encounter_feedback.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/music.gd -- --test
+            }
         }
         'capture' {
             & $GodotPath --path . --script res://tests/visual_capture.gd -- --test
             if ($LASTEXITCODE -eq 0) {
                 & $GodotPath --path . --script res://tests/update_capture.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --path . --script res://tests/den_capture.gd -- --test
             }
         }
     }

@@ -3,6 +3,7 @@ render_mode diffuse_burley, specular_disabled, cull_disabled;
 uniform vec4 base_color : source_color = vec4(0.17, 0.24, 0.19, 1.0);
 uniform bool road = false;
 uniform bool paving = false;
+uniform vec3 terrain_tint : source_color = vec3(1.0);
 varying vec3 world_position;
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
 float noise(vec2 p) {
@@ -29,5 +30,5 @@ void fragment() {
      earth*=0.90+noise(p*12.0)*0.14;
    }
  } else { earth*=0.85+noise(p*13.0)*0.26; }
- ALBEDO=earth; ROUGHNESS=1.0;
+ ALBEDO=earth*terrain_tint; ROUGHNESS=1.0;
 }

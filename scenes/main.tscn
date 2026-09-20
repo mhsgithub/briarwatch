@@ -22,7 +22,8 @@ catalog = ExtResource("catalog")
 region_scenes = {
 "briar_march": "res://scenes/world/briar_march.tscn",
 "watchtower": "res://scenes/world/watchtower.tscn",
-"warwick_cellars": "res://scenes/world/warwick_cellars.tscn"
+"warwick_cellars": "res://scenes/world/warwick_cellars.tscn",
+"dark_woods": "res://scenes/world/dark_woods.tscn"
 }
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource("environment")

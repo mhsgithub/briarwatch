@@ -19,7 +19,7 @@ func engage() -> void:
 	resting_time = 0.0
 
 func apply(packet: DamagePacket) -> void:
-	if packet.bleed_ticks > 0:
+	if packet.bleed_ticks > 0 and (bleed_left == 0 or packet.bleed_damage >= bleed_damage):
 		bleed_left = packet.bleed_ticks
 		bleed_damage = packet.bleed_damage
 		bleed_tick = 1.0

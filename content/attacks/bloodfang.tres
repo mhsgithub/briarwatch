@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AttackDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://src/data/attack_definition.gd" id="script"]
+[resource]
+script = ExtResource("script")
+id = &"bloodfang"
+damage = 23.0
+windup = 0.4
+cooldown = 1.3
+reach = 2.8
+arc_degrees = 105.0

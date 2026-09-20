@@ -59,8 +59,8 @@ stable ID. Runtime HP, inventory, gold and AI state never live on shared Resourc
 Combat: input/AI requests an attack → windup locks direction → shared attack
 component resolves arc and line of sight, or creates a projectile → `DamagePacket`
 enters target health → damaged/died signals update feedback and lifecycle.
-The unequipped Centurion has 0 melee damage, 0 armor and 100 vitality. Gear supplies
-additive damage/armor/max vitality and the weapon's seconds-per-swing cooldown
+The unequipped Centurion has 0 melee damage, 0 Strength, 0 armor and 100 vitality. Gear supplies
+additive damage/Strength/armor/max vitality and the weapon's seconds-per-swing cooldown
 override. Shared attack definitions stay immutable. One damage adds one to a hit;
 one armor subtracts one from physical/melee/ranged hits. Ordinary packets clamp
 at zero; all Enemy attack packets explicitly carry a one-damage minimum. Other
@@ -82,11 +82,11 @@ time. Enemy floating numbers are instantiated as `FloatingText` before entering
 the tree, so their process callback runs, rises/fades and frees them after 1.3 s.
 
 Reward: enemy death → Region records spawn ID, rolls the enemy's optional LootTable and drops gold/items and
-decrements the encounter → Session schedules a deferred snapshot. For the current
-quest, actual key collection (not camp clearance or boss death) updates QuestLog.
+decrements the encounter → Session schedules a deferred snapshot. For The Crow's Captive, actual key collection (not camp clearance or boss death)
+updates QuestLog. The later quests depend on their configured boss encounters.
 Collection changes inventory; claimed drops are excluded from
-the snapshot. The current quest awards only 50 gold and works with a full bag. Optional item
-rewards remain supported by QuestDefinition/QuestLog for later quests.
+the snapshot. The Crow's Captive and Into the Lion's Den each award 50 gold. A Lord Beneath
+the Stones awards 10 gold and a family seal, reserving the item if the pack is full.
 
 Interaction: click-to-approach or E finds a nearby target → Player emits a request
 → Session opens the defined service or collects loot → HUD emits a service action
@@ -199,7 +199,7 @@ grants three seconds of damage immunity. Iona heals without resetting the world.
 - Better art: replace ActorVisual and prop geometry with meshes/AnimationTrees;
   keep damage and AI in their existing owners.
 
-Current limits: single player, three regions, two linked quests, fixed-cell 20-slot inventory,
+Current limits: single player, four regions, three linked quests, fixed-cell 20-slot inventory,
 eleven gear slots, no animation skeleton, no avoidance solver, no streamed world,
 no random item affixes and no account/cloud service. Navigation/AI have been tested
 at this slice's population, not at hundreds of simultaneous combatants.
@@ -262,9 +262,11 @@ store for elemental wards, DOT, stun/root/slow; legacy Darius bleed, knockdown a
 rest recovery remain in PlayerCombatState, which respects control immunity.
 
 BruteCombat is an optional enemy kit alongside CommanderCombat. BruteDefinition
-owns threshold, duration, interval, radius, damage and knockback. Rage cancels
-normal windup, plants movement, applies sixteen obstruction-checked pulses and
-recovers. Presentation owns fists, silhouette and rage lighting.
+owns threshold, duration, volley interval/count, knife speed/damage, visual radius
+and punch knockback. Rage cancels normal windup, plants movement, emits randomly
+rotated knife volleys and recovers. KnifeProjectile sweeps a narrow sphere at
+the visible blade tip, checks initial overlap and stops at world/player collision.
+Presentation owns fists, silhouette and rage lighting.
 
 QuestDefinition links the next quest and declares destination/hand-in NPC/region.
 QuestLog stores active state, completed IDs and persistent story flags. Session
@@ -272,3 +274,53 @@ checks the accepted quest at the cellar portal, boss completion at PrisonGate,
 and the open cell before rescue dialogue. It derives the town NPC from completion.
 Inventory.pending_rewards reserves item rewards when the ordinary pack is full.
 All new save fields extend v1; existing region defeat/drop/fog namespaces remain.
+
+## Dark Woods encounter and state
+
+DenBossDefinition is an optional immutable enemy kit. DenBossCombat holds
+Garrick/Bloodfang timers, committed windups, collision-based motion, howl
+thresholds, feeding and fury. DenEncounter coordinates the two authored actors
+and BeastCage, and registers stable-ID summoned wolves with Region for ordinary
+loot/EXP/persistence. Caged Bloodfang is dormant, invulnerable and untargetable.
+The release flag persists independently of either boss's defeat.
+
+GroundFire is owned by the region, never the caster. RegionTravel snapshots
+active fire durations/tick phases and restores them on return; inactive time
+is paused. GroundFire targets only players, sends elemental DamagePackets and
+respects line of sight. Existing Elemental Resolve therefore works without
+special UI rules. AttackDefinition.bleed_chance configures Garrick's on-hit
+chance; accepted damage still passes through the shared player avoidance path.
+
+Edible enemy corpses remain scene-owned, non-colliding and outside the enemy
+group. Bloodfang reserves and consumes one corpse at a time. They are transient
+region presentation; defeated spawn IDs persist, but corpses are not reconstructed
+on load. TreasureChest stores its once-only opening in Region.world_state and
+spawns normal LootDrop actors for gold and optional item resources. Uncollected
+chest loot uses the existing floor-loot snapshot contract.
+The optional per-region world/fires fields extend version-1 saves compatibly.
+
+DarkThicket is an original shared vertex-colored tree mesh batched into native
+MultiMeshes. Each authored segment has a solid world collider. A local shader
+fades branches around the player without changing collision. Maze edges,
+trails, patrol markers, cage and chest are editable in dark_woods.tscn.
+The cage sides are included in navigation; the lift gate is disabled during
+baking and physically enabled after initialization while still closed.
+
+ItemDefinition.strength_bonus is summed by Player.strength(). Both ordinary
+attacks and ability-scaled melee use the same derived damage. Definitions,
+equipment IDs, item inspection, character stats and portrait appearance remain
+the existing content/UI contracts.
+
+TorchThrow owns the short ballistic presentation before spawning GroundFire;
+the actor retains its carried torch. PlayerBurn is a reusable player-owned flame
+effect refreshed by ground-fire contact. EnemyDefinition.voice_pitch controls
+ordinary enemy vocal character; encounter kits select their special cues.
+Garrick's resource-authored narrative lines appear above him on aggro/release.
+
+DenEncounter resets the unfinished fight on player death before Session saves.
+It removes encounter actors/hazards, resets cage motion and respawns authored
+boss markers. Region.world_state.credited_defeats separately records rewarded
+kills so retries cannot duplicate loot/EXP. Maze state and floor loot survive.
+Region.map_enabled suppresses both the map button and M action in Dark Woods.
+CharacterProgression stores testing point grants separately from level-derived
+points; the U shortcut uses the same rank/prerequisite validation as normal play.

@@ -18,7 +18,7 @@ func _ready() -> void:
 	stats.add_child(ArtTheme.label("%d  Melee damage" % player.melee_damage(),17,ArtTheme.PALE,true))
 	stats.add_child(ArtTheme.label("%d  Armor" % player.inventory.bonus("armor_bonus"),17,ArtTheme.PALE,true))
 	stats.add_child(ArtTheme.label("%d  Vitality" % player.health.maximum,17,ArtTheme.PALE,true))
-	character.add_child(ArtTheme.label("Attack speed   %.1f seconds / swing" % player.swing_seconds(),13,ArtTheme.MUTED))
+	character.add_child(ArtTheme.label("Strength  %d   ·   Attack speed  %.1f seconds / swing" % [player.strength(),player.swing_seconds()],13,ArtTheme.MUTED))
 	var doll := Control.new()
 	doll.custom_minimum_size=Vector2(486,490)
 	character.add_child(doll)

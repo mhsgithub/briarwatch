@@ -3,6 +3,7 @@ extends Node3D
 var item: ItemDefinition
 var gold: int = 0
 var taken: bool = false
+var source_id: String = ""
 
 func _ready() -> void:
 	add_to_group("interactables")

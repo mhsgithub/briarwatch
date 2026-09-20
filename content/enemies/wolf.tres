@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1")
+edible_corpse = true
 experience = 1
 id = &"wolf"
 display_name = "Greyfang"
@@ -14,7 +15,7 @@ move_speed = 4.24
 hit_chance = 0.6
 audio_profile = "wolf"
 aggro_radius = 9.0
-leash_radius = 20.0
+leash_radius = 24.0
 attack = ExtResource("attack")
 loot_table = ExtResource("loot_table")
 tint = Color(0.57, 0.61, 0.56, 1)

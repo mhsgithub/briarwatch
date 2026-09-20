@@ -70,6 +70,10 @@ func run() -> void:
 	p.attack_target=boss
 	session.get_node("Camera").size=17
 	boss.receive_damage(DamagePacket.new(60,p))
+	boss.aggro=true
+	boss.brute.step(0.25)
+	await create_timer(0.15).timeout
+	boss.brute.step(0.25)
 	await create_timer(0.3).timeout
 	await capture("29-brutus-rage")
 	boss.brute.cancel()

@@ -19,6 +19,7 @@ script = ExtResource("region")
 region_id = &"watchtower"
 display_name = "Crowbane's Watchtower"
 interior = true
+music_track = &"cellars"
 map_bounds = Rect2(-15, -15, 30, 30)
 [node name="NavigationRegion" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("navmesh")

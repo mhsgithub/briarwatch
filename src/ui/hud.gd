@@ -31,6 +31,7 @@ var target_health: ProgressBar
 var experience_bar: ProgressBar
 var level_label: Label
 var talent_button: Button
+var map_button: Button
 
 func _ready() -> void:
 	process_mode=Node.PROCESS_MODE_ALWAYS
@@ -85,7 +86,7 @@ func _build() -> void:
 	_place(navigation,Control.PRESET_TOP_RIGHT,Rect2(-375,68,345,35))
 	_button("Character [I]",show_inventory,navigation)
 	talent_button=_button("Talents [N]",show_talents,navigation)
-	_button("Map [M]",show_map,navigation)
+	map_button=_button("Map [M]",show_map,navigation)
 	target_box=VBoxContainer.new()
 	_place(target_box,Control.PRESET_CENTER_TOP,Rect2(-155,30,310,53))
 	target_box.mouse_filter=Control.MOUSE_FILTER_IGNORE
@@ -257,6 +258,11 @@ func _input(event: InputEvent) -> void:
 			if mode=="map": close_panel()
 			else: show_map()
 		KEY_F5: save_requested.emit()
+		KEY_U:
+			if player.dead: return
+			player.progression.grant_test_points(15)
+			toast("Testing: 15 talent points received.")
+			if mode=="talents": show_talents()
 		_: return
 	get_viewport().set_input_as_handled()
 
@@ -321,7 +327,7 @@ func show_inventory() -> void:
 
 func show_talents() -> void:
 	if not is_instance_valid(player) or player.dead: return
-	if player.progression.level<2:
+	if not player.progression.talents_unlocked():
 		toast("Talents unlock at level 2. Earn EXP by defeating enemies.")
 		return
 	_begin("talents","Centurion talents","One point per level. Fully master every connected prerequisite to advance. Talent choices are permanent.")
@@ -416,6 +422,10 @@ func show_npc(npc: Npc) -> void:
 			_button("Tend my wounds  ·  Free",func(): service_action.emit("heal",0),panel_body)
 		"warden":
 			var offer:=quest.offered()
+			if offer.giver_npc != str(definition.id):
+				greeting.text="“Kasparov waits near Sister Iona. The lord has news from our scouts; hear what he has to say.”"
+				_button("Farewell  [Esc]",close_panel,panel_body)
+				return
 			if not offer.offer_dialogue.is_empty(): greeting.text="“"+offer.offer_dialogue+"”"
 			panel_body.add_child(_label(offer.title,23,ArtTheme.GOLD,true))
 			var description:=_label(offer.description,16)
@@ -437,7 +447,26 @@ func show_npc(npc: Npc) -> void:
 				panel_body.add_child(_label(quest.status_text(),17))
 		"rescue":
 			if quest.is_completed("warwick_rescue"):
-				greeting.text="“Briarwatch gave me shelter when my own walls could not. I will remember it—and you—when the banners gather.”"
+				var offer := quest.offered()
+				if offer.giver_npc=="kasparov":
+					panel_body.add_child(_label(offer.title,23,ArtTheme.GOLD,true))
+					if quest.is_completed(str(offer.id)):
+						greeting.text="“"+offer.completed_dialogue+"”"
+					elif offer != quest.definition or not quest.accepted:
+						greeting.text="“"+offer.offer_dialogue+"”"
+						var reward := GoldAmount.new()
+						reward.amount=offer.reward_gold
+						panel_body.add_child(_label("REWARD",13,ArtTheme.GOLD))
+						panel_body.add_child(reward)
+						_button(offer.accept_text,func(): service_action.emit("accept",0),panel_body)
+					elif quest.cleared:
+						greeting.text="“"+offer.handin_dialogue+"”"
+						_button("Tell Kasparov of Bloodfang · Receive %d gold" % offer.reward_gold,func(): service_action.emit("claim",0),panel_body)
+					else:
+						greeting.text="“"+offer.progress_dialogue+"”"
+						var objective := _label(quest.status_text(),17)
+						objective.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+						panel_body.add_child(objective)
 			elif quest.accepted and quest.cleared and quest.flags.get("kasparov_cell_open",false):
 				_button("Let us get you home",func(): service_action.emit("rescue",0),panel_body)
 			else:
@@ -460,11 +489,13 @@ func show_quest() -> void:
 	panel_body.add_child(objective)
 
 func _refresh_quest() -> void:
-	quest_title.text = "◇  " + quest.definition.title.to_upper() if not quest.rewarded else ""
-	quest_text.text = quest.status_text() if not quest.rewarded else ""
+	var next := quest.offered()
+	quest_title.text = "◇  " + (next.title if quest.rewarded and next!=quest.definition else quest.definition.title).to_upper() if not quest.rewarded or next!=quest.definition else ""
+	quest_text.text = next.offer_objective if quest.rewarded and next!=quest.definition else (quest.status_text() if not quest.rewarded else "")
 
 func show_map() -> void:
 	if not is_instance_valid(player) or player.dead: return
+	if large_map.region and not large_map.region.map_enabled: return
 	AudioLibrary.play_ui(self,"page")
 	close_panel()
 	mode="map"

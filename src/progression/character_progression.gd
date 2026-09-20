@@ -6,6 +6,14 @@ const MAX_LEVEL := 20
 var level: int = 1
 var experience: int = 0
 var ranks: Dictionary = {}
+var test_points: int = 0
+
+func grant_test_points(amount: int) -> void:
+	test_points = clampi(test_points + amount,0,10000)
+	changed.emit()
+
+func talents_unlocked() -> bool:
+	return level >= 2 or test_points > 0
 func required() -> int:
 	return 0 if level == MAX_LEVEL else int(CenturionTalents.content().thresholds[level - 1])
 func grant(amount: int) -> void:
@@ -24,10 +32,10 @@ func mastered(id: String) -> bool:
 func points() -> int:
 	var spent := 0
 	for value in ranks.values(): spent += int(value)
-	return maxi(0, level - 1 - spent)
+	return maxi(0, level - 1 + test_points - spent)
 func available(id: String) -> bool:
 	var data := CenturionTalents.find(id)
-	if data.is_empty() or level < 2 or points() < 1 or rank(id) >= int(data.max_rank): return false
+	if data.is_empty() or not talents_unlocked() or points() < 1 or rank(id) >= int(data.max_rank): return false
 	for parent: String in data.parents:
 		if not mastered(parent): return false
 	return true
@@ -37,9 +45,10 @@ func learn(id: String) -> bool:
 	changed.emit()
 	return true
 func serialize() -> Dictionary:
-	return {"level":level,"experience":experience,"ranks":ranks.duplicate()}
+	return {"level":level,"experience":experience,"ranks":ranks.duplicate(),"test_points":test_points}
 func restore(data: Dictionary) -> void:
 	level = clampi(int(data.get("level",1)),1,MAX_LEVEL)
+	test_points = clampi(int(data.get("test_points",0)),0,10000)
 	experience = clampi(int(data.get("experience",0)),0,maxi(0,required()-1))
 	ranks.clear()
 	var saved: Variant = data.get("ranks",{})

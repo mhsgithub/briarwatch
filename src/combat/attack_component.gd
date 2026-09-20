@@ -83,8 +83,9 @@ func _resolve() -> void:
 			# keep the component's independent accuracy roll.
 			if candidate is Player or roll_hit():
 				var packet := DamagePacket.new(amount, actor, definition.damage_type, minimum_damage)
-				packet.bleed_damage = definition.bleed_damage
-				packet.bleed_ticks = definition.bleed_ticks
+				if definition.bleed_ticks > 0 and rng.randf() < definition.bleed_chance:
+					packet.bleed_damage = definition.bleed_damage
+					packet.bleed_ticks = definition.bleed_ticks
 				packet.knockdown_seconds = definition.knockdown_seconds
 				packet.stun_seconds = swing_stun
 				packet.knockback = knockback

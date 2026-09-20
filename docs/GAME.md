@@ -16,7 +16,7 @@ game's characters, dialogue, geography, assets, classes or storyline.
 
 The player begins in a small timber-and-stone village with a sword, shield, padded
 coat, one Tonic and zero gold. The class is named Centurion: base stats without
-gear are 0 melee damage, 0 armor and 100 vitality. A single connected region surrounds
+gear are 0 melee damage, 0 Strength, 0 armor and 100 vitality. A single connected region surrounds
 it: meadow, sparse pinewood, branching paths, a charcoal camp, an eastroad camp,
 an old watchtower and scattered ruins. The map reveals roads and scenery as you explore and marks only the active quest
 objective. The outdoor region connects through an interactive doorway to a separate
@@ -93,8 +93,8 @@ a vitality orb and a six-slot assignable action belt. The character panel combin
 Centurion preview, live stats, eleven equipment slots and a 20-cell pack. Gear slots
 are head, shoulders, armor, gloves, belt, boots, amulet, two rings, main hand and
 off hand. Each bag item occupies one cell; this is not a variable-size packing
-system. The twenty-two-item catalog includes Outlaw's Mantle, the key and the
-Green Kasparov Family Seal ring. Equipped gear appears on both the world
+system. The twenty-four-item catalog includes Outlaw's Mantle, the key, the
+Green Kasparov Family Seal ring, Blackroad Belt and Bloodclaw. Equipped gear appears on both the world
 character and portrait. Removing all equipment leaves simple clothing. The
 Pitchfork reserves both hands. N opens the bronze/enamel talent window at level 2.
 
@@ -113,16 +113,57 @@ After the key hand-in, Elric sends the Centurion to Warwick's southeast ruins.
 Four bandits defend the cellar entrance. The torchlit prison below contains
 barred cells, old skeletons and Lord Kasparov, guarded by Jailor Brutus.
 The broad, bearded brawler has 120 health and fast 15-damage punches that knock
-back. At half health, his eight-second planted rage inflicts 30 damage every
-half second nearby. A roar, rapid fists, red light and a boundary ring warn you.
+back. At half health, his eight-second planted rage scatters fast knives in
+random directions at 15.5 m/s: five every quarter second, each dealing 20 base physical
+damage on contact. A roar, rapid fists, red light and a ring accompany the storm.
+Knives stop at walls, and their narrow collision follows the visible blade.
 
 Defeat him, open the rear cell and speak with Kasparov to return to Briarwatch.
 The quest pays 10 gold and a Green +5-vitality family-seal ring. The lord remains
 in town. Full bags reserve the ring safely for later collection.
 
-New characters begin level 1; ordinary kills give 1 EXP and bosses give 5.
+New characters begin level 1; ordinary kills give 1 EXP, Elite Bandits give 2,
+Darius, Brutus and Garrick give 5 each, and Bloodfang gives 10.
 Level-ups reset EXP to zero and grant one talent point, up to level 20.
 Battle Mastery and Pathfinder contain fourteen implemented talents with explicit
 AND prerequisites, learned-action belt bindings and persistent cooldowns.
-The exact curve makes level 2 the limit of the present finite region's EXP.
+The present finite content supports reaching level 3.
 See PROGRESSION.md for complete rules and content boundaries.
+
+## Into the Lion's Den
+
+Back in Briarwatch, Kasparov sends the Centurion northwest. Scouts have found the
+bandit leaders gathering in the Dark Woods; the lord fears his captivity bought
+them time to release an evil upon Briar. The old northwest trail enters a dense,
+irregular edge of twisted trees and leads to a separate 112 × 164 metre woodland
+instance. The Dark Woods has no map; players navigate its paths by sight.
+
+Twisted, tightly packed trees form solid maze walls around clear paths. Nine
+Greyfangs and nine Elite Bandits guard its branches. A chest deep in a side route
+drops 15 gold onto the ground when opened, available once. The maze ends in a broad circular clearing.
+No ordinary patrols begin inside that arena.
+
+Garrick Vane, an elegant outlaw in dark armor and a wine-colored cloak, carries
+a sword and a burning torch. He throws burning brands that ignite lasting ground
+fires, and his sword can inflict bleeding. Burning the player produces a brief,
+subtle flame effect and a distinct scorching sound. Garrick addresses the player
+when battle begins and calls to Bloodfang as he opens the cage.
+At a quarter of his health, he sprints to an iron cage and frees Bloodfang, a
+towering, clawed werewolf. Garrick continues fighting. Bloodfang howls for wolves
+at two health thresholds, pursues in a biting fury, lunges, and feeds on nearby
+dead Greyfangs to recover. Animation, lighting, fire, movement and sound communicate
+the encounter; there are no mechanic-name text announcements.
+
+Death during the unfinished encounter restores both bosses, extinguishes its
+fires and returns Bloodfang to the locked cage. Opened chests, maze kills and
+floor loot remain. Each boss and summoned wolf grants its rewards only once.
+
+Garrick drops the Green Blackroad Belt (+2 armor, +10 vitality). Bloodfang drops
+the Green one-handed Bloodclaw (10 damage, 0.8-second swing, +1 Strength).
+Each point of Strength adds one melee damage, so Bloodclaw contributes 11 damage
+in total. Its hooked, blood-streaked blade appears on the character and portrait.
+
+Bloodfang's death sends the Centurion back to Kasparov for 50 gold. The lord
+thanks the player for freeing Briarwatch and begins gathering his armies to
+drive the remaining bandits from the lands. This concludes the first map's
+three-quest story while leaving the wider kingdom open to later adventures.

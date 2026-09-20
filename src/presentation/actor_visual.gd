@@ -2,7 +2,7 @@
 class_name ActorVisual
 extends Node3D
 ## Art-only articulated silhouettes. Gameplay owns timing and health.
-@export_enum("warrior", "melee", "archer", "wolf", "npc", "commander", "brutus", "lord") var style: String = "warrior"
+@export_enum("warrior", "melee", "archer", "wolf", "npc", "commander", "brutus", "lord", "elite", "garrick", "bloodfang") var style: String = "warrior"
 @export var tint: Color = Color("527b7b")
 var equipment: Dictionary = {}
 var pivot: Node3D
@@ -20,6 +20,11 @@ var special_left: float = 0.0
 var special_duration: float = 1.0
 var raging: bool = false
 var fists: Array[Node3D] = []
+var feeding: bool = false
+var beast_head: Node3D
+var jaw: Node3D
+var rage_light: OmniLight3D
+var carried_torch: Node3D
 
 func _ready() -> void:
 	rebuild()
@@ -47,9 +52,15 @@ func rebuild() -> void:
 	legs.clear()
 	fists.clear()
 	weapon = null
+	beast_head = null
+	jaw = null
+	rage_light = null
+	carried_torch = null
 	pivot = Node3D.new()
 	add_child(pivot)
-	if style == "brutus":
+	if style == "bloodfang":
+		_build_bloodfang()
+	elif style == "brutus":
 		_build_brutus()
 	elif style == "lord":
 		_build_lord()
@@ -57,6 +68,7 @@ func rebuild() -> void:
 		_build_wolf()
 	else:
 		_build_human()
+		if style in ["garrick","elite"]: _build_outlaw_armor()
 	if style == "warrior":
 		Geometry.ring(self, 0.57, Color("b8b886"), 0.018)
 	telegraph = Node3D.new()
@@ -180,7 +192,7 @@ func _build_human() -> void:
 			Geometry.box(pivot, Vector3(0, 0.95, -0.03), Vector3(0.78, 0.18, 0.65), leather)
 			Geometry.box(pivot, Vector3(0, 0.95, -0.37), Vector3(0.18, 0.18, 0.06), steel)
 	var weapon_item := gear("weapon")
-	var has_weapon := (hero and weapon_item != null) or style in ["melee","archer","commander"]
+	var has_weapon := (hero and weapon_item != null) or style in ["melee","archer","commander","garrick","elite"]
 	if has_weapon:
 		weapon = part("weapon")
 		weapon.position = Vector3(0.55,1.02,-0.08)
@@ -203,6 +215,14 @@ func _build_human() -> void:
 			Geometry.box(weapon,Vector3(0,0.65,-0.65),Vector3(0.65,0.08,0.10),steel)
 			for x in [-0.29,0,0.29]:
 				Geometry.beam(weapon,Vector3(x,0.65,-0.65),Vector3(x,1.02,-1.02),0.055,edge)
+		elif weapon_item and weapon_item.appearance == "bloodclaw":
+			Geometry.box(weapon,Vector3(0,0,-0.1),Vector3(0.14,0.14,0.4),Color("251e21"))
+			Geometry.beam(weapon,Vector3(-0.32,0,-0.18),Vector3(0.32,0,-0.38),0.10,Color("aea393"))
+			Geometry.box(weapon,Vector3(0,0,-0.94),Vector3(0.24,0.065,1.25),Color("a2aeb0"))
+			Geometry.box(weapon,Vector3(0,0.042,-0.95),Vector3(0.075,0.015,1.12),Color("941e24"))
+			for i in range(3):
+				Geometry.beam(weapon,Vector3(0.1,0,-0.65-i*0.3),Vector3(0.24,0,-0.89-i*0.3),0.07,Color("babead"))
+			Geometry.beam(weapon,Vector3(0,0,-1.49),Vector3(-0.20,0,-1.75),0.13,Color("681d24"))
 		else:
 			Geometry.box(weapon,Vector3(0,0,-0.1),Vector3(0.13,0.13,0.4),leather)
 			Geometry.box(weapon,Vector3(0,0,-0.29),Vector3(0.52,0.11,0.12),brass)
@@ -229,6 +249,88 @@ func _build_cape(color: Color) -> void:
 	var mat := Geometry.material(color.darkened(0.22)).duplicate() as StandardMaterial3D
 	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	cape.material_override = mat
+
+func _build_outlaw_armor() -> void:
+	var elegant := style=="garrick"
+	var iron := Color("667477")
+	var trim := Color("bfaa77") if elegant else Color("989b89")
+	Geometry.cylinder(pivot,Vector3(0,1.2,0),0.33,0.61,Color("262c32"),0.40,8)
+	for side in [-1,1]:
+		Geometry.sphere(pivot,Vector3(side*0.43,1.43,0),Vector3(0.43,0.25,0.49),iron)
+		Geometry.beam(pivot,Vector3(side*0.20,1.5,-0.32),Vector3(side*0.15,0.86,-0.35),0.035,trim)
+	Geometry.box(pivot,Vector3(0,0.91,-0.02),Vector3(0.78,0.14,0.66),Color("242323"))
+	Geometry.box(pivot,Vector3(0,0.91,-0.38),Vector3(0.17,0.17,0.055),trim)
+	if elegant:
+		_build_cape(Color("542539"))
+		Geometry.box(pivot,Vector3(0,1.60,0.1),Vector3(0.72,0.24,0.32),Color("26202a"))
+		Geometry.box(pivot,Vector3(0,1.62,-0.26),Vector3(0.22,0.20,0.06),Color("e0c9a0"))
+		Geometry.box(pivot,Vector3(0,1.68,-0.22),Vector3(0.23,0.13,0.07),Color("373231"))
+		var torch := Node3D.new()
+		carried_torch= torch
+		pivot.add_child(torch)
+		torch.position=Vector3(-0.5,1.15,-0.24)
+		Geometry.beam(torch,Vector3(0,-0.35,0),Vector3(0,0.7,0),0.10,Color("594332"))
+		Geometry.cylinder(torch,Vector3(0,0.65,0),0.15,0.26,Color("272c2d"),0.21,6)
+		var fire := FireVisual.new()
+		fire.position.y=0.77
+		fire.flame_height=0.58
+		fire.light_range=5
+		fire.light_energy=0.8
+		torch.add_child(fire)
+	else:
+		Geometry.cylinder(pivot,Vector3(0,1.9,0),0.25,0.20,iron,0.18,8)
+		Geometry.box(pivot,Vector3(0,1.77,-0.23),Vector3(0.39,0.22,0.06),Color("302e29"))
+
+func _build_bloodfang() -> void:
+	var fur := Color("3d4241")
+	var mane := Color("232c2d")
+	var flesh := Color("79625a")
+	Geometry.sphere(pivot,Vector3(0,1.55,0.08),Vector3(1.35,1.65,0.95),fur)
+	Geometry.sphere(pivot,Vector3(0,2.19,-0.12),Vector3(1.60,1.05,1.18),mane)
+	beast_head=Node3D.new()
+	pivot.add_child(beast_head)
+	beast_head.position=Vector3(0,2.5,-0.4)
+	Geometry.sphere(beast_head,Vector3(0,0.16,-0.02),Vector3(0.91,0.95,0.91),fur)
+	Geometry.box(beast_head,Vector3(0,-0.04,-0.59),Vector3(0.56,0.25,0.72),flesh)
+	Geometry.sphere(beast_head,Vector3(0,0.02,-0.97),Vector3(0.4,0.24,0.2),Color("192324"))
+	jaw=Node3D.new()
+	beast_head.add_child(jaw)
+	jaw.position=Vector3(0,-0.13,-0.35)
+	Geometry.box(jaw,Vector3(0,-0.05,-0.32),Vector3(0.50,0.13,0.67),Color("611f26"))
+	rage_light=OmniLight3D.new()
+	rage_light.light_color=Color("b82323")
+	rage_light.omni_range=4.5
+	rage_light.position.y=1.7
+	rage_light.light_energy=0
+	pivot.add_child(rage_light)
+	for side in [-1,1]:
+		Geometry.cylinder(beast_head,Vector3(side*0.31,0.62,0.1),0.21,0.58,mane,0,5)
+		var eye := Geometry.sphere(beast_head,Vector3(side*0.32,0.26,-0.44),Vector3(0.13,0.08,0.09),Color("e86435"))
+		eye.material_override=Geometry.material(Color("e86435"),1.2)
+		for z in [-1.28,-1.02]:
+			var fang := Geometry.cylinder(beast_head,Vector3(side*0.23,-0.20,z+0.4),0.055,0.25,Color("d9ccb0"),0,5)
+			fang.rotation.x=PI
+		var arm := Node3D.new()
+		pivot.add_child(arm)
+		arm.position=Vector3(side*0.80,2.16,-0.08)
+		Geometry.beam(arm,Vector3.ZERO,Vector3(side*0.22,-0.79,-0.08),0.36,fur)
+		Geometry.sphere(arm,Vector3(side*0.24,-0.94,-0.21),Vector3(0.48,0.43,0.56),flesh)
+		for i in range(3):
+			Geometry.beam(arm,Vector3(side*0.24-0.13+i*0.13,-0.98,-0.39),Vector3(side*0.24-0.13+i*0.13,-1.21,-0.66),0.055,Color("d6c5a5"))
+		fists.append(arm)
+		var leg := Node3D.new()
+		pivot.add_child(leg)
+		leg.position=Vector3(side*0.39,0.93,0.04)
+		Geometry.beam(leg,Vector3.ZERO,Vector3(0,-0.45,0.24),0.31,fur)
+		Geometry.beam(leg,Vector3(0,-0.45,0.24),Vector3(0,-0.79,-0.04),0.19,fur)
+		Geometry.box(leg,Vector3(0,-0.84,-0.23),Vector3(0.38,0.22,0.62),flesh)
+		for i in range(3):
+			Geometry.beam(leg,Vector3(-0.12+i*0.12,-0.84,-0.42),Vector3(-0.12+i*0.12,-0.90,-0.66),0.045,Color("d6c5a5"))
+		legs.append(leg)
+	for i in range(5):
+		var spine := Geometry.cylinder(pivot,Vector3(0,2.36-i*0.19,0.43),0.16,0.50,mane,0,4)
+		spine.rotation.x=0.9
+	Geometry.box(pivot,Vector3(0,1.07,0),Vector3(0.92,0.27,0.72),Color("3f292b"))
 
 func _build_wolf() -> void:
 	var fur := Color("747d77")
@@ -328,9 +430,18 @@ func _process(delta: float) -> void:
 	if raging:
 		pivot.rotation.z = sin(phase*1.5)*0.09
 		pivot.rotation.x = 0.2
-	elif style == "brutus": pivot.rotation.z = 0
+	elif style in ["brutus","bloodfang"]: pivot.rotation.z = 0
+	if feeding:
+		pivot.rotation.x=0.75+sin(phase*1.9)*0.10
+		pivot.position.y=-0.42
+	if beast_head:
+		beast_head.rotation.y=sin(phase*2.7)*0.65 if raging else 0.0
+		beast_head.rotation.x=0.22 if feeding else 0.0
+		jaw.rotation.x=(0.35+sin(phase*3.1)*0.3) if raging or feeding else (0.5 if swing>0 else 0.08)
+		rage_light.light_energy=1.3+sin(phase*2)*0.3 if raging else 0.0
 	special_left = maxf(0, special_left - delta)
 	if weapon: weapon.rotation.x = 0
+	if carried_torch: carried_torch.rotation.x=0
 	if special_left > 0:
 		telegraph.visible = false
 		if special_kind == "cleave" and weapon:
@@ -339,3 +450,14 @@ func _process(delta: float) -> void:
 			pivot.rotation.x = -0.12 if special_left > 0.3 else 0.22
 		elif special_kind == "kick" and not legs.is_empty():
 			legs[0].rotation.x = 1.3 * sin(PI * clampf(1.0 - special_left / (special_duration + 0.3), 0, 1))
+		elif special_kind == "howl":
+			pivot.rotation.x=-0.4
+			if beast_head: beast_head.rotation.x=-0.5
+			for arm in fists: arm.rotation.x=-1.7
+		elif special_kind == "lunge":
+			pivot.rotation.x=0.5
+			pivot.position.y=-0.35
+		elif special_kind == "fury":
+			pivot.rotation.z=sin(phase*3)*0.13
+		elif special_kind == "fire" and weapon:
+			if carried_torch: carried_torch.rotation.x=-1.1 if special_left>0.3 else 0.65

@@ -22,6 +22,7 @@ func _voice(id: String, gain: float=0.0) -> void:
 	var pitch:=0.93 if profile()==&"centurion" else 1.03
 	if profile()==&"wolf": pitch=1.0
 	if actor is Enemy and actor.definition.brute: pitch=0.73
+	if actor is Enemy: pitch *= actor.definition.voice_pitch
 	AudioLibrary.play_world(actor,actor.global_position+Vector3.UP,id,pitch,gain)
 
 func _attack() -> void:

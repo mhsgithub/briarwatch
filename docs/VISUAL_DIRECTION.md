@@ -31,7 +31,7 @@ support inspection, tooltips, activation and compatible drag/drop.
   cells. Do not bake item names/numbers into artwork; UI provides accessible text.
 - Keep icons centered, bold at 40-70 px display size and away from cell edges.
 - Avoid saturated clutter on the ground: characters, hits and loot need contrast.
-- Run all sixteen visual captures after changing palette, panel geometry or fonts.
+- Run the full visual capture suite after changing palette, panel geometry or fonts.
 
 ## Shipped painted assets
 
