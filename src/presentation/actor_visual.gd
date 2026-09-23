@@ -58,7 +58,9 @@ func rebuild() -> void:
 	carried_torch = null
 	pivot = Node3D.new()
 	add_child(pivot)
-	if style == "bloodfang":
+	if style in ["crocodile","marsh_widow","broodqueen"]:
+		MarshCreature.build(self)
+	elif style == "bloodfang":
 		_build_bloodfang()
 	elif style == "brutus":
 		_build_brutus()
@@ -210,6 +212,27 @@ func _build_human() -> void:
 				var b := a+0.3
 				Geometry.beam(weapon,Vector3(0,sin(a)*0.62,-cos(a)*0.32),Vector3(0,sin(b)*0.62,-cos(b)*0.32),0.07,Color("b19a69"))
 			Geometry.beam(weapon,Vector3(0,-0.58,-0.11),Vector3(0,0.58,-0.11),0.015,Color("c2b99a"))
+		elif weapon_item and weapon_item.appearance in ["cleaver","greatblade"]:
+			var great := weapon_item.appearance == "greatblade"
+			Geometry.box(weapon,Vector3(0,0,0.03),Vector3(0.13,0.14,0.65 if great else 0.38),Color("343a30"))
+			Geometry.box(weapon,Vector3(0,0,-0.28),Vector3(0.75 if great else 0.48,0.12,0.13),brass)
+			Geometry.box(weapon,Vector3(0,0,-1.26 if great else -0.94),Vector3(0.28 if great else 0.39,0.075,1.90 if great else 1.15),Color("929e92"))
+			Geometry.box(weapon,Vector3(0,0.045,-1.26 if great else -0.94),Vector3(0.10,0.018,1.7 if great else 0.95),Color("435c48"))
+			Geometry.sphere(weapon,Vector3(0,0,0.38 if great else 0.25),Vector3.ONE*0.20,brass)
+		elif weapon_item and weapon_item.appearance == "polearm":
+			var polearm := Node3D.new()
+			weapon.add_child(polearm)
+			polearm.rotation.x = 0.85
+			polearm.rotation.y = 0.45
+			polearm.scale = Vector3.ONE*0.75
+			Geometry.beam(polearm,Vector3(0,0,0.85),Vector3(0,0,-1.45),0.09,Color("3f382d"))
+			for z in [0.5,0.3,0.1,-0.1,-1.2]:
+				Geometry.box(polearm,Vector3(0,0,z),Vector3(0.14,0.14,0.085),brass)
+			Geometry.beam(polearm,Vector3(0,0,-1.30),Vector3(-0.09,0,-2.15),0.22,Color("9aa99f"))
+			Geometry.beam(polearm,Vector3(-0.09,0,-2.12),Vector3(0.18,0,-2.57),0.12,edge)
+			Geometry.beam(polearm,Vector3(0,0,-1.44),Vector3(0.34,0,-1.80),0.13,steel)
+			Geometry.beam(polearm,Vector3(0.34,0,-1.80),Vector3(0.30,0,-2.05),0.08,edge)
+			Geometry.sphere(polearm,Vector3(0,0.075,-1.35),Vector3(0.16,0.08,0.23),Color("477e55"))
 		elif weapon_item and weapon_item.appearance == "pitchfork":
 			Geometry.beam(weapon,Vector3(0,-0.5,0.5),Vector3(0,0.65,-0.65),0.085,Color("816446"))
 			Geometry.box(weapon,Vector3(0,0.65,-0.65),Vector3(0.65,0.08,0.10),steel)
@@ -416,6 +439,11 @@ func _process(delta: float) -> void:
 	pivot.position.y=abs(sin(phase))*0.035 if moving else sin(phase*0.18)*0.012
 	for i in range(legs.size()):
 		legs[i].rotation.x=sin(phase+float(i%2)*PI)*0.45 if moving else 0.0
+		if style in ["marsh_widow","broodqueen"]:
+			legs[i].rotation.x *= 0.40
+			legs[i].rotation.y = sin(phase+i*PI*0.75)*0.16 if moving else 0.0
+	if style == "crocodile":
+		pivot.get_node("Snout").rotation.x = -0.35*sin(clampf(swing/(windup_duration+0.2),0,1)*PI)
 	swing=maxf(0,swing-delta)
 	flash=maxf(0,flash-delta)
 	telegraph.visible=swing>0.2 and style!="npc"
@@ -444,6 +472,10 @@ func _process(delta: float) -> void:
 	if carried_torch: carried_torch.rotation.x=0
 	if special_left > 0:
 		telegraph.visible = false
+		if special_kind == "web":
+			pivot.rotation.x = -0.25
+			for i in [0,4]:
+				if legs.size() > i: legs[i].rotation.x = -0.75
 		if special_kind == "cleave" and weapon:
 			weapon.rotation.x = 1.15 if special_left > 0.3 else lerpf(-0.55, 1.15, special_left / 0.3)
 			if special_left > 0.3: weapon.rotation.y = 0

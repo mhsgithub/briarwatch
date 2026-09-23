@@ -72,3 +72,15 @@ assets/ui/blackroad_belt.svg and bloodclaw.svg are original vector item icons.
 Bloodclaw also has a dedicated hooked, blood-streaked world/portrait model.
 All sources are committed and editable; no external downloads, generated binary
 dependency or third-party art license is introduced.
+
+## Hollowmere assets
+
+The marsh, shore water shader, cypress groves, lamps, bridges, ruins, crocodiles
+and articulated spiders use original native geometry. `marsh_gear_atlas.png`
+is an original generated 4×4 painted atlas for the fourteen wildlife drops.
+`rowan_gear_atlas.png` is a separate original 1536×1024, 3×2 painted atlas:
+Wyrmhide Grips, Emerald Band, Wyrmsteel Shoulders, Oakheart Guard, Wyrmfang,
+then an empty cell. Both were created with the built-in imagegen tool and
+inspected before integration. Resources use AtlasTexture regions directly;
+the approved inventory art and layout remain intact. Music and frog recording
+licenses and sources are documented in AUDIO.md and the asset license files.

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ContentCatalog" load_steps=29 format=3]
+[gd_resource type="Resource" script_class="ContentCatalog" load_steps=48 format=3]
 [ext_resource type="Script" path="res://src/data/content_catalog.gd" id="1"]
 [ext_resource type="Script" path="res://src/data/item_definition.gd" id="item_script"]
 [ext_resource type="Resource" path="res://content/quests/open_road.tres" id="quest"]
@@ -26,7 +26,26 @@
 [ext_resource type="Resource" path="res://content/items/kasparov_seal.tres" id="seal"]
 [ext_resource type="Resource" path="res://content/items/blackroad_belt.tres" id="blackroad"]
 [ext_resource type="Resource" path="res://content/items/bloodclaw.tres" id="bloodclaw"]
+[ext_resource type="Resource" path="res://content/items/marshscale_tunic.tres" id="marshscale_tunic"]
+[ext_resource type="Resource" path="res://content/items/bogwalker_boots.tres" id="bogwalker_boots"]
+[ext_resource type="Resource" path="res://content/items/rotcap_cowl.tres" id="rotcap_cowl"]
+[ext_resource type="Resource" path="res://content/items/swampgrip_mitts.tres" id="swampgrip_mitts"]
+[ext_resource type="Resource" path="res://content/items/mud_stained_sash.tres" id="mud_stained_sash"]
+[ext_resource type="Resource" path="res://content/items/bogwood_shield.tres" id="bogwood_shield"]
+[ext_resource type="Resource" path="res://content/items/marsh_cleaver.tres" id="marsh_cleaver"]
+[ext_resource type="Resource" path="res://content/items/gloomhide_vest.tres" id="gloomhide_vest"]
+[ext_resource type="Resource" path="res://content/items/marshrunner_boots.tres" id="marshrunner_boots"]
+[ext_resource type="Resource" path="res://content/items/marshguard_crown.tres" id="marshguard_crown"]
+[ext_resource type="Resource" path="res://content/items/marshwarden_sash.tres" id="marshwarden_sash"]
+[ext_resource type="Resource" path="res://content/items/fenwarden_charm.tres" id="fenwarden_charm"]
+[ext_resource type="Resource" path="res://content/items/marshwarden_band.tres" id="marshwarden_band"]
+[ext_resource type="Resource" path="res://content/items/bogiron_greatblade.tres" id="bogiron_greatblade"]
+[ext_resource type="Resource" path="res://content/items/wyrmhide_grips.tres" id="wyrmhide_grips"]
+[ext_resource type="Resource" path="res://content/items/emerald_band.tres" id="emerald_band"]
+[ext_resource type="Resource" path="res://content/items/wyrmsteel_shoulders.tres" id="wyrmsteel_shoulders"]
+[ext_resource type="Resource" path="res://content/items/oakheart_guard.tres" id="oakheart_guard"]
+[ext_resource type="Resource" path="res://content/items/wyrmfang.tres" id="wyrmfang"]
 [resource]
 script = ExtResource("1")
-items = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7"), ExtResource("i8"), ExtResource("i9"), ExtResource("i10"), ExtResource("i11"), ExtResource("i12"), ExtResource("i13"), ExtResource("i14"), ExtResource("i15"), ExtResource("i16"), ExtResource("i17"), ExtResource("i18"), ExtResource("key"), ExtResource("mantle"), ExtResource("seal"), ExtResource("blackroad"), ExtResource("bloodclaw")])
+items = Array[ExtResource("item_script")]([ExtResource("i0"), ExtResource("i1"), ExtResource("i2"), ExtResource("i3"), ExtResource("i4"), ExtResource("i5"), ExtResource("i6"), ExtResource("i7"), ExtResource("i8"), ExtResource("i9"), ExtResource("i10"), ExtResource("i11"), ExtResource("i12"), ExtResource("i13"), ExtResource("i14"), ExtResource("i15"), ExtResource("i16"), ExtResource("i17"), ExtResource("i18"), ExtResource("key"), ExtResource("mantle"), ExtResource("seal"), ExtResource("blackroad"), ExtResource("bloodclaw"), ExtResource("marshscale_tunic"), ExtResource("bogwalker_boots"), ExtResource("rotcap_cowl"), ExtResource("swampgrip_mitts"), ExtResource("mud_stained_sash"), ExtResource("bogwood_shield"), ExtResource("marsh_cleaver"), ExtResource("gloomhide_vest"), ExtResource("marshrunner_boots"), ExtResource("marshguard_crown"), ExtResource("marshwarden_sash"), ExtResource("fenwarden_charm"), ExtResource("marshwarden_band"), ExtResource("bogiron_greatblade"), ExtResource("wyrmhide_grips"), ExtResource("emerald_band"), ExtResource("wyrmsteel_shoulders"), ExtResource("oakheart_guard"), ExtResource("wyrmfang")])
 quest = ExtResource("quest")

@@ -59,7 +59,7 @@ stable ID. Runtime HP, inventory, gold and AI state never live on shared Resourc
 Combat: input/AI requests an attack → windup locks direction → shared attack
 component resolves arc and line of sight, or creates a projectile → `DamagePacket`
 enters target health → damaged/died signals update feedback and lifecycle.
-The unequipped Centurion has 0 melee damage, 0 Strength, 0 armor and 100 vitality. Gear supplies
+The unequipped Centurion has 0 melee damage, 0 Strength, 0 Crit Rating, 0 armor and 100 vitality. Gear supplies
 additive damage/Strength/armor/max vitality and the weapon's seconds-per-swing cooldown
 override. Shared attack definitions stay immutable. One damage adds one to a hit;
 one armor subtracts one from physical/melee/ranged hits. Ordinary packets clamp
@@ -181,7 +181,7 @@ save validation, not a security boundary or an anti-cheat mechanism.
 Autosaves are deferred/coalesced after rewards, inventory/quest changes and service
 actions. A temporary file is written before replacing the primary; the previous
 primary becomes the backup. Manual save, window close and quit also save. Loading
-always starts safely in town at full HP; position, wounded enemy HP and transient
+starts safely in the saved recovery hub at full HP; position, wounded enemy HP and transient
 attacks are not persisted. Death applies its gold penalty immediately, so closing
 the recovery screen by quitting does not avoid it. Respawn restores health and
 grants three seconds of damage immunity. Iona heals without resetting the world. Saves stay outside the Git repository.
@@ -199,10 +199,32 @@ grants three seconds of damage immunity. Iona heals without resetting the world.
 - Better art: replace ActorVisual and prop geometry with meshes/AnimationTrees;
   keep damage and AI in their existing owners.
 
-Current limits: single player, four regions, three linked quests, fixed-cell 20-slot inventory,
+Current limits: single player, five regions, three linked quests, fixed-cell 20-slot inventory,
 eleven gear slots, no animation skeleton, no avoidance solver, no streamed world,
 no random item affixes and no account/cloud service. Navigation/AI have been tested
 at this slice's population, not at hundreds of simultaneous combatants.
+
+## Hollowmere systems
+
+Hollowmere is another registered Region scene. Elric's travel service requires
+the completed `lions_den` hand-in, and Region.recovery_region selects the safe hub
+on death and save. The optional v1 `recovery_region` field preserves old saves'
+Briarwatch default. NPC trainer transactions deduct gold atomically and clear
+ranks, active effects, learned bindings and cooldowns, retaining earned points.
+
+MarshWater derives visible shores and blocked deep-water volumes from authored
+polygons; rectangular bridge cutouts carve those volumes before navigation bake.
+Shallow puddles are decorative. MarshProp and MarshCreature provide reusable
+native geometry. All spawns, resources and scenery are authored in the scene;
+the offline authoring script is excluded from exports. See [Hollowmere](HOLLOWMERE.md).
+
+AttackDefinition supplies poison payloads to DamagePacket. Player applies them
+only after a hit passes accuracy, blocking and wards. Optional WebAttack composes
+onto Enemy and fires swept-sphere WebProjectiles after a locked-aim windup.
+StatusEffects owns poison, roots and immunity; StatusVisual displays them.
+Player resolves one critical roll per direct physical packet using equipment
+Crit Rating; HealthComponent doubles final damage and exposes its critical flag
+to FloatingText. Item movement bonuses feed the existing movement multiplier.
 
 ## Playtest combat and audio refinement
 
@@ -242,7 +264,8 @@ positions the player at an authored arrival marker, restores its state and bakes
 navigation. Inactive regions are data only: no collisions, projectiles, voices or
 AI survive unloading. Session reconnects lifecycle signals and updates the map,
 lighting and fixed-angle camera. Surviving enemies recover on re-entry, as on load.
-Death inside returns to the outdoor town; loading always resumes safely in town.
+Death inside returns to the region's configured recovery hub; loading resumes
+safely in the saved hub. Legacy saves default to Briarwatch.
 The current small regions load synchronously, without background streaming.
 
 ## Progression and Warwick implementation

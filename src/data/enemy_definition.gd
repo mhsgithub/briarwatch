@@ -8,7 +8,7 @@ extends Resource
 @export var armor: float = 0.0
 @export var move_speed: float = 2.8
 @export_range(0.0, 1.0) var hit_chance: float = 1.0
-@export_enum("bandit", "wolf") var audio_profile: String = "bandit"
+@export_enum("bandit", "wolf", "reptile", "spider") var audio_profile: String = "bandit"
 @export var aggro_radius: float = 11.0
 @export var leash_radius: float = 23.0
 @export var preferred_range: float = 7.0
@@ -28,3 +28,6 @@ extends Resource
 @export var collision_radius: float = 0.4
 @export var collision_height: float = 1.7
 @export var voice_pitch: float = 1.0
+@export var web_cooldown: float = 0.0
+@export var web_range: float = 10.0
+@export var web_root_seconds: float = 2.0

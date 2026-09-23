@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="NpcDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/npc_definition.gd" id="script"]
+[resource]
+script = ExtResource("script")
+id = &"oswin"
+display_name = "Master Oswin"
+title = "Veteran instructor"
+service = "trainer"
+greeting = "A habit can be unlearned. For one hundred gold, we can begin your training anew."
+appearance = "npc"
+tint = Color(0.34, 0.43, 0.36, 1)

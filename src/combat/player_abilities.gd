@@ -94,7 +94,7 @@ func damage_dealt(amount: float) -> void:
 	if amount > 0 and not player.dead:
 		player.health.heal(amount * player.progression.rank("bloodthirst") * 0.01)
 func movement_multiplier() -> float:
-	var bonus := player.progression.rank("momentum") * 0.03
+	var bonus := player.progression.rank("momentum") * 0.03 + player.inventory.bonus("movement_bonus") / 100.0
 	if rampage_left > 0: bonus += 0.2
 	if player.progression.rank("blood_and_breath") > 0 and player.health.current > player.health.maximum*0.8: bonus += 0.2
 	return 1.0+bonus

@@ -120,3 +120,28 @@ fire_hurt and fire_impact use the original fire_hurt.wav synthesized hiss and
 crackle. The hurt cue plays only when ground fire removes health; an elemental
 ward suppresses it. The brand impact uses a quieter version. This source is
 reproducible through tools/build_fire_sfx.ps1 and has no external license.
+
+## Hollowmere
+
+The marsh plays HitCtrl's *RPG - The Secret Within the Woods*, a mysterious
+guitar, lyre and strings composition licensed CC BY 3.0. Lanternwatch Camp uses HitCtrl's guitar-led *RPG Ambient 3*,
+licensed CC BY 3.0. Both committed source tracks are unmodified; region music
+selection applies the existing crossfade and looping behavior at -19 dB.
+Source links, attribution and license links are in `assets/music/LICENSES.md`,
+the pause-menu music credits, and the Windows distribution's MUSIC-LICENSES.txt.
+
+Marsh wildlife uses dedicated CC0 recordings for its alert, bite, hurt, death
+and movement cues. Crocodiles use adult alligator and crocodilian-type growls,
+plus the field recording's wet movement. Spiders use separate chattering and
+insect-like shrieks, with a deeper mix for the Broodqueen. Web warning,
+launch and impact also use spider-specific cues. None use the wolf, bandit,
+bow or arrow sounds. Exact source credits and processing details are in
+`assets/audio/LICENSES.md` and `tools/build_creature_audio.py`. Existing voice
+limits and distance culling apply.
+
+RegionAmbience plays one of three CC0 frog recordings by EZduzziteh at irregular
+18–36 second intervals outside camp. Calls originate 14–20 metres away at -23 dB
+with high frequencies attenuated. They pause with gameplay and are freed on
+travel. Sources: https://opengameart.org/content/ribbit-frog-sounds ; original
+ribbit_01.mp3 through ribbit_03.mp3 are renamed marsh_frog_1.mp3 through
+marsh_frog_3.mp3 without editing. No environmental or combat RNG affects loot.

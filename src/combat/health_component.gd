@@ -9,6 +9,7 @@ var maximum: float = 100.0
 var current: float = 100.0
 var armor: float = 0.0
 var invulnerable: bool = false
+var last_critical: bool = false
 
 func configure(hp: float, defense: float = 0.0) -> void:
 	maximum = maxf(1, hp)
@@ -21,6 +22,8 @@ func receive(packet: DamagePacket) -> void:
 		return
 	var defense := armor if packet.damage_type in [&"physical", &"melee", &"ranged"] else 0.0
 	var dealt := maxf(packet.minimum_damage, (packet.amount - defense) * packet.taken_multiplier)
+	last_critical = packet.critical
+	if last_critical: dealt *= 2.0
 	if dealt <= 0:
 		return
 	current = maxf(0, current - dealt)

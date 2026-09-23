@@ -205,6 +205,8 @@ func _process(delta: float) -> void:
 	damage_flash.color.a=maxf(0,damage_flash.color.a-delta*0.5)
 	if not is_instance_valid(player): return
 	status_text.text="Knocked down" if player.combat_state.knockdown_left>0 else ("Bleeding · %ds" % player.combat_state.bleed_left if player.combat_state.bleed_left>0 else "")
+	if player.statuses.has("root"): status_text.text = "Webbed"
+	elif player.statuses.has("poison"): status_text.text = "Poisoned"
 	prompt.text=""
 	target_box.hide()
 	if not mode.is_empty() or player.dead: return
@@ -215,6 +217,8 @@ func _process(delta: float) -> void:
 			best_distance=distance
 			prompt.text="[ E ]  "+target.interaction_name()
 	region_label.text=large_map.region.display_name.to_upper() if large_map.region.interior else ("BRIARWATCH  /  SANCTUARY" if player.global_position.distance_to(Vector3(-35,0,28))<20 else "THE BRIAR MARCH  /  WILDERNESS")
+	if large_map.region.region_id == &"hollowmere":
+		region_label.text = (large_map.region.hub_name + "  /  SANCTUARY" if large_map.region.local_music_bounds.has_point(Vector2(player.position.x,player.position.z)) else large_map.region.display_name).to_upper()
 	var enemy: Enemy=player.attack_target as Enemy
 	if not is_instance_valid(enemy):
 		enemy=player._pick_enemy(get_viewport().get_mouse_position()) as Enemy
@@ -330,7 +334,7 @@ func show_talents() -> void:
 	if not player.progression.talents_unlocked():
 		toast("Talents unlock at level 2. Earn EXP by defeating enemies.")
 		return
-	_begin("talents","Centurion talents","One point per level. Fully master every connected prerequisite to advance. Talent choices are permanent.")
+	_begin("talents","Centurion talents","One point per level. Fully master every connected prerequisite to advance. A camp mentor can reset talents for 100 gold.")
 	var talents:=TalentPanel.new()
 	talents.player=player
 	panel_body.add_child(talents)
@@ -402,6 +406,11 @@ func show_npc(npc: Npc) -> void:
 	greeting.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	panel_body.add_child(greeting)
 	match definition.service:
+		"trainer":
+			var explanation := _label("Reset both talent trees and recover every spent talent point. Learned ability bindings and active talent effects are cleared. Your level and EXP are kept.",17)
+			explanation.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			panel_body.add_child(explanation)
+			_button("Reset my talents · 100 gold",func(): service_action.emit("reset_talents",0),panel_body).disabled = player.inventory.gold < 100 or player.progression.ranks.is_empty()
 		"vendor":
 			var balance:=HBoxContainer.new()
 			panel_body.add_child(balance)
@@ -421,6 +430,12 @@ func show_npc(npc: Npc) -> void:
 			panel_body.add_child(_label("SANCTUARY",12,ArtTheme.GOLD))
 			_button("Tend my wounds  ·  Free",func(): service_action.emit("heal",0),panel_body)
 		"warden":
+			if definition.id == &"elric" and quest.is_completed("lions_den"):
+				var in_marsh := large_map.region.region_id == &"hollowmere"
+				greeting.text = "“The lanterns mark the safe ground. Beyond them lie drowned homesteads and trails our scouts have yet to chart. Somewhere out there is the hand that guided Vane. Search carefully; we will plan our next move here.”" if in_marsh else "“Kasparov is gathering his banners, but the bandits did not arrange all this alone. Someone put that beast in Vane's hands and paid to keep our lord in chains. The scouts followed their supply trails into the Hollowmere Marshes. We must learn who is pulling the strings. Our expedition has made camp on the old causeway. When you are ready, travel with me.”"
+				_button("Travel with Elric to Briarwatch" if in_marsh else "I am ready · Travel to the Hollowmere Marshes",func(): service_action.emit("travel",0),panel_body)
+				_button("Not yet · Farewell",close_panel,panel_body)
+				return
 			var offer:=quest.offered()
 			if offer.giver_npc != str(definition.id):
 				greeting.text="“Kasparov waits near Sister Iona. The lord has news from our scouts; hear what he has to say.”"
@@ -507,16 +522,33 @@ func show_pause() -> void:
 	_begin("pause","The March can wait","Your journey is saved after discoveries, trades, and recovery.")
 	_button("Return to the road",close_panel,panel_body)
 	_button("Save journey  [F5]",func(): save_requested.emit(),panel_body)
+	_button("Music credits",show_music_credits,panel_body)
 	_button("Save & quit",func(): save_requested.emit(); get_tree().quit(),panel_body)
 	panel_body.add_child(_label("FIELD NOTES",12,ArtTheme.GOLD))
 	panel_body.add_child(_label("LMB ground  Move      LMB enemy  Pursue & attack\nWASD  Move      Shift + LMB  Attack in place\nE  Interact      Q  Quest      I  Inventory      M  Map\nN  Talents (level 2+)      1–6  Assigned abilities / tonics\nClick an empty belt slot to assign; right-click to clear\n\nStep out of committed blows and evade arrows.\nDeath costs 10% of gold. Your equipment is safe.",16,ArtTheme.MUTED))
 
 func show_death() -> void:
-	_begin("death","The road takes its due","FALLEN IN THE BRIAR MARCH")
-	var message:=_label("Iona's wardens carry you home.\n\nYou lose 10% of your carried gold. Your equipment and quest progress remain.",21,ArtTheme.PALE,true)
+	_begin("death","The road takes its due","FALLEN IN " + large_map.region.display_name.to_upper())
+	var message:=_label("The wardens carry you to safety.\n\nYou lose 10% of your carried gold. Your equipment and quest progress remain.",21,ArtTheme.PALE,true)
 	message.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	panel_body.add_child(message)
-	_button("Return to Briarwatch",func(): close_panel(); respawn_requested.emit(),panel_body)
+	_button("Return to " + large_map.region.hub_name,func(): close_panel(); respawn_requested.emit(),panel_body)
+
+func show_music_credits() -> void:
+	_begin("credits","Music credits","Original compositions used under Creative Commons licenses.")
+	var list := _scroll_list(390)
+	for entry in [
+		"Town Theme RPG — cynicmusic · CC0 1.0\nopengameart.org/content/town-theme-rpg",
+		"Medieval: Exploration — RandomMind · CC0 1.0\nopengameart.org/content/medieval-exploration",
+		"Forgoten tomb ambience — kindland · CC0 1.0\nopengameart.org/content/forgoten-tomb-ambience",
+		"RPG Ambient 4 (The Dark Woods) — HitCtrl · CC BY 3.0\nopengameart.org/content/rpg-ambient-4-the-dark-woods",
+		"Determined Pursuit — Emma_MA · CC0 1.0\nopengameart.org/content/determined-pursuit-epic-orchestra-loop",
+		"RPG - The Secret Within the Woods — HitCtrl · CC BY 3.0\nopengameart.org/content/rpg-the-secret-within-the-woods",
+		"RPG Ambient 3 — HitCtrl · CC BY 3.0\nopengameart.org/content/rpg-ambient-3",
+		"Creative Commons licenses: creativecommons.org/licenses/by/3.0/\ncreativecommons.org/licenses/by/4.0/\ncreativecommons.org/publicdomain/zero/1.0/\nTracks are unmodified; playback volume and looping are set in-game."]:
+		var credit := _label(entry,15,ArtTheme.PALE)
+		credit.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		list.add_child(credit)
 
 func toast(text: String) -> void:
 	toast_label.text=text

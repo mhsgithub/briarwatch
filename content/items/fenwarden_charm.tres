@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=4 format=3]
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/ui/marsh_gear_atlas.png" id="atlas"]
+[sub_resource type="AtlasTexture" id="icon"]
+atlas = ExtResource("atlas")
+region = Rect2(940.5, 627.0, 313.5, 313.5)
+filter_clip = true
+[resource]
+script = ExtResource("script")
+id = &"fenwarden_charm"
+display_name = "Fenwarden Charm"
+description = "Amber holds a single reed seed, dry after all these years."
+slot = "amulet"
+tier = "green"
+appearance = "amulet"
+icon = SubResource("icon")
+price = 45
+sell_price = 9
+tint = Color(0.29, 0.39, 0.30, 1)
+vitality_bonus = 10

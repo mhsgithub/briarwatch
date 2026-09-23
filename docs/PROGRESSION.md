@@ -30,10 +30,12 @@ level-up, discarding overflow from that kill.
 
 Ordinary enemies grant 1 EXP, Elite Bandits grant 2, Darius/Brutus/Garrick grant 5,
 and Bloodfang grants 10. New definitions
-default to zero until configured. The finite current content totals 130 EXP before
+default to zero until configured. The Briar March and its instances total 130 EXP before
 summons: 87 ordinary enemies (87), nine Elite Bandits (18), Darius/Brutus/Garrick
 (15) and Bloodfang (10). His two pairs of Greyfangs add four EXP for a total of
-134. The content reaches level 3; the exact remainder depends on kill order
+134. Hollowmere's 25 crocodiles and 42 Widows grant 2 EXP each; its 14 Broodqueens
+grant 3 each, adding 176 EXP for 310 across both regions including summons.
+The final level and remainder depend on kill order
 because level-up discards overflow. No repeatable
 XP service or altered curve was added. Higher builds are verified in isolated tests.
 
@@ -49,7 +51,9 @@ content/progression/centurion.json. One point buys one rank. Every connected
 parent requires **maximum rank**; multiple parents mean **all must be mastered**.
 Older saves refund ranks whose prerequisites are no longer satisfied, preserving
 level and EXP. Valid allocations remain learned.
-There are no extra level gates, mana costs or respec service. Choices are permanent.
+There are no extra level gates or mana costs. Master Oswin in Briarwatch and
+Captain Tamsin in Lanternwatch reset learned talents for 100 gold, refunding
+all spent points and clearing learned ability bindings and active effects.
 
 - Battle: Block → Whirlwind / Impale; Whirlwind → Bloodthirst / Retaliate;
   Impale → Retaliate / Rampage; all three tier-3 talents → Bladestorm.

@@ -27,12 +27,16 @@ var brute: BruteCombat
 var den_combat: DenBossCombat
 var dormant: bool = false
 var corpse_consumed: bool = false
+var web_attack: WebAttack
 
 func _ready() -> void:
 	add_to_group("enemies")
 	statuses = StatusEffects.new()
 	add_child(statuses)
 	home = global_position
+	# Recast places walkable surfaces above the collision floor by a voxel.
+	# Compare feet to the adjusted path, keeping the tight corner tolerance.
+	navigation.path_height_offset = NavigationServer3D.map_get_cell_height(navigation.get_navigation_map())
 	var capsule := CapsuleShape3D.new()
 	capsule.radius = definition.collision_radius
 	capsule.height = definition.collision_height
@@ -75,6 +79,10 @@ func _ready() -> void:
 		den_combat = DenBossCombat.new()
 		den_combat.actor = self
 		add_child(den_combat)
+	if definition.web_cooldown > 0:
+		web_attack = WebAttack.new()
+		web_attack.actor = self
+		add_child(web_attack)
 
 func _physics_process(delta: float) -> void:
 	if dormant or health.current <= 0 or not is_instance_valid(target):
@@ -98,6 +106,10 @@ func _physics_process(delta: float) -> void:
 	health_label.visible = aggro and target.attack_target == self
 	health_label.text = "%s  %d / %d" % [definition.display_name, health.current, health.maximum]
 	if den_combat and den_combat.step(delta):
+		return
+	if web_attack and web_attack.step(delta):
+		velocity = Vector3.ZERO
+		visual.moving = false
 		return
 	if brute and brute.step(delta):
 		velocity = Vector3(0,-2,0)
@@ -184,6 +196,8 @@ func receive_damage(packet: DamagePacket) -> void:
 	aggro = true
 	if statuses.immune(str(packet.damage_type)): return
 	var before := health.current
+	if is_instance_valid(packet.source) and packet.source is Player:
+		packet.source.resolve_critical(packet)
 	health.receive(packet)
 	var dealt := before - health.current
 	if is_instance_valid(packet.source) and packet.source is Player:
@@ -195,7 +209,7 @@ func receive_damage(packet: DamagePacket) -> void:
 
 func _damaged(amount: float) -> void:
 	visual.hit()
-	FloatingText.spawn(get_parent(), global_position + Vector3.UP * 2, amount)
+	FloatingText.spawn(get_parent(), global_position + Vector3.UP * 2, amount, health.last_critical)
 
 func _die() -> void:
 	attack.cancel()

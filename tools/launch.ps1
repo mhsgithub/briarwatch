@@ -52,6 +52,12 @@ try {
             if ($LASTEXITCODE -eq 0) {
                 & $GodotPath --headless --path . --script res://tests/music.gd -- --test
             }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/hollowmere.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/marsh_movement.gd -- --test
+            }
         }
         'capture' {
             & $GodotPath --path . --script res://tests/visual_capture.gd -- --test
@@ -60,6 +66,9 @@ try {
             }
             if ($LASTEXITCODE -eq 0) {
                 & $GodotPath --path . --script res://tests/den_capture.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --path . --script res://tests/hollowmere_capture.gd -- --test
             }
         }
     }

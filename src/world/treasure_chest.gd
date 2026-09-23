@@ -3,6 +3,7 @@ class_name TreasureChest
 extends Node3D
 @export var chest_id: String = "woods_cache"
 @export var gold: int = 15
+@export var display_name: String = "bandit chest"
 @export var items: Array[ItemDefinition] = []
 var lid: Node3D
 var opened: bool = false
@@ -24,7 +25,7 @@ func _ready() -> void:
 	lid.rotation.x = -1.6 if opened else 0.0
 	if not opened: add_to_group("interactables")
 func interaction_name() -> String:
-	return "Open bandit chest"
+	return "Open " + display_name
 func open() -> bool:
 	if opened: return false
 	opened = true

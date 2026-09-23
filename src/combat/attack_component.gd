@@ -88,6 +88,8 @@ func _resolve() -> void:
 					packet.bleed_ticks = definition.bleed_ticks
 				packet.knockdown_seconds = definition.knockdown_seconds
 				packet.stun_seconds = swing_stun
+				packet.poison_damage = definition.poison_damage
+				packet.poison_seconds = definition.poison_seconds
 				packet.knockback = knockback
 				packet.accuracy = hit_chance if candidate is Player else -1.0
 				candidate.receive_damage(packet)

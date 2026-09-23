@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=4 format=3]
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/ui/rowan_gear_atlas.png" id="atlas"]
+[sub_resource type="AtlasTexture" id="icon"]
+atlas = ExtResource("atlas")
+region = Rect2(512.0, 0.0, 512.0, 512.0)
+filter_clip = true
+[resource]
+script = ExtResource("script")
+id = &"emerald_band"
+display_name = "Emerald Band"
+description = "A clear green stone set in a heavy, timeworn band."
+slot = "ring"
+tier = "green"
+appearance = "plain"
+icon = SubResource("icon")
+price = 125
+sell_price = 15
+tint = Color(0.28, 0.39, 0.31, 1)
+crit_rating = 1
+strength_bonus = 1

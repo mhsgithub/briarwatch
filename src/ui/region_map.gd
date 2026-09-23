@@ -8,6 +8,8 @@ var region: Region
 var roads: Array[PackedVector2Array]=[]
 var trees: PackedVector2Array=[]
 var houses: PackedVector2Array=[]
+var waters: Array[PackedVector2Array]=[]
+var landmarks: Array[Dictionary]=[]
 var redraw_timer: float=0
 
 func bind_region(value: Region) -> void:
@@ -15,7 +17,10 @@ func bind_region(value: Region) -> void:
 	roads.clear()
 	trees.clear()
 	houses.clear()
+	waters.clear()
+	landmarks.clear()
 	for child in region.navigation_region.get_children():
+		if child is MarshWater: waters.append(child.shore)
 		if child.get_script()==preload("res://src/world/road.gd") and child.width<10:
 			var line:=PackedVector2Array()
 			for p in child.points:
@@ -23,12 +28,17 @@ func bind_region(value: Region) -> void:
 				line.append(Vector2(world.x,world.z))
 			roads.append(line)
 	for prop in region.get_node("NavigationRegion/Scenery").get_children():
+		if prop is MarshProp and prop.kind == "cypress": trees.append(Vector2(prop.global_position.x,prop.global_position.z))
 		if prop is DarkThicket:
 			trees.append(Vector2(prop.global_position.x,prop.global_position.z))
 		if prop is WorldProp:
 			var p:=Vector2(prop.global_position.x,prop.global_position.z)
 			if prop.kind=="tree": trees.append(p)
-			elif prop.kind in ["house","tower"]: houses.append(p)
+			elif prop.kind in ["house","tower","tent"]: houses.append(p)
+	var pois := region.get_node_or_null("PointsOfInterest")
+	if pois:
+		for marker in pois.get_children():
+			landmarks.append({"position":Vector2(marker.position.x,marker.position.z),"label":str(marker.get_meta("display_name",marker.name))})
 	if not exploration.changed.is_connected(queue_redraw): exploration.changed.connect(queue_redraw)
 	if not quest.changed.is_connected(queue_redraw): quest.changed.connect(queue_redraw)
 	queue_redraw()
@@ -56,6 +66,15 @@ func _draw() -> void:
 			draw_line(Vector2(x,65),Vector2(x,size.y-65),Color(0.60,0.63,0.47,0.06),1)
 		for y in range(80,int(size.y)-40,80):
 			draw_line(Vector2(30,y),Vector2(size.x-30,y),Color(0.60,0.63,0.47,0.06),1)
+	for water in waters:
+		var shape := PackedVector2Array()
+		for p in water: shape.append(point(p))
+		draw_colored_polygon(shape,Color("243b3d"))
+		draw_polyline(shape,Color("3c5146"),1,true)
+	for landmark in landmarks:
+		var p := point(landmark.position)
+		draw_circle(p,3,ArtTheme.GOLD)
+		draw_string(ArtTheme.serif(),p+Vector2(6,-5),landmark.label,HORIZONTAL_ALIGNMENT_LEFT,-1,11,ArtTheme.MUTED)
 	for tree in trees:
 		var p:=point(tree)
 		var radius:=3.5 if expanded else 1.5
@@ -96,8 +115,8 @@ func _draw() -> void:
 		draw_string(ArtTheme.serif(),_label_position(p,objective.label,labels),objective.label,HORIZONTAL_ALIGNMENT_LEFT,-1,16,ArtTheme.PALE)
 	if expanded:
 		draw_string(ArtTheme.serif(),Vector2(30,43),region.display_name,HORIZONTAL_ALIGNMENT_LEFT,-1,29,ArtTheme.PALE)
-		draw_string(ThemeDB.fallback_font,Vector2(32,65),"FRONTIER CHART  /  BRIARWATCH",HORIZONTAL_ALIGNMENT_LEFT,-1,11,ArtTheme.GOLD)
-		draw_string(ThemeDB.fallback_font,Vector2(30,size.y-27),"◉ Quest objective     ·     Explore to chart the March",HORIZONTAL_ALIGNMENT_LEFT,-1,14,ArtTheme.MUTED)
+		draw_string(ThemeDB.fallback_font,Vector2(32,65),"FRONTIER CHART  /  " + region.hub_name.to_upper(),HORIZONTAL_ALIGNMENT_LEFT,-1,11,ArtTheme.GOLD)
+		draw_string(ThemeDB.fallback_font,Vector2(30,size.y-27),"◉ Quest objective     ·     Explore to chart the frontier",HORIZONTAL_ALIGNMENT_LEFT,-1,14,ArtTheme.MUTED)
 		draw_string(ThemeDB.fallback_font,Vector2(size.x-158,size.y-27),"[ M / Esc ]  Close",HORIZONTAL_ALIGNMENT_LEFT,-1,14,ArtTheme.GOLD)
 		var compass:=Vector2(size.x-63,65)
 		draw_line(compass-Vector2(0,20),compass+Vector2(0,20),ArtTheme.GOLD,1)

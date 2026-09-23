@@ -14,5 +14,7 @@ extends Resource
 @export var bleed_ticks: int = 0
 @export_range(0, 1) var bleed_chance: float = 1.0
 @export var knockdown_seconds: float = 0.0
+@export var poison_damage: float = 0.0
+@export var poison_seconds: float = 0.0
 ## Forward movement during a targeted melee windup; stand attacks never advance.
 @export_range(0, 10) var advance_speed: float = 0.0

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AttackDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/attack_definition.gd" id="script"]
+[resource]
+script = ExtResource("script")
+id = &"marsh_widow_bite"
+damage = 17.0
+reach = 2.1
+windup = 0.38
+cooldown = 1.35
+arc_degrees = 85.0
+poison_damage = 1.0
+poison_seconds = 3.0

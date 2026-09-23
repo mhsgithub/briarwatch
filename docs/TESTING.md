@@ -1,7 +1,7 @@
 # Verification
 
-Run `tools/launch.ps1 -Mode test` for the eight headless suites and
-`tools/launch.ps1 -Mode capture` for 50 rendered views. Both commands import
+Run `tools/launch.ps1 -Mode test` for the ten headless suites and
+`tools/launch.ps1 -Mode capture` for 62 rendered views. Both commands import
 source assets with Godot 4.7.2 stable before running.
 
 Tests instantiate the real main scene and pass `--test`, so they do not load
@@ -10,7 +10,7 @@ under `user://`. Captures and logs are ignored local files in `test-results/`.
 
 ## Automated coverage
 
-The suites contain 462 checks:
+The suites contain 689 checks:
 
 | Suite | Checks | Main coverage |
 |---|---:|---|
@@ -21,7 +21,14 @@ The suites contain 462 checks:
 | talent_ui.gd | 10 | Prerequisite display, tooltips, learning and action-slot assignment |
 | dark_woods.gd | 79 | Third quest, forest approach, maze traversal, both bosses, chest, Strength and save state |
 | encounter_feedback.gd | 36 | Knife collisions, burn feedback, death reset, repeat rewards, map rules and testing points |
-| music.gd | 15 | Asset decoding, area routing, boss start/end, death fallback and crossfading |
+| music.gd | 17 | Asset decoding, area routing, boss start/end, death fallback and crossfading |
+| hollowmere.gd | 209 | Travel, camp services, every spawn route, loot, crits, poison, webs, respec, vendors, ambience and persistence |
+| marsh_movement.gd | 16 | Live input, four bank-to-bank crossings, wildlife pursuit/audio and return travel |
+
+For the marsh creature audio, `creature_audio.gd` runs 50 focused checks of
+distinct recorded sources, imported cue lengths, live alert/attack/hurt/death
+events and the Broodqueen's lower voice. It runs separately from the ten gameplay
+suites so an audio-only change can be verified without repeating unrelated tests.
 
 Dark Woods coverage includes:
 
@@ -72,7 +79,8 @@ Brutus, rescue, Kasparov's return and the family seal. den_capture.gd adds:
 - 48-thrown-torch
 - 49-player-burning
 
-There are 50 images because the talent detail view also uses the 23b suffix.
+Hollowmere capture adds images 50–61 for travel, camp, bridge, chapel, spider
+grove, graves, crocodile, equipment, reset service, map, Rowan stock and Wyrmfang.
 Inspect the pictures after changing art or UI; a successful PNG write alone does
 not verify readability. Capture fixtures deliberately stage actors and freeze AI
 to expose specific poses; the headless encounter suite separately runs movement,
@@ -81,6 +89,22 @@ timers, hit resolution and quest lifecycle.
 The current verification was run on Windows using the pinned engine and
 Compatibility renderer. It establishes automated behavior and inspected layout;
 it is not an exhaustive manual difficulty playthrough or a second-PC certification.
+
+## Hollowmere gameplay regression
+
+`hollowmere.gd` covers travel gating, safe recovery, all authored spawn/cache
+routes, independent loot probabilities, critical hits, poison, web collision,
+talent resets, persistence, vendor stock/prices, purchases and equipment saves.
+`marsh_movement.gd` keeps the player's actual physics enabled and feeds mouse
+coordinates through the input handler. It checks grounded click movement,
+both directions of both bridges starting from the bank, ordinary AI pursuit
+and combat sound cues for all three creatures, and movement after return travel.
+The movement suite can also load the exported embedded PCK with the pinned
+engine's `--main-pack builds/windows/Briarwatch.exe` option. This tests packaged
+resources in addition to the Windows executable startup smoke test.
+
+Rendered fixtures intentionally freeze actors to frame art. They do not replace
+these movement tests, and a route query alone does not establish traversability.
 
 ## Local environment and portable source
 

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="NpcDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/npc_definition.gd" id="script"]
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://content/items/tonic.tres" id="tonic"]
+[ext_resource type="Resource" path="res://content/items/greater_tonic.tres" id="greater_tonic"]
+[ext_resource type="Resource" path="res://content/items/guardian_amulet.tres" id="guardian_amulet"]
+[ext_resource type="Resource" path="res://content/items/wyrmhide_grips.tres" id="wyrmhide_grips"]
+[ext_resource type="Resource" path="res://content/items/emerald_band.tres" id="emerald_band"]
+[ext_resource type="Resource" path="res://content/items/wyrmsteel_shoulders.tres" id="wyrmsteel_shoulders"]
+[ext_resource type="Resource" path="res://content/items/oakheart_guard.tres" id="oakheart_guard"]
+[ext_resource type="Resource" path="res://content/items/wyrmfang.tres" id="wyrmfang"]
+[resource]
+script = ExtResource("script")
+id = &"rowan"
+display_name = "Quartermaster Rowan"
+title = "Expedition supplies"
+service = "vendor"
+greeting = "Keep your steel dry and your boots tied. The mire swallows anything you cannot carry."
+appearance = "npc"
+tint = Color(0.34, 0.43, 0.36, 1)
+stock = Array[ExtResource("item")]([ExtResource("tonic"), ExtResource("greater_tonic"), ExtResource("guardian_amulet"), ExtResource("wyrmhide_grips"), ExtResource("emerald_band"), ExtResource("wyrmsteel_shoulders"), ExtResource("oakheart_guard"), ExtResource("wyrmfang")])

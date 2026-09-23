@@ -84,8 +84,10 @@ func _ready() -> void:
 	_restore_loot(region_state.get("loot", []))
 	initialized = true
 	_sync_story()
+	var recovery := saved_recovery_region(saved)
+	if recovery != region.region_id: travel.enter(recovery)
 	if not saved.is_empty() and not saved.has("progression"): _schedule_save()
-	hud.toast("Welcome to Briarwatch. Speak with Warden Elric.  [E]")
+	hud.toast("Welcome to %s. Speak with Warden Elric.  [E]" % region.hub_name)
 
 func _interact(target: Node) -> void:
 	if target is RegionPortal:
@@ -121,6 +123,19 @@ func _service(action: String, index: int) -> void:
 	if not is_instance_valid(npc):
 		return
 	match action:
+		"travel":
+			if npc.definition.id != &"elric" or not quest.is_completed("lions_den"): return
+			var destination: StringName = &"briar_march" if region.region_id == &"hollowmere" else &"hollowmere"
+			hud.close_panel()
+			call_deferred("_travel_to", destination, &"")
+			return
+		"reset_talents":
+			if npc.definition.service != "trainer": return
+			if player.reset_talents():
+				hud.toast("Your talents have been reset. All spent points are available again.")
+				AudioLibrary.play_ui(self,"gold_pickup")
+			else:
+				hud.toast("You need learned talents and 100 gold.")
 		"buy":
 			if index >= 0 and index < npc.definition.stock.size():
 				if not player.inventory.buy(npc.definition.stock[index]):
@@ -160,7 +175,7 @@ func _on_player_died() -> void:
 	_schedule_save()
 
 func _respawn() -> void:
-	if region.interior: travel.enter(&"briar_march")
+	if region.region_id != region.recovery_region: travel.enter(region.recovery_region)
 	player.respawn(region.player_spawn.global_position)
 	$Camera.initialized = false
 	_schedule_save()
@@ -174,13 +189,16 @@ func _travel_to(destination: StringName, arrival: StringName) -> void:
 
 func _region_changed(value: Region) -> void:
 	region = value
+	player.navigation.path_height_offset = region.navigation_region.navigation_mesh.cell_height
 	region.encounter_cleared.connect(quest.encounter_cleared)
 	region.enemy_defeated.connect(_enemy_defeated)
 	hud.large_map.bind_region(region)
 	hud.map_button.visible = region.map_enabled
 	$Camera.initialized = false
-	$Sun.light_energy = region.interior_sun if region.interior else 0.8
-	$Environment.environment.ambient_light_energy = region.interior_ambient if region.interior else 0.48
+	$Sun.light_energy = region.interior_sun if region.interior else region.outdoor_sun
+	$Environment.environment.ambient_light_energy = region.interior_ambient if region.interior else region.outdoor_ambient
+	$Environment.environment.fog_light_color = region.fog_color
+	$Environment.environment.fog_density = region.fog_density
 	$Environment.environment.fog_enabled = not region.interior
 	$Environment.environment.background_color = Color("0c1218") if region.interior else Color(0.075, 0.105, 0.115, 1)
 	_sync_story()
@@ -263,6 +281,7 @@ func _save(notify: bool) -> void:
 	if testing:
 		return
 	var data := {"inventory": player.inventory.serialize(), "quest": quest.serialize(), "regions": travel.snapshot(), "actions": player.actions.serialize(), "progression":player.progression.serialize(), "cooldowns":player.abilities.serialize()}
+	data["recovery_region"] = str(region.recovery_region)
 	var error := SaveStore.write(data)
 	if error != OK:
 		hud.toast("Save failed (%d). Your session is still running." % error)
@@ -271,6 +290,11 @@ func _save(notify: bool) -> void:
 
 func _serialize_loot() -> Array:
 	return travel.serialize_loot()
+
+func saved_recovery_region(saved: Dictionary) -> StringName:
+	var id := str(saved.get("recovery_region", "briar_march"))
+	if id == "hollowmere" and quest.is_completed("lions_den"): return &"hollowmere"
+	return &"briar_march"
 
 func _restore_loot(data: Variant) -> void:
 	travel.restore_loot(data)

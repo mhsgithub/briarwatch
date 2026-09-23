@@ -165,7 +165,9 @@ if ($smokeLog -match '(?m)^(SCRIPT ERROR|ERROR):') {
     throw "Exported-game smoke test logged an error. See $smokeLogPath"
 }
 
-Compress-Archive -LiteralPath $executablePath, $readmePath -DestinationPath $zipPath -CompressionLevel Optimal -Force
+$musicCreditsPath = Join-Path (Split-Path -Parent $executablePath) 'MUSIC-LICENSES.txt'
+Copy-Item -LiteralPath (Join-Path $projectRoot 'assets/music/LICENSES.md') -Destination $musicCreditsPath -Force
+Compress-Archive -LiteralPath $executablePath, $readmePath, $musicCreditsPath -DestinationPath $zipPath -CompressionLevel Optimal -Force
 $zipHash = (Get-FileHash -LiteralPath $zipPath -Algorithm SHA256).Hash.ToLowerInvariant()
 $zipSizeMb = [math]::Round((Get-Item -LiteralPath $zipPath).Length / 1MB, 1)
 

@@ -14,6 +14,12 @@ signal initialized
 @export var encounter_music_track: StringName
 @export var interior_ambient: float = 0.42
 @export var interior_sun: float = 0.35
+@export var outdoor_ambient: float = 0.48
+@export var outdoor_sun: float = 0.8
+@export var fog_color: Color = Color(0.17, 0.23, 0.25, 1)
+@export var fog_density: float = 0.003
+@export var hub_name: String = "Briarwatch"
+@export var recovery_region: StringName = &"briar_march"
 @export var map_bounds := Rect2(-80, -72, 160, 144)
 @onready var navigation_region: NavigationRegion3D = $NavigationRegion
 @onready var actors: Node3D = $Actors

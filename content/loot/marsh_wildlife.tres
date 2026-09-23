@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="LootTable" format=3]
+[ext_resource type="Script" path="res://src/data/loot_table.gd" id="table"]
+[ext_resource type="Script" path="res://src/data/loot_entry.gd" id="entry"]
+[ext_resource type="Resource" path="res://content/items/marshscale_tunic.tres" id="marshscale_tunic"]
+[ext_resource type="Resource" path="res://content/items/bogwalker_boots.tres" id="bogwalker_boots"]
+[ext_resource type="Resource" path="res://content/items/rotcap_cowl.tres" id="rotcap_cowl"]
+[ext_resource type="Resource" path="res://content/items/swampgrip_mitts.tres" id="swampgrip_mitts"]
+[ext_resource type="Resource" path="res://content/items/mud_stained_sash.tres" id="mud_stained_sash"]
+[ext_resource type="Resource" path="res://content/items/bogwood_shield.tres" id="bogwood_shield"]
+[ext_resource type="Resource" path="res://content/items/marsh_cleaver.tres" id="marsh_cleaver"]
+[ext_resource type="Resource" path="res://content/items/gloomhide_vest.tres" id="gloomhide_vest"]
+[ext_resource type="Resource" path="res://content/items/marshrunner_boots.tres" id="marshrunner_boots"]
+[ext_resource type="Resource" path="res://content/items/marshguard_crown.tres" id="marshguard_crown"]
+[ext_resource type="Resource" path="res://content/items/marshwarden_sash.tres" id="marshwarden_sash"]
+[ext_resource type="Resource" path="res://content/items/fenwarden_charm.tres" id="fenwarden_charm"]
+[ext_resource type="Resource" path="res://content/items/marshwarden_band.tres" id="marshwarden_band"]
+[ext_resource type="Resource" path="res://content/items/bogiron_greatblade.tres" id="bogiron_greatblade"]
+[sub_resource type="Resource" id="marshscale_tunic"]
+script = ExtResource("entry")
+item = ExtResource("marshscale_tunic")
+chance = 0.025
+[sub_resource type="Resource" id="bogwalker_boots"]
+script = ExtResource("entry")
+item = ExtResource("bogwalker_boots")
+chance = 0.025
+[sub_resource type="Resource" id="rotcap_cowl"]
+script = ExtResource("entry")
+item = ExtResource("rotcap_cowl")
+chance = 0.025
+[sub_resource type="Resource" id="swampgrip_mitts"]
+script = ExtResource("entry")
+item = ExtResource("swampgrip_mitts")
+chance = 0.025
+[sub_resource type="Resource" id="mud_stained_sash"]
+script = ExtResource("entry")
+item = ExtResource("mud_stained_sash")
+chance = 0.025
+[sub_resource type="Resource" id="bogwood_shield"]
+script = ExtResource("entry")
+item = ExtResource("bogwood_shield")
+chance = 0.02
+[sub_resource type="Resource" id="marsh_cleaver"]
+script = ExtResource("entry")
+item = ExtResource("marsh_cleaver")
+chance = 0.02
+[sub_resource type="Resource" id="gloomhide_vest"]
+script = ExtResource("entry")
+item = ExtResource("gloomhide_vest")
+chance = 0.015
+[sub_resource type="Resource" id="marshrunner_boots"]
+script = ExtResource("entry")
+item = ExtResource("marshrunner_boots")
+chance = 0.015
+[sub_resource type="Resource" id="marshguard_crown"]
+script = ExtResource("entry")
+item = ExtResource("marshguard_crown")
+chance = 0.015
+[sub_resource type="Resource" id="marshwarden_sash"]
+script = ExtResource("entry")
+item = ExtResource("marshwarden_sash")
+chance = 0.015
+[sub_resource type="Resource" id="fenwarden_charm"]
+script = ExtResource("entry")
+item = ExtResource("fenwarden_charm")
+chance = 0.015
+[sub_resource type="Resource" id="marshwarden_band"]
+script = ExtResource("entry")
+item = ExtResource("marshwarden_band")
+chance = 0.015
+[sub_resource type="Resource" id="bogiron_greatblade"]
+script = ExtResource("entry")
+item = ExtResource("bogiron_greatblade")
+chance = 0.01
+[resource]
+script = ExtResource("table")
+gold_weights = PackedFloat32Array(70, 0, 0, 12, 10, 8)
+entries = Array[ExtResource("entry")]([SubResource("marshscale_tunic"), SubResource("bogwalker_boots"), SubResource("rotcap_cowl"), SubResource("swampgrip_mitts"), SubResource("mud_stained_sash"), SubResource("bogwood_shield"), SubResource("marsh_cleaver"), SubResource("gloomhide_vest"), SubResource("marshrunner_boots"), SubResource("marshguard_crown"), SubResource("marshwarden_sash"), SubResource("fenwarden_charm"), SubResource("marshwarden_band"), SubResource("bogiron_greatblade")])

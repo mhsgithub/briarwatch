@@ -16,6 +16,7 @@
 [ext_resource type="Resource" path="res://content/npcs/iona.tres" id="iona"]
 [ext_resource type="Resource" path="res://content/npcs/elric.tres" id="elric"]
 
+[ext_resource type="Resource" path="res://content/npcs/oswin.tres" id="oswin"]
 [sub_resource type="NavigationMesh" id="navmesh"]
 geometry_parsed_geometry_type = 1
 geometry_collision_mask = 1
@@ -5715,3 +5716,8 @@ required_quest = &"lions_den"
 locked_message = "Lord Kasparov has news of the northwest woods. Speak with him in Briarwatch."
 [node name="dark_woods" type="Marker3D" parent="Arrivals"]
 position = Vector3(-104,0.1,-84)
+
+[node name="oswin" type="Node3D" parent="NPCs"]
+position = Vector3(-29,0.1,29)
+script = ExtResource("npc")
+definition = ExtResource("oswin")

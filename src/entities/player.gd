@@ -31,12 +31,14 @@ var burn_visual: PlayerBurn
 
 func _ready() -> void:
 	add_to_group("player")
+	navigation.path_height_offset = NavigationServer3D.map_get_cell_height(navigation.get_navigation_map())
 	burn_visual=PlayerBurn.new()
 	add_child(burn_visual)
 	progression = CharacterProgression.new()
 	add_child(progression)
 	statuses = StatusEffects.new()
 	add_child(statuses)
+	add_child(StatusVisual.new())
 	abilities = PlayerAbilities.new()
 	abilities.player = self
 	add_child(abilities)
@@ -203,6 +205,8 @@ func receive_damage(packet: DamagePacket) -> void:
 	if dead or health.invulnerable: return
 	if not abilities.accept_hit(packet): return
 	health.receive(packet)
+	if not dead and packet.poison_seconds > 0:
+		statuses.apply("poison", packet.poison_seconds, packet.poison_damage)
 	if not dead and (packet.bleed_ticks > 0 or packet.knockdown_seconds > 0):
 		combat_state.apply(packet)
 	if not dead and packet.knockback > 0 and not statuses.control_immune and is_instance_valid(packet.source):
@@ -263,6 +267,30 @@ func melee_damage() -> float:
 
 func strength() -> float:
 	return inventory.bonus("strength_bonus")
+
+func crit_rating() -> float:
+	return inventory.bonus("crit_rating")
+
+func resolve_critical(packet: DamagePacket) -> void:
+	# Resolve once per direct hit, including talent attacks. DOT never crits.
+	if packet.critical_resolved: return
+	packet.critical_resolved = true
+	if packet.damage_type not in [&"physical", &"melee", &"ranged"]: return
+	packet.critical = abilities.rng.randf() < clampf(crit_rating() / 100.0, 0.0, 1.0)
+
+func reset_talents() -> bool:
+	if dead or inventory.gold < 100 or progression.ranks.is_empty(): return false
+	inventory.gold -= 100
+	attack.cancel()
+	abilities.reset()
+	abilities.cooldowns.clear()
+	statuses.reset()
+	progression.ranks.clear()
+	progression.changed.emit()
+	for i in range(ActionLoadout.SIZE):
+		if actions.slots[i].get("kind", "") == "ability": actions.clear(i)
+	inventory.changed.emit()
+	return true
 
 func swing_seconds() -> float:
 	var weapon_item: ItemDefinition = inventory.equipment.weapon

@@ -21,7 +21,9 @@ static func sample(id: String) -> AudioStream:
 	var index := rng.randi_range(0,files.size()-1)
 	if files.size()>1 and index==previous: index=(index+1)%files.size()
 	last_variant[id]=index
-	var path: String = "res://assets/audio/"+str(files[index])+".wav"
+	var filename := str(files[index])
+	if filename.get_extension().is_empty(): filename += ".wav"
+	var path: String = "res://assets/audio/"+filename
 	if not streams.has(path): streams[path]=load(path)
 	return streams[path]
 

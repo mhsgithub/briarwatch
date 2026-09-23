@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="NpcDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/npc_definition.gd" id="script"]
+[resource]
+script = ExtResource("script")
+id = &"tamsin"
+display_name = "Captain Tamsin"
+title = "Expedition instructor"
+service = "trainer"
+greeting = "The marsh punishes old habits. One hundred gold buys time at the practice ring and a fresh beginning."
+appearance = "npc"
+tint = Color(0.34, 0.43, 0.36, 1)

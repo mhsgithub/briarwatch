@@ -163,3 +163,30 @@ the central approach remains clear. DarkThicket keeps collision separate from
 its exposed-root tree mesh and proximity fade.
 Run dark_woods.gd tests after path/wall/cage changes; they include actual
 player traversal, spawn reachability, release sprint and wall collision.
+
+## Hollowmere
+
+Open `scenes/world/hollowmere.tscn` to edit the second outdoor region. Roads,
+encounter groups, spawn markers, shoreline polygons, bridge cutouts, landmarks,
+NPCs and strongboxes are authored nodes. MarshWater.shore is an editable polygon;
+deep shores block both physical movement and navigation. Each bridge must have
+a matching rectangular crossing cutout on its water node. Shallow puddles use
+`deep = false`. Keep the walkable bridge deck above the visible water and retain
+the camp's clear approaches. Bridge ends have matching sloped colliders: keep
+their bank approaches and the full deck free of reeds, rocks and other props.
+NavigationAgent path-height offsets account for the baked voxel surface above
+actor feet without widening corner tolerance. Region.recovery_region is `hollowmere`.
+
+MarshProp supplies cypress trees, lanterns with decorative fireflies, reeds,
+bridges, ruins, boats, webs, graves and camp furnishings. Its variation seed is
+stable. Ground cover is batched and excludes authored water and roads. The offline
+`tools/author_hollowmere.py` regenerates the authored scene and its content
+resources; reflect manual scene edits in that source before regenerating.
+
+Run `tests/hollowmere.gd` after editing shores or placement. It verifies reachable
+enemies, landmarks and chests, actual bridge traversal, swept web collisions,
+status interactions, equipment probabilities, travel, resets and persistence.
+Also run `tests/marsh_movement.gd` for live grounded click movement, bank-to-bank
+crossings in both directions, wildlife pursuit and travel re-entry.
+`tests/hollowmere_capture.gd` produces camp, bridge, wildlife, landmark, dialogue,
+equipment and cartography screenshots under ignored `test-results/`.

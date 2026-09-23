@@ -4,6 +4,8 @@ extends Node
 
 const TRACKS := {
 	&"town": {"path": "res://assets/music/briarwatch_town.mp3", "volume": -18.0},
+	&"hollowmere": {"path": "res://assets/music/hollowmere_marshes.ogg", "volume": -19.0},
+	&"hollowmere_camp": {"path": "res://assets/music/hollowmere_camp.ogg", "volume": -19.0},
 	&"wilderness": {"path": "res://assets/music/briar_march_wilderness.mp3", "volume": -18.0},
 	&"cellars": {"path": "res://assets/music/warwick_cellars.mp3", "volume": -20.0},
 	&"dark_woods": {"path": "res://assets/music/dark_woods.ogg", "volume": -20.0},

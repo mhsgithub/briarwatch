@@ -276,5 +276,111 @@
     ],
     "range": 18,
     "cooldown": 0.3
+  },
+  "reptile_attack": {
+    "files": [
+      "reptile_attack_1",
+      "reptile_attack_2"
+    ],
+    "volume_db": -12,
+    "range": 22,
+    "cooldown": 0.1
+  },
+  "reptile_alert": {
+    "files": [
+      "reptile_alert"
+    ],
+    "volume_db": -12,
+    "range": 22,
+    "cooldown": 0.22
+  },
+  "reptile_hurt": {
+    "files": [
+      "reptile_hurt"
+    ],
+    "volume_db": -12,
+    "range": 22,
+    "cooldown": 0.1
+  },
+  "reptile_death": {
+    "files": [
+      "reptile_death"
+    ],
+    "volume_db": -12,
+    "range": 22,
+    "cooldown": 0.1
+  },
+  "spider_attack": {
+    "files": [
+      "spider_attack_1",
+      "spider_attack_2"
+    ],
+    "volume_db": -10,
+    "range": 22,
+    "cooldown": 0.1
+  },
+  "spider_alert": {
+    "files": [
+      "spider_alert"
+    ],
+    "volume_db": -11,
+    "range": 22,
+    "cooldown": 0.22
+  },
+  "spider_hurt": {
+    "files": [
+      "spider_hurt"
+    ],
+    "volume_db": -10,
+    "range": 22,
+    "cooldown": 0.1
+  },
+  "spider_death": {
+    "files": [
+      "spider_death"
+    ],
+    "volume_db": -10,
+    "range": 22,
+    "cooldown": 0.1
+  },
+  "reptile_step": {
+    "files": ["reptile_step"],
+    "volume_db": -20,
+    "range": 16,
+    "cooldown": 0.08
+  },
+  "spider_step": {
+    "files": ["spider_step"],
+    "volume_db": -20,
+    "range": 16,
+    "cooldown": 0.08
+  },
+  "spider_web": {
+    "files": ["spider_web"],
+    "volume_db": -15,
+    "range": 25,
+    "cooldown": 0.35
+  },
+  "spider_web_cast": {
+    "files": ["spider_web_cast"],
+    "volume_db": -13,
+    "range": 25,
+    "cooldown": 0.3
+  },
+  "spider_web_impact": {
+    "files": ["spider_web_impact"],
+    "volume_db": -13,
+    "range": 25,
+    "cooldown": 0.15
+  },
+  "marsh_frogs": {
+    "files": [
+      "marsh_frog_1.mp3",
+      "marsh_frog_2.mp3",
+      "marsh_frog_3.mp3"
+    ],
+    "volume_db": -23,
+    "range": 35,
+    "cooldown": 5
   }
 }

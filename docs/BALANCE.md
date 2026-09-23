@@ -10,13 +10,17 @@ Do not copy its characters, maps, names or assets.
 ## Character and combat
 
 The only playable class is **Centurion**. Naked base stats are **0 melee damage,
-0 Strength, 0 armor, 100 vitality**. A new character starts with Watch sword, Padded Coat,
+0 Strength, 0 Crit Rating, 0 armor, 100 vitality**. A new character starts with Watch sword, Padded Coat,
 Oak shield, one Tonic and zero gold: 4 melee damage, 3 armor, 100 vitality.
 Existing saves retain their character state while using the current item definitions.
 
 Melee damage is base plus equipped damage bonuses plus Strength, before the
 target's armor. Each point of Strength adds one melee damage, including the
 weapon-scaled Centurion abilities. Base Strength is zero.
+Each point of Crit Rating grants one percentage point of critical chance, capped
+at 100%. Direct player hits and damaging talents can critically strike for double
+post-armor damage; damage-over-time effects cannot. Movement speed bonuses on
+equipment add to movement talents. Both are displayed in the character panel.
 One armor subtracts one incoming melee/ranged physical damage, with a floor of
 zero for ordinary/player damage. Enemy attacks carry an explicit minimum of one
 damage after armor on a successful hit; a miss deals no damage. Block is a learned passive; Elemental Resolve gives temporary elemental immunity. Weapon attack speed is **seconds between swing starts**,
@@ -59,8 +63,9 @@ abilities while the current Centurion talents use the same action belt.
 ## Items
 
 Values below are gold. Sell prices are explicit and independent of buy prices.
-Green items are Guardian’s Amulet, Kasparov Family Seal, Blackroad Belt and
-Bloodclaw; the remaining populated equipment is White. Names use White → Green →
+The March's Green items are Guardian’s Amulet, Kasparov Family Seal, Blackroad
+Belt and Bloodclaw; Hollowmere adds Green drops and expedition vendor gear.
+Names use White → Green →
 Blue → Legendary (orange) colors in item details, tooltips, shops and world drops.
 Blue/Legendary are supported tiers, not additional items in the present catalog.
 
@@ -257,3 +262,19 @@ Death during an unfinished den encounter resets both bosses, the cage and
 encounter hazards; reward credits prevent duplicate EXP and loot on retries.
 The U testing shortcut adds 15 spendable talent points, including at level 1;
 normal rank caps and prerequisites still apply, and grants persist in saves.
+
+## Hollowmere wildlife, equipment and services
+
+Hollowmere has 25 crocodiles (100 HP, 20 damage, 70% hit, 2 EXP), 42 Marsh Widows
+(80 HP, 17 damage, 70% hit, 2 EXP) and 14 Broodqueens (150 HP, 25 damage, 90% hit,
+3 EXP). Widow hits apply one poison damage per second for three seconds.
+Broodqueen ranged webs root for two seconds, with 0.8-second warnings and
+9.5–12.5-second cooldowns. All three use a 28-metre leash. Shared gold weights
+are 70% zero, 12% three, 10% four and 8% five. Their fourteen independent item
+rolls and complete gear values are listed in [Hollowmere's loot table](HOLLOWMERE.md).
+
+Oswin in Briarwatch and Tamsin in Lanternwatch reset both talent trees for 100
+gold. Every spent point is refunded, including spent testing grants. Level/EXP
+remain. Empty trees and insufficient funds make no change. Learned ability
+bindings, active talent effects and cooldowns are cleared. Five marsh caches
+drop 12, 15, 20, 10 and 18 gold respectively and never refill.

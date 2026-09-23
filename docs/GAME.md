@@ -16,7 +16,7 @@ game's characters, dialogue, geography, assets, classes or storyline.
 
 The player begins in a small timber-and-stone village with a sword, shield, padded
 coat, one Tonic and zero gold. The class is named Centurion: base stats without
-gear are 0 melee damage, 0 Strength, 0 armor and 100 vitality. A single connected region surrounds
+gear are 0 melee damage, 0 Strength, 0 Crit Rating, 0 armor and 100 vitality. The first connected region surrounds
 it: meadow, sparse pinewood, branching paths, a charcoal camp, an eastroad camp,
 an old watchtower and scattered ruins. The map reveals roads and scenery as you explore and marks only the active quest
 objective. The outdoor region connects through an interactive doorway to a separate
@@ -74,6 +74,7 @@ Outlaw's Mantle. The key cannot be sold or blocked by a full pack.
 **Mara**, smith and supplier: buy upgrades and tonics; sell unequipped finds.
 **Sister Iona**, healer: restore health freely.
 **Warden Elric**, roadkeeper: give the objective and its one-time reward.
+**Master Oswin**, veteran instructor: reset both talent trees for 100 gold.
 
 ## Presentation and future direction
 
@@ -93,7 +94,7 @@ a vitality orb and a six-slot assignable action belt. The character panel combin
 Centurion preview, live stats, eleven equipment slots and a 20-cell pack. Gear slots
 are head, shoulders, armor, gloves, belt, boots, amulet, two rings, main hand and
 off hand. Each bag item occupies one cell; this is not a variable-size packing
-system. The twenty-four-item catalog includes Outlaw's Mantle, the key, the
+system. The thirty-eight-item catalog includes Outlaw's Mantle, the key, the
 Green Kasparov Family Seal ring, Blackroad Belt and Bloodclaw. Equipped gear appears on both the world
 character and portrait. Removing all equipment leaves simple clothing. The
 Pitchfork reserves both hands. N opens the bronze/enamel talent window at level 2.
@@ -166,4 +167,26 @@ in total. Its hooked, blood-streaked blade appears on the character and portrait
 Bloodfang's death sends the Centurion back to Kasparov for 50 gold. The lord
 thanks the player for freeing Briarwatch and begins gathering his armies to
 drive the remaining bandits from the lands. This concludes the first map's
-three-quest story while leaving the wider kingdom open to later adventures.
+three-quest story. Elric then follows the bandits' supply trails into the
+Hollowmere Marshes, suspecting that another power put Bloodfang in Vane's hands.
+
+## The Hollowmere Marshes
+
+The second outdoor map is a 288 × 256 metre dark, misty marsh. Elric escorts the
+player to Lanternwatch Camp after Kasparov receives the third quest hand-in.
+Rowan supplies gear and tonics, Maelin heals, and Tamsin resets talents for 100
+gold. The same reset service is available from Oswin in Briarwatch. Elric offers
+return travel, and marsh deaths recover at camp.
+
+Raised trails and two timber bridges connect drowned ruins, a ferry landing,
+pilgrim graves, a ruined chapel and an old beacon. Cypress roots, hanging moss,
+reeds, peat, shallow puddles and drifting mist surround the routes. Warm lamps
+draw decorative fireflies. Eighty-one crocodiles, Widows and Broodqueens occupy
+thirty-two encounters across trails, groves and shore clearings, while five strongboxes offer 10–20 gold as floor loot.
+Widows poison their victims; Broodqueens fire webs that briefly root them.
+Fourteen marsh items expand the equipment catalog, including movement bonuses
+and Crit Rating. Every point gives 1% critical chance; critical hits double damage
+and display larger yellow numbers. No marsh quests are offered yet.
+
+See [Hollowmere](HOLLOWMERE.md) for the camp, landmarks, wildlife, loot tables,
+soundtrack and authoring details.

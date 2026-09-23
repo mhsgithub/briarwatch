@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=4 format=3]
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/ui/rowan_gear_atlas.png" id="atlas"]
+[sub_resource type="AtlasTexture" id="icon"]
+atlas = ExtResource("atlas")
+region = Rect2(0.0, 512.0, 512.0, 512.0)
+filter_clip = true
+[resource]
+script = ExtResource("script")
+id = &"oakheart_guard"
+display_name = "Oakheart Guard"
+description = "Living heartwood held fast by weathered bronze."
+slot = "shield"
+tier = "green"
+appearance = "oak"
+icon = SubResource("icon")
+price = 150
+sell_price = 16
+tint = Color(0.28, 0.39, 0.31, 1)
+armor_bonus = 5
+vitality_bonus = 10

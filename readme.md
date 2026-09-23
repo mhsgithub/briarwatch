@@ -1,10 +1,11 @@
 # Briarwatch
 
 An original single-player PC action RPG set in a weathered frontier of timber
-villages, old stone defenses and dangerous woodland roads. This first milestone
-is a playable foundation: **a 256 × 224 metre region with 76 enemies in nineteen
-encounters, watchtower, Warwick cellar and Dark Woods instances, four bosses, three linked quests,
-levels 1–20 and fourteen Centurion talents**, alongside loot, gear and trading.
+villages, old stone defenses, dangerous woodland roads and mist-covered marshes.
+The playable foundation contains **the 256 × 224 metre Briar March and the
+288 × 256 metre Hollowmere Marshes**, plus watchtower, Warwick cellar and Dark
+Woods instances, four bosses, three linked quests, levels 1–20 and fourteen
+Centurion talents, alongside loot, gear, trading and paid talent resets.
 
 Read [the game description](docs/GAME.md) for creative direction and scope, and
 [the architecture](docs/ARCHITECTURE.md) before extending systems.
@@ -84,6 +85,21 @@ and objective progress intact, including when dying inside the tower. Inventory,
 dialogue and map panels pause combat. Resting restores one vitality every two
 seconds after four seconds without combat, only while no enemy is chasing you.
 
+After defeating Vane and Bloodfang, hand **Into the Lion's Den** in to Kasparov.
+Speak with **Warden Elric** and confirm travel to **The Hollowmere Marshes**.
+The expedition arrives at Lanternwatch Camp: Rowan trades equipment and tonics,
+Maelin heals, and Tamsin resets talents for 100 gold. Elric also offers return
+travel to Briarwatch, where Master Oswin provides the same talent reset service.
+Hollowmere contains seventy crocodiles, Marsh Widows and Broodqueens, seven
+wilderness landmarks, five caches holding 10–20 gold, fourteen new equipment
+pieces, two bridge crossings, and distinct camp and wilderness soundtracks.
+Its story continues through Elric's dialogue; no marsh quests are offered yet.
+
+Each **Crit Rating** grants 1% critical chance, starting at zero. Critical hits
+deal twice the damage and show larger yellow numbers. Gear can also increase
+movement speed. Widow poison and Broodqueen webs interact with existing wards
+and Unshackled. Chests scatter their contents onto the ground for collection.
+
 Click an item to inspect it; double-click or right-click to equip/use it. Drag
 pack items onto compatible gear slots, or drag equipped gear back to the pack.
 Six action slots start empty: click to assign a learned ability or consumable,
@@ -105,7 +121,8 @@ attack in place.
 
 The single local character uses Godot's `user://briarwatch_v1.json`, normally
 `%APPDATA%/Godot/app_userdata/Briarwatch/`. A previous valid save is kept as `.bak`.
-Loading resumes in town at full health. Inventory, equipment, gold, quest state,
+Loading resumes at full health in Briarwatch or Lanternwatch Camp, according to
+the saved recovery region. Existing saves default to Briarwatch. Inventory, equipment, gold, quest state,
 defeated spawn IDs, action bindings, explored map cells and uncollected drops persist
 separately for each region. The key has its own unsellable quest pouch and takes
 no bag space. Injured living
@@ -167,7 +184,8 @@ interface. See [visual direction and asset prompts](docs/VISUAL_DIRECTION.md) an
 
 N opens two Centurion trees from level 2. Each level awards one point; every
 connected prerequisite must be fully ranked. Learned abilities bind to slots 1–6.
-The current content provides 130 EXP before Bloodfang's summoned packs, or 134 EXP
-including both pairs of Greyfangs. Clearing the available content reaches level 3;
-overflow is discarded at each level-up. The full level curve and
+The Briar March storyline provides 130 EXP before Bloodfang's summoned packs,
+or 134 EXP including both pairs of Greyfangs. Hollowmere adds 176 EXP, for 310
+across both regions including summons. Overflow is discarded at each level-up.
+The full level curve and
 talent rules are in [progression and combat rules](docs/PROGRESSION.md).

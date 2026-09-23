@@ -2,13 +2,13 @@ class_name FloatingText
 extends Label3D
 var elapsed: float = 0
 
-static func spawn(parent: Node3D, point: Vector3, amount: float) -> FloatingText:
+static func spawn(parent: Node3D, point: Vector3, amount: float, critical: bool = false) -> FloatingText:
 	# Attach the script before entering the tree so Godot registers _process.
 	var label := FloatingText.new()
 	label.text = str(int(amount))
-	label.font_size = 42
+	label.font_size = 58 if critical else 42
 	label.pixel_size = 0.009
-	label.modulate = Color("ffe5b0")
+	label.modulate = Color("ffdb37") if critical else Color("ffe5b0")
 	label.outline_modulate = Color("19110e")
 	label.outline_size = 8
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
