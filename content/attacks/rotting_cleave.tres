@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/attack_definition.gd" id="script"]
+
+[resource]
+script = ExtResource("script")
+id = &"rotting_cleave"
+damage = 60.0
+reach = 3.6
+windup = 1
+cooldown = 2
+arc_degrees = 110.0

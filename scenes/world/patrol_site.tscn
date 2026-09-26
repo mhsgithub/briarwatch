@@ -1,0 +1,21 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://src/presentation/patrol_remains.gd" id="remains"]
+[ext_resource type="Script" path="res://src/world/chapel_lever.gd" id="lever"]
+[node name="PatrolSite" type="Node3D"]
+[node name="CorvinArrival" type="Marker3D" parent="."]
+position = Vector3(-99,0.1,26)
+[node name="FallenWatchman1" type="Node3D" parent="."]
+position = Vector3(-103,0,28)
+script = ExtResource("remains")
+variation = 1
+[node name="FallenWatchman2" type="Node3D" parent="."]
+position = Vector3(-95,0,30)
+script = ExtResource("remains")
+variation = 2
+[node name="FallenWatchman3" type="Node3D" parent="."]
+position = Vector3(-101,0,31)
+script = ExtResource("remains")
+variation = 3
+[node name="ChapelLever" type="Node3D" parent="."]
+position = Vector3(39,0,31)
+script = ExtResource("lever")

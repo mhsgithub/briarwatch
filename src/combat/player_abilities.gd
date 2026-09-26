@@ -29,6 +29,7 @@ func _swing(_direction: Vector3, _duration: float) -> void:
 func remaining(id: String) -> float:
 	return float(cooldowns.get(id,0))
 func ready_reason(id: String) -> String:
+	if player.cinematic_locked: return "You cannot act during the encounter."
 	if player.dead: return "You cannot act while fallen."
 	if player.progression.rank(id) == 0: return "Learn this talent first."
 	if player.combat_state and player.combat_state.knockdown_left > 0 or player.statuses.has("stun"): return "You are stunned."
@@ -93,6 +94,11 @@ func activate(id: String) -> bool:
 func damage_dealt(amount: float) -> void:
 	if amount > 0 and not player.dead:
 		player.health.heal(amount * player.progression.rank("bloodthirst") * 0.01)
+		for item: ItemDefinition in player.inventory.equipment.values():
+			if item and item.life_steal_chance > 0 and rng.randf() < item.life_steal_chance:
+				player.health.heal(item.life_steal_amount)
+				flash(0.55,Color("8974b0"))
+				sound("reliquary_siphon",1.0)
 func movement_multiplier() -> float:
 	var bonus := player.progression.rank("momentum") * 0.03 + player.inventory.bonus("movement_bonus") / 100.0
 	if rampage_left > 0: bonus += 0.2

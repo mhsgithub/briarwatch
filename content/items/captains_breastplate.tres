@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/item_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/ui/captains_breastplate.svg" id="icon"]
+[resource]
+script = ExtResource("script")
+id = &"captains_breastplate"
+display_name = "Captain's Breastplate"
+description = "Lanternwatch steel, its reed-and-lantern crest scarred by a darkness no forge could temper."
+slot = "body"
+tier = "green"
+armor_bonus = 5.0
+vitality_bonus = 5.0
+crit_rating = 1.0
+price = 160
+sell_price = 16
+appearance = "captain_plate"
+icon = ExtResource("icon")
+tint = Color(0.24, 0.36, 0.36, 1)

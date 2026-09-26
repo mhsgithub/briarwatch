@@ -27,7 +27,7 @@ func _voice(id: String, gain: float=0.0) -> void:
 	AudioLibrary.play_world(actor,actor.global_position+Vector3.UP,id,pitch,gain)
 
 func _attack() -> void:
-	if profile() in [&"reptile", &"spider"]:
+	if profile() in [&"reptile", &"spider", &"zombie", &"skeleton", &"occult"]:
 		_voice(str(profile())+"_attack")
 	elif profile()==&"wolf":
 		_voice("wolf_bite")
@@ -43,18 +43,18 @@ func _attack() -> void:
 			vocal_cooldown=1.6
 
 func _hurt(_amount: float) -> void:
-	if profile() not in [&"reptile", &"spider"]: _voice("impact")
+	if profile() not in [&"reptile", &"spider", &"zombie", &"skeleton", &"occult"]: _voice("impact")
 	var health: HealthComponent=actor.get_node("Health")
 	if health.armor>0: _voice("metal",-8)
 	# Death gets its own reaction rather than stacking a hurt grunt and death cry.
 	if health.current<=0 or hurt_cooldown>0: return
-	if profile() in [&"reptile", &"spider"]: _voice(str(profile())+"_hurt")
+	if profile() in [&"reptile", &"spider", &"zombie", &"skeleton", &"occult"]: _voice(str(profile())+"_hurt")
 	else: _voice("wolf_hurt" if profile()==&"wolf" else "human_hurt")
 	hurt_cooldown=0.3
 	vocal_cooldown=0.9
 
 func _death() -> void:
-	if profile() in [&"reptile", &"spider"]:
+	if profile() in [&"reptile", &"spider", &"zombie", &"skeleton", &"occult"]:
 		_voice(str(profile())+"_death")
 	else:
 		_voice("wolf_death" if profile()==&"wolf" else "human_death")
@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
 	if actor.get_node("Health").current<=0: return
 	if actor is Enemy:
 		if actor.aggro and not last_aggro and vocal_cooldown<=0:
-			if profile() in [&"reptile", &"spider"]: _voice(str(profile())+"_alert")
+			if profile() in [&"reptile", &"spider", &"zombie", &"skeleton", &"occult"]: _voice(str(profile())+"_alert")
 			else: _voice("wolf_growl" if profile()==&"wolf" else "human_effort",-3)
 			vocal_cooldown=1.5
 		last_aggro=actor.aggro
@@ -80,7 +80,7 @@ func _physics_process(delta: float) -> void:
 	var stride:=0.85 if profile() in [&"wolf", &"reptile", &"spider"] else 1.55
 	if step_distance>=stride:
 		step_distance=fmod(step_distance,stride)
-		var cue: String = "paw" if profile()==&"wolf" else (str(profile())+"_step" if profile() in [&"reptile", &"spider"] else "step")
+		var cue: String = "paw" if profile()==&"wolf" else (str(profile())+"_step" if profile() in [&"reptile", &"spider", &"zombie", &"skeleton", &"occult"] else "step")
 		_voice(cue,-4 if actor is Enemy else 0)
 
 static func play_drop(parent: Node3D, point: Vector3, gear: bool) -> void:

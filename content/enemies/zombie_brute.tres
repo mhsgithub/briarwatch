@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/attacks/zombie_brute.tres" id="attack"]
+[ext_resource type="Resource" path="res://content/loot/marsh_wildlife.tres" id="loot"]
+[ext_resource type="Script" path="res://src/data/charge_definition.gd" id="charge"]
+[sub_resource type="Resource" id="charge"]
+script = ExtResource("charge")
+[resource]
+script = ExtResource("script")
+id = &"zombie_brute"
+display_name = "Zombie Brute"
+appearance = "zombie_brute"
+max_health = 200.0
+hit_chance = 1.0
+experience = 4
+audio_profile = "zombie"
+attack = ExtResource("attack")
+move_speed = 2.6
+voice_pitch = 0.67
+collision_radius = 0.65
+collision_height = 2.2
+charge = SubResource("charge")
+loot_table = ExtResource("loot")

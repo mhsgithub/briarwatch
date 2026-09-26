@@ -3,6 +3,7 @@ extends Node
 ## Selects region music and crossfades without coupling music to combat audio.
 
 const TRACKS := {
+	&"chapel_crypts": {"path":"res://assets/music/chapel_crypts.ogg", "volume":-20.0},
 	&"town": {"path": "res://assets/music/briarwatch_town.mp3", "volume": -18.0},
 	&"hollowmere": {"path": "res://assets/music/hollowmere_marshes.ogg", "volume": -19.0},
 	&"hollowmere_camp": {"path": "res://assets/music/hollowmere_camp.ogg", "volume": -19.0},
@@ -50,7 +51,7 @@ func requested_track() -> StringName:
 	if not region.local_music_track.is_empty() and region.local_music_bounds.has_point(Vector2(session.player.position.x,session.player.position.z)):
 		return region.local_music_track
 	if not region.encounter_music_track.is_empty():
-		var den:=region.get_node_or_null("DenEncounter") as DenEncounter
+		var den:=region.get_node_or_null(region.encounter_music_owner)
 		if den and den.music_active() and not session.player.dead:
 			return region.encounter_music_track
 	return region.music_track

@@ -1,0 +1,199 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://src/world/region.gd" id="region"]
+[ext_resource type="Script" path="res://src/world/crypt_chamber.gd" id="room"]
+[ext_resource type="Script" path="res://src/world/hold_dressing.gd" id="dressing"]
+[ext_resource type="Script" path="res://src/world/region_portal.gd" id="portal"]
+[ext_resource type="Script" path="res://src/world/encounter.gd" id="encounter"]
+[ext_resource type="Script" path="res://src/world/enemy_spawn.gd" id="spawn"]
+[ext_resource type="Resource" path="res://content/enemies/zombie.tres" id="zombie"]
+[ext_resource type="Resource" path="res://content/enemies/skeletal_archer.tres" id="skeletal_archer"]
+[ext_resource type="Resource" path="res://content/enemies/marsh_widow.tres" id="marsh_widow"]
+[ext_resource type="Resource" path="res://content/enemies/malrec.tres" id="malrec"]
+[ext_resource type="Script" path="res://src/world/malrec_encounter.gd" id="boss_controller"]
+[ext_resource type="Resource" path="res://content/encounters/malrec.tres" id="boss_kit"]
+[sub_resource type="NavigationMesh" id="nav"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 1
+cell_size = 0.3
+cell_height = 0.1
+agent_radius = 0.6
+agent_height = 2.0
+agent_max_climb = 0.5
+[node name="Darkmere" type="Node3D"]
+script = ExtResource("region")
+region_id = &"darkmere_halls"
+display_name = "Darkmere Hold · The Lower Halls"
+interior = true
+recovery_region = &"hollowmere"
+hub_name = "Lanternwatch Camp"
+music_track = &"chapel_crypts"
+interior_ambient = 0.2
+interior_sun = 0.1
+map_bounds = Rect2(-24,-35,48,70)
+[node name="NavigationRegion" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("nav")
+[node name="Scenery" type="Node3D" parent="NavigationRegion"]
+[node name="Hall" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0,0,0)
+script = ExtResource("room")
+extent = Vector2(10,64)
+lit = false
+furnishings = false
+north_opening = 4.0
+south_opening = 4.0
+west_openings = PackedVector2Array(12,4.2,-23,4.2)
+east_openings = PackedVector2Array(-8,4.2)
+[node name="Barracks" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12,0,12)
+script = ExtResource("room")
+extent = Vector2(14,14)
+lit = false
+furnishings = false
+east_openings = PackedVector2Array(0,4.2)
+[node name="Store" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(13,0,-8)
+script = ExtResource("room")
+extent = Vector2(16,16)
+lit = false
+furnishings = false
+west_openings = PackedVector2Array(0,4.2)
+[node name="Guardroom" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12,0,-23)
+script = ExtResource("room")
+extent = Vector2(14,14)
+lit = false
+furnishings = false
+east_openings = PackedVector2Array(0,4.2)
+[node name="Furnishings" type="Node3D" parent="NavigationRegion/Scenery"]
+script = ExtResource("dressing")
+upper = false
+[node name="Actors" type="Node3D" parent="."]
+[node name="NPCs" type="Node3D" parent="."]
+[node name="Arrivals" type="Node3D" parent="."]
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+position = Vector3(0,0.1,29)
+[node name="upstairs" type="Marker3D" parent="Arrivals"]
+position = Vector3(0,0.1,-27)
+[node name="Portals" type="Node3D" parent="."]
+[node name="Exit" type="Node3D" parent="Portals"]
+position = Vector3(0,0,30.5)
+script = ExtResource("portal")
+display_name = "Return to Hollowmere"
+destination = &"hollowmere"
+arrival = &"darkmere"
+appearance = "stairs"
+[node name="UpperFloor" type="Node3D" parent="Portals"]
+position = Vector3(0,0,-29)
+script = ExtResource("portal")
+display_name = "Ascend to the upper chamber"
+destination = &"darkmere_sanctum"
+appearance = "stairs"
+[node name="Encounters" type="Node3D" parent="."]
+[node name="gate" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"darkmere_gate"
+[node name="Enemy0" type="Marker3D" parent="Encounters/gate"]
+position = Vector3(0,0.1,19)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_gate_0"
+definition = ExtResource("zombie")
+[node name="Enemy1" type="Marker3D" parent="Encounters/gate"]
+position = Vector3(2,0.1,15)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_gate_1"
+definition = ExtResource("zombie")
+[node name="Enemy2" type="Marker3D" parent="Encounters/gate"]
+position = Vector3(1,0.1,12)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_gate_2"
+definition = ExtResource("marsh_widow")
+[node name="barracks" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"darkmere_barracks"
+[node name="Enemy0" type="Marker3D" parent="Encounters/barracks"]
+position = Vector3(-9,0.1,10)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_barracks_0"
+definition = ExtResource("zombie")
+[node name="Enemy1" type="Marker3D" parent="Encounters/barracks"]
+position = Vector3(-14,0.1,9)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_barracks_1"
+definition = ExtResource("zombie")
+[node name="Enemy2" type="Marker3D" parent="Encounters/barracks"]
+position = Vector3(-14,0.1,16)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_barracks_2"
+definition = ExtResource("skeletal_archer")
+[node name="passage" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"darkmere_passage"
+[node name="Enemy0" type="Marker3D" parent="Encounters/passage"]
+position = Vector3(1,0.1,3)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_passage_0"
+definition = ExtResource("zombie")
+[node name="Enemy1" type="Marker3D" parent="Encounters/passage"]
+position = Vector3(-1,0.1,-3)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_passage_1"
+definition = ExtResource("marsh_widow")
+[node name="Enemy2" type="Marker3D" parent="Encounters/passage"]
+position = Vector3(1,0.1,-9)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_passage_2"
+definition = ExtResource("skeletal_archer")
+[node name="store" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"darkmere_store"
+[node name="Enemy0" type="Marker3D" parent="Encounters/store"]
+position = Vector3(9,0.1,-9)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_store_0"
+definition = ExtResource("zombie")
+[node name="Enemy1" type="Marker3D" parent="Encounters/store"]
+position = Vector3(15,0.1,-12)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_store_1"
+definition = ExtResource("marsh_widow")
+[node name="Enemy2" type="Marker3D" parent="Encounters/store"]
+position = Vector3(16,0.1,-5)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_store_2"
+definition = ExtResource("marsh_widow")
+[node name="Enemy3" type="Marker3D" parent="Encounters/store"]
+position = Vector3(12,0.1,-3)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_store_3"
+definition = ExtResource("skeletal_archer")
+[node name="guardroom" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"darkmere_guardroom"
+[node name="Enemy0" type="Marker3D" parent="Encounters/guardroom"]
+position = Vector3(-10,0.1,-22)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_guardroom_0"
+definition = ExtResource("zombie")
+[node name="Enemy1" type="Marker3D" parent="Encounters/guardroom"]
+position = Vector3(-15,0.1,-24)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_guardroom_1"
+definition = ExtResource("zombie")
+[node name="Enemy2" type="Marker3D" parent="Encounters/guardroom"]
+position = Vector3(-13,0.1,-18)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_guardroom_2"
+definition = ExtResource("skeletal_archer")
+[node name="stairs" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"darkmere_stairs"
+[node name="Enemy0" type="Marker3D" parent="Encounters/stairs"]
+position = Vector3(0,0.1,-21)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_stairs_0"
+definition = ExtResource("zombie")
+[node name="Enemy1" type="Marker3D" parent="Encounters/stairs"]
+position = Vector3(2,0.1,-25)
+script = ExtResource("spawn")
+spawn_id = &"darkmere_stairs_1"
+definition = ExtResource("marsh_widow")

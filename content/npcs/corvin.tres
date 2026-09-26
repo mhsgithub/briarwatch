@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NpcDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/npc_definition.gd" id="script"]
+
+[resource]
+script = ExtResource("script")
+id = &"corvin"
+display_name = "Sergeant Corvin Marr"
+title = "Last of the Lanternwatch patrol"
+service = "companion"
+appearance = "corvin"
+greeting = "Keep your voice down. They were dead before they reached us... and they kept coming."
+tint = Color(0.27,0.38,0.37,1)

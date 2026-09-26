@@ -1,0 +1,255 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://src/world/region.gd" id="region"]
+[ext_resource type="Script" path="res://src/world/crypt_chamber.gd" id="chamber"]
+[ext_resource type="Script" path="res://src/world/region_portal.gd" id="portal"]
+[ext_resource type="Script" path="res://src/world/encounter.gd" id="encounter"]
+[ext_resource type="Script" path="res://src/world/enemy_spawn.gd" id="spawn"]
+[ext_resource type="Script" path="res://src/world/crypt_ritual.gd" id="ritual"]
+[ext_resource type="Script" path="res://src/presentation/necromancer_visual.gd" id="malrec"]
+[ext_resource type="Script" path="res://src/presentation/ritual_visual.gd" id="ritual_art"]
+[ext_resource type="Resource" path="res://content/enemies/zombie.tres" id="zombie"]
+[ext_resource type="Resource" path="res://content/enemies/skeletal_archer.tres" id="skeleton"]
+[ext_resource type="Resource" path="res://content/enemies/risen_soldier.tres" id="soldier"]
+[sub_resource type="NavigationMesh" id="navmesh"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 1
+cell_size = 0.3
+cell_height = 0.1
+agent_height = 2.0
+agent_radius = 0.6
+agent_max_climb = 0.5
+[node name="ChapelCrypts" type="Node3D"]
+script = ExtResource("region")
+region_id = &"chapel_crypts"
+display_name = "The Chapel Crypts"
+interior = true
+recovery_region = &"hollowmere"
+hub_name = "Lanternwatch Camp"
+music_track = &"chapel_crypts"
+interior_ambient = 0.25
+interior_sun = 0.16
+map_bounds = Rect2(-23,-64,48,97)
+[node name="NavigationRegion" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("navmesh")
+[node name="Scenery" type="Node3D" parent="NavigationRegion"]
+[node name="ProcessionalHall" type="Node3D" parent="NavigationRegion/Scenery"]
+script = ExtResource("chamber")
+extent = Vector2(10,60)
+north_opening = 8.0
+south_opening = 3.2
+west_openings = PackedVector2Array(11,4.2,-23,4.2)
+east_openings = PackedVector2Array(-8,4.2)
+decor = "hall"
+[node name="Reliquary" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12,0,11)
+script = ExtResource("chamber")
+extent = Vector2(14,14)
+east_openings = PackedVector2Array(0,4.2)
+decor = "tombs"
+[node name="Ossuary" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(13,0,-8)
+script = ExtResource("chamber")
+extent = Vector2(16,14)
+west_openings = PackedVector2Array(0,4.2)
+decor = "bones"
+[node name="VigilChamber" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(-12,0,-23)
+script = ExtResource("chamber")
+extent = Vector2(14,12)
+east_openings = PackedVector2Array(0,4.2)
+decor = "tombs"
+[node name="RitualSanctum" type="Node3D" parent="NavigationRegion/Scenery"]
+position = Vector3(0,0,-45)
+script = ExtResource("chamber")
+extent = Vector2(34,30)
+south_opening = 8.0
+decor = "sanctum"
+[node name="Actors" type="Node3D" parent="."]
+[node name="NPCs" type="Node3D" parent="."]
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+position = Vector3(0,0.1,27)
+[node name="Portals" type="Node3D" parent="."]
+[node name="Exit" type="Node3D" parent="Portals"]
+position = Vector3(0,0,29.3)
+script = ExtResource("portal")
+display_name = "Ascend to the Sunken Chapel"
+destination = &"hollowmere"
+arrival = &"chapel"
+[node name="CryptRitual" type="Node3D" parent="."]
+position = Vector3(0,0,-47)
+script = ExtResource("ritual")
+[node name="Malrec" type="Node3D" parent="CryptRitual"]
+position = Vector3(0,0.15,-3)
+rotation = Vector3(0,3.14159,0)
+script = ExtResource("malrec")
+[node name="Ritual" type="Node3D" parent="CryptRitual"]
+script = ExtResource("ritual_art")
+[node name="Focus" type="Marker3D" parent="CryptRitual"]
+position = Vector3(0,0,5)
+[node name="Reinforcements" type="Node3D" parent="."]
+[node name="SkeletalArcher" type="Marker3D" parent="Reinforcements"]
+position = Vector3(0,0.1,-28)
+script = ExtResource("spawn")
+spawn_id = &"crypt_half_health_archer"
+definition = ExtResource("skeleton")
+[node name="Encounters" type="Node3D" parent="."]
+
+[node name="entrance" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"crypt_entrance"
+display_name = "Entrance"
+[node name="zombie0" type="Marker3D" parent="Encounters/entrance"]
+position = Vector3(0,0.1,18)
+script = ExtResource("spawn")
+spawn_id = &"crypt_entrance_0"
+definition = ExtResource("zombie")
+[node name="zombie1" type="Marker3D" parent="Encounters/entrance"]
+position = Vector3(2,0.1,14)
+script = ExtResource("spawn")
+spawn_id = &"crypt_entrance_1"
+definition = ExtResource("zombie")
+[node name="zombie2" type="Marker3D" parent="Encounters/entrance"]
+position = Vector3(-2,0.1,13)
+script = ExtResource("spawn")
+spawn_id = &"crypt_entrance_2"
+definition = ExtResource("zombie")
+
+[node name="reliquary" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"crypt_reliquary"
+display_name = "Reliquary"
+[node name="zombie0" type="Marker3D" parent="Encounters/reliquary"]
+position = Vector3(-9,0.1,12)
+script = ExtResource("spawn")
+spawn_id = &"crypt_reliquary_0"
+definition = ExtResource("zombie")
+[node name="zombie1" type="Marker3D" parent="Encounters/reliquary"]
+position = Vector3(-13,0.1,14)
+script = ExtResource("spawn")
+spawn_id = &"crypt_reliquary_1"
+definition = ExtResource("zombie")
+[node name="zombie2" type="Marker3D" parent="Encounters/reliquary"]
+position = Vector3(-16,0.1,8)
+script = ExtResource("spawn")
+spawn_id = &"crypt_reliquary_2"
+definition = ExtResource("zombie")
+[node name="zombie3" type="Marker3D" parent="Encounters/reliquary"]
+position = Vector3(-11,0.1,7)
+script = ExtResource("spawn")
+spawn_id = &"crypt_reliquary_3"
+definition = ExtResource("zombie")
+[node name="skeleton4" type="Marker3D" parent="Encounters/reliquary"]
+position = Vector3(-12,0.1,16)
+script = ExtResource("spawn")
+spawn_id = &"crypt_reliquary_4"
+definition = ExtResource("skeleton")
+
+[node name="hall" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"crypt_hall"
+display_name = "Hall"
+[node name="zombie0" type="Marker3D" parent="Encounters/hall"]
+position = Vector3(-2,0.1,3)
+script = ExtResource("spawn")
+spawn_id = &"crypt_hall_0"
+definition = ExtResource("zombie")
+[node name="zombie1" type="Marker3D" parent="Encounters/hall"]
+position = Vector3(2,0.1,-1)
+script = ExtResource("spawn")
+spawn_id = &"crypt_hall_1"
+definition = ExtResource("zombie")
+[node name="zombie2" type="Marker3D" parent="Encounters/hall"]
+position = Vector3(0,0.1,-6)
+script = ExtResource("spawn")
+spawn_id = &"crypt_hall_2"
+definition = ExtResource("zombie")
+
+[node name="ossuary" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"crypt_ossuary"
+display_name = "Ossuary"
+[node name="zombie0" type="Marker3D" parent="Encounters/ossuary"]
+position = Vector3(8,0.1,-7)
+script = ExtResource("spawn")
+spawn_id = &"crypt_ossuary_0"
+definition = ExtResource("zombie")
+[node name="zombie1" type="Marker3D" parent="Encounters/ossuary"]
+position = Vector3(13,0.1,-4)
+script = ExtResource("spawn")
+spawn_id = &"crypt_ossuary_1"
+definition = ExtResource("zombie")
+[node name="zombie2" type="Marker3D" parent="Encounters/ossuary"]
+position = Vector3(17,0.1,-10)
+script = ExtResource("spawn")
+spawn_id = &"crypt_ossuary_2"
+definition = ExtResource("zombie")
+[node name="zombie3" type="Marker3D" parent="Encounters/ossuary"]
+position = Vector3(10,0.1,-12)
+script = ExtResource("spawn")
+spawn_id = &"crypt_ossuary_3"
+definition = ExtResource("zombie")
+[node name="skeleton4" type="Marker3D" parent="Encounters/ossuary"]
+position = Vector3(17,0.1,-4)
+script = ExtResource("spawn")
+spawn_id = &"crypt_ossuary_4"
+definition = ExtResource("skeleton")
+
+[node name="vigil" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"crypt_vigil"
+display_name = "Vigil"
+[node name="zombie0" type="Marker3D" parent="Encounters/vigil"]
+position = Vector3(-8,0.1,-22)
+script = ExtResource("spawn")
+spawn_id = &"crypt_vigil_0"
+definition = ExtResource("zombie")
+[node name="zombie1" type="Marker3D" parent="Encounters/vigil"]
+position = Vector3(-13,0.1,-20)
+script = ExtResource("spawn")
+spawn_id = &"crypt_vigil_1"
+definition = ExtResource("zombie")
+[node name="zombie2" type="Marker3D" parent="Encounters/vigil"]
+position = Vector3(-15,0.1,-26)
+script = ExtResource("spawn")
+spawn_id = &"crypt_vigil_2"
+definition = ExtResource("zombie")
+[node name="zombie3" type="Marker3D" parent="Encounters/vigil"]
+position = Vector3(-10,0.1,-26)
+script = ExtResource("spawn")
+spawn_id = &"crypt_vigil_3"
+definition = ExtResource("zombie")
+[node name="skeleton4" type="Marker3D" parent="Encounters/vigil"]
+position = Vector3(-12,0.1,-19)
+script = ExtResource("spawn")
+spawn_id = &"crypt_vigil_4"
+definition = ExtResource("skeleton")
+
+[node name="last_watch" type="Node3D" parent="Encounters"]
+script = ExtResource("encounter")
+encounter_id = &"crypt_last_watch"
+display_name = "Last Watch"
+[node name="zombie0" type="Marker3D" parent="Encounters/last_watch"]
+position = Vector3(-2,0.1,-20)
+script = ExtResource("spawn")
+spawn_id = &"crypt_last_watch_0"
+definition = ExtResource("zombie")
+[node name="zombie1" type="Marker3D" parent="Encounters/last_watch"]
+position = Vector3(2,0.1,-25)
+script = ExtResource("spawn")
+spawn_id = &"crypt_last_watch_1"
+definition = ExtResource("zombie")
+[node name="skeleton2" type="Marker3D" parent="Encounters/last_watch"]
+position = Vector3(2,0.1,-29)
+script = ExtResource("spawn")
+spawn_id = &"crypt_last_watch_2"
+definition = ExtResource("skeleton")
+[node name="risen_soldier" type="Node3D" parent="Encounters"]
+position = Vector3(-2,0,-39)
+script = ExtResource("encounter")
+encounter_id = &"risen_soldier"
+display_name = "Risen Soldier"
+[node name="Corvin" type="Marker3D" parent="Encounters/risen_soldier"]
+position = Vector3(0,0.1,0)
+script = ExtResource("spawn")
+spawn_id = &"crypt_risen_corvin"
+definition = ExtResource("soldier")

@@ -1,13 +1,17 @@
-# Recorded sound palette
+# Audio direction and implementation
 
-The game uses 38 edited, mono 32 kHz PCM recordings. The direction is restrained physical
-foley: dry blade movement, leather, muted metal, weighty contact and natural
-vocal reactions. No arcade jingles or synthetic reward tones remain.
+The game includes 90 WAV effects and three marsh-frog MP3 recordings. The
+original combat palette uses restrained physical foley: dry blade movement,
+leather, muted metal, weighty contact and natural vocal reactions. The undead,
+ritual and Darkmere spell cues mix edited recordings with project-authored
+synthesis. Combat feedback comes from sound, animation, light and ground
+telegraphs rather than ability-name announcements.
 
 ## Sources and license
 
-All recordings used here are offered under **CC0 1.0** by their source authors.
-These acknowledgements preserve provenance even though attribution is optional.
+External sound recordings used here are offered under **CC0 1.0** by their
+source authors. Project-authored synthesized cues have no external source.
+These acknowledgements preserve provenance even where attribution is optional.
 License: https://creativecommons.org/publicdomain/zero/1.0/
 
 | Author / source | Used for |
@@ -56,7 +60,8 @@ Source archive URLs:
 limits. `AudioLibrary` loads/caches these recordings, avoids consecutive identical
 variants, and limits simultaneous transient voices. Its random generator is
 independent of combat/loot randomness. `GameAudio` routes actor attack, hurt,
-death, alert and movement events; enemy definitions select a human or wolf profile.
+death, alert and movement events; enemy definitions select human, wolf,
+reptile, spider, undead or occult profiles.
 
 Enemy footsteps follow actual distance travelled and skip teleports. Player
 footsteps are disabled. Creature voices
@@ -72,17 +77,20 @@ potion use is silent. NPC dialogue remains written rather than recorded speech.
 
 ## Music
 
-Five complete composed tracks provide distinct area identities. Calm harp and
-recorders play inside Briarwatch; a fuller medieval theme follows wilderness
-exploration; tomb ambience serves the Watchtower and Warwick cellars; orchestral
-unease scores the Dark Woods; and frantic strings, horns and drums begin when
-Garrick's encounter starts. MusicDirector checks authored Region music fields,
-the town bounds and the den encounter state, then crossfades for 1.75 seconds.
-Music continues under paused panels and all tracks loop locally.
+Eight complete tracks provide area and encounter identities. Briarwatch has
+town and March wilderness themes; the Watchtower and Warwick share tomb
+ambience. The Dark Woods has its own exploration track, while Determined
+Pursuit plays for Garrick/Bloodfang and Malrec. Hollowmere has separate
+Lanternwatch and wilderness themes. Dungeon Ambience scores the Sunken Chapel
+crypts and Darkmere exploration; the Risen Soldier retains that ambient track.
+`MusicDirector` reads Region music fields, local bounds and encounter state,
+then crossfades for 1.75 seconds. Music continues under paused panels and
+loops locally.
 
 The tracks, authors, source pages and license links are recorded in
-`assets/music/LICENSES.md`. Four are CC0. **RPG Ambient 4 (The Dark Woods)** is
-CC BY 3.0 by **HitCtrl**. Source audio is committed; playback needs no network.
+`assets/music/LICENSES.md`. The Dark Woods and both Hollowmere tracks are
+CC BY 3.0 by **HitCtrl**; the other five are CC0. Source audio is committed;
+playback needs no network.
 
 Darius's cleave warning reuses the licensed human vocal recordings through a
 dedicated `boss_roar` cue at a lower pitch and clearer gain. A dedicated
@@ -93,12 +101,12 @@ substitutes for the visible windup and sound warning.
 
 ## Talents and Warwick
 
-New cues reuse existing CC0 recordings: level_up (metal resonance),
+These cues reuse existing CC0 recordings: level_up (metal resonance),
 talent_learn (equipment foley), brutus_punch (impact variants), cell_unlock
 (metal variants), cellar_door (heavy gear movement). Brutus's effort/hurt/death
 and roar use lower-pitched human recordings. Spins/leaps use swings and impacts;
 wards/empowerments use bottle/gear textures. Existing mix/voice/range limits apply.
-No external recordings or licenses were added.
+They use the same mix and voice limits.
 
 ## Dark Woods cues
 
@@ -145,3 +153,24 @@ with high frequencies attenuated. They pause with gameplay and are freed on
 travel. Sources: https://opengameart.org/content/ribbit-frog-sounds ; original
 ribbit_01.mp3 through ribbit_03.mp3 are renamed marsh_frog_1.mp3 through
 marsh_frog_3.mp3 without editing. No environmental or combat RNG affects loot.
+
+## Chapel crypts
+
+The crypt uses yd's CC0 Dungeon Ambience. The Risen Soldier retains this exploration track; Darkmere uses the existing
+boss composition for the final Malrec Veyne encounter. Zombies and
+skeletons have dedicated alert, attack, hurt, death and movement profiles.
+The ritual has a positional looping drone; lever, resurrection, death spell,
+teleport, corruption and cleave have separate cues. Sources and processing
+are documented in assets/audio/LICENSES.md and tools/build_chapel_audio.py.
+
+## Darkmere effects
+
+The offline chapel recipe renders charge warning/contact, mark
+ambush, relic siphon, fire/poison bolts, meteor warning/impact, ritual start,
+interruption and detonation. These are original deterministic synthesized effects;
+no new external sources are required. The occult vocal profile routes Malrec
+and cultists to magical cues. Region music retains the licensed Dungeon Ambience
+for exploration and Determined Pursuit for Malrec. The Risen Soldier has no
+boss-music override. The pause-menu and packaged music credits cover these tracks.
+Malrec's boiling dark magic patch has its own low spell cue, authored in the
+same offline synthesis recipe.

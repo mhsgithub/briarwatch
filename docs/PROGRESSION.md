@@ -1,4 +1,4 @@
-# Centurion progression and Warwick rules
+# Centurion progression and talent rules
 
 ## Levels
 
@@ -35,9 +35,9 @@ summons: 87 ordinary enemies (87), nine Elite Bandits (18), Darius/Brutus/Garric
 (15) and Bloodfang (10). His two pairs of Greyfangs add four EXP for a total of
 134. Hollowmere's 25 crocodiles and 42 Widows grant 2 EXP each; its 14 Broodqueens
 grant 3 each, adding 176 EXP for 310 across both regions including summons.
-The final level and remainder depend on kill order
-because level-up discards overflow. No repeatable
-XP service or altered curve was added. Higher builds are verified in isolated tests.
+The final level and remainder depend on kill order because level-up discards
+overflow. There is no repeatable EXP service; the higher levels reserve room
+for future regions and encounters.
 
 Old saves without progression receive one-time credit for recorded defeats,
 using authored spawn IDs/definitions without instantiating old AI or granting loot.
@@ -124,3 +124,17 @@ ring slot, sell value 12. Both return to town; Kasparov offers Into the Lion's D
 A full bag reserves the ring persistently, claimable from the pack header after
 making room. Rewards cannot be repeated; travel/load cannot resurrect the boss
 or duplicate the rescued prisoner.
+
+## Chapel experience
+
+The crypt adds 67 EXP: twenty zombies (40), four archers (12), the Risen Soldier
+(12) and his single summoned archer (3). Through quest four, authored
+kills and summons provide 377 EXP before level-up overflow is discarded.
+
+## The final Hollowmere quests
+
+The three mark ambushes add 38 EXP (eleven zombies, four skeletal archers and a
+4-EXP Zombie Brute). The lower keep adds 40 EXP (nine zombies, four archers,
+five Marsh Widows), and Malrec adds 25. Ritual cultists give no EXP; each timed
+zombie/Widow wave adds 4 if defeated. Stable reward credits prevent repeated
+attempts from farming these waves. The level cap and level-up rules are unchanged.

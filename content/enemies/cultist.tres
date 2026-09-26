@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/attacks/ritualist.tres" id="attack"]
+
+[resource]
+script = ExtResource("script")
+id = &"cultist"
+display_name = "Bound Cultist"
+appearance = "cultist"
+max_health = 80.0
+hit_chance = 1.0
+experience = 0
+audio_profile = "occult"
+attack = ExtResource("attack")
+passive = true
+move_speed = 0.0

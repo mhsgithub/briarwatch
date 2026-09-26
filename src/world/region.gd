@@ -12,6 +12,7 @@ signal initialized
 @export var local_music_track: StringName
 @export var local_music_bounds: Rect2
 @export var encounter_music_track: StringName
+@export var encounter_music_owner: NodePath = ^"DenEncounter"
 @export var interior_ambient: float = 0.42
 @export var interior_sun: float = 0.35
 @export var outdoor_ambient: float = 0.48

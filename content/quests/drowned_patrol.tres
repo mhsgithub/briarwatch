@@ -1,0 +1,58 @@
+[gd_resource type="Resource" script_class="QuestDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/quest_definition.gd" id="script"]
+[ext_resource type="Script" path="res://src/data/quest_stage.gd" id="stage_script"]
+[ext_resource type="Resource" path="res://content/quests/unseen_hand.tres" id="next"]
+[sub_resource type="Resource" id="patrol"]
+script = ExtResource("stage_script")
+id = &"find_patrol"
+objective = "Search Siltwater Landing north of camp. Speak with any survivors."
+region = &"hollowmere"
+target_path = NodePath("PointsOfInterest/SiltwaterLanding")
+label = "The missing patrol"
+[sub_resource type="Resource" id="chapel"]
+script = ExtResource("stage_script")
+id = &"enter_crypts"
+objective = "Investigate the Sunken Chapel with Corvin. Find a way beneath its stones."
+region = &"hollowmere"
+target_path = NodePath("PatrolSite/ChapelLever")
+label = "The Sunken Chapel"
+[sub_resource type="Resource" id="ritual"]
+script = ExtResource("stage_script")
+id = &"witness_ritual"
+objective = "Search the chapel crypts with Corvin. Find the source of the risen dead."
+region = &"chapel_crypts"
+target_path = NodePath("CryptRitual")
+label = "Investigate the crypts"
+[sub_resource type="Resource" id="soldier"]
+script = ExtResource("stage_script")
+id = &"defeat_soldier"
+objective = "Lay the Risen Soldier to rest."
+region = &"chapel_crypts"
+target_path = NodePath("Encounters/risen_soldier")
+label = "The Risen Soldier"
+[resource]
+script = ExtResource("script")
+id = &"drowned_patrol"
+title = "The Drowned Patrol"
+giver_region = &"hollowmere"
+giver_npc = "elric"
+handin_region = &"hollowmere"
+handin_npc = "elric"
+target_region = &"chapel_crypts"
+target_encounter = &"risen_soldier"
+reward_gold = 50
+offer_objective = "Speak with Warden Elric at Lanternwatch Camp."
+offer_dialogue = "This was fertile country once: fishing villages, peat cutters, herb gardens along the pilgrimage road. The marsh-priests kept their own counsel at the chapel. Years ago, something old began to stir beneath the water. Now travelers vanish and supply boats drift in empty. Sergeant Corvin Marr took a patrol to Siltwater Landing, just north of camp. None have returned. Find them. Bring me word of what is happening here."
+description = "Warden Elric sent Sergeant Corvin Marr and a Lanternwatch patrol to investigate missing travelers and abandoned supply boats at Siltwater Landing. The patrol never returned. Search the landing north of camp and discover their fate.
+
+The wetland once sustained villages and pilgrims. Now its old roads lead through drowned fields, and something ancient stirs beneath them."
+objective = "Find the missing patrol at Siltwater Landing, north of camp."
+return_objective = "Return to Warden Elric at Lanternwatch. Tell him of Corvin and Malrec's ritual."
+entrance_label = "The Sunken Chapel"
+accept_text = "I will find the patrol"
+progress_dialogue = "Corvin knows this marsh better than any of us. If he is alive, he will have found cover near the landing."
+handin_dialogue = "Corvin... He would have dragged every one of them home if he could. You gave him the only peace that remained. Malrec Veyne knew his name, and this woman he summoned is already loose. Then the dead at the landing were only the beginning. Take this for your service. I will double the watch and send word to Kasparov. We must learn what Veyne has brought into the marsh."
+completed_dialogue = "Corvin and his patrol will be remembered. Keep your weapons close. Whatever Veyne summoned is still out there."
+completion_text = "Elric knows the truth. Corvin rests, but Malrec's summoned presence remains at large."
+stages = Array[ExtResource("stage_script")]([SubResource("patrol"),SubResource("chapel"),SubResource("ritual"),SubResource("soldier")])
+next_quest = ExtResource("next")

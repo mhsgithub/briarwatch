@@ -19,6 +19,9 @@ extends Resource
 @export var accept_text: String = "I will find Crowbane's key"
 @export_multiline var offer_dialogue: String
 @export var giver_npc: String = "elric"
+@export var giver_region: StringName = &"briar_march"
+@export var stages: Array[QuestStage] = []
+@export var show_objective_marker: bool = true
 @export var offer_objective: String = "Speak with Warden Elric in Briarwatch."
 @export_multiline var progress_dialogue: String
 @export_multiline var handin_dialogue: String

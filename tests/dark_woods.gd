@@ -253,7 +253,7 @@ func run() -> void:
 	session._service("claim",0)
 	check(quest.rewarded and p.inventory.gold==gold_before+50,"Kasparov awards exactly fifty gold once")
 	session.hud.close_panel()
-	check(quest.offered().next_quest==null,"Into the Lion's Den is the final March quest")
+	check(quest.offered().id==&"drowned_patrol" and quest.offered().giver_region==&"hollowmere","Into the Lion's Den leads to Elric's Hollowmere quest")
 	session.travel.enter(&"dark_woods")
 	await frames(2)
 	check(not is_instance_valid(session.region.get_node("DenEncounter").bloodfang),"Completed boss does not respawn")

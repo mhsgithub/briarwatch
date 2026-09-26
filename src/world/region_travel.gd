@@ -24,10 +24,11 @@ func world_state(id: String) -> Dictionary:
 	return value.duplicate(true) if value is Dictionary else {}
 
 func snapshot() -> Dictionary:
-	states[str(active.region_id)] = {"defeated": active.defeated_ids.duplicate(), "loot": serialize_loot(), "exploration": exploration.serialize(), "world": active.world_state.duplicate(true), "fires": serialize_fires()}
+	states[str(active.region_id)] = {"defeated": active.defeated_ids.duplicate(), "loot": serialize_loot(), "exploration": exploration.serialize(), "world": active.world_state.duplicate(true), "fires": serialize_fires(), "corruption":serialize_corruption()}
 	return states.duplicate(true)
 
 func enter(id: StringName, arrival: StringName = &"") -> bool:
+	if player.cinematic_locked: return false
 	if not scenes.has(str(id)) or active.region_id == id: return false
 	var packed := load(scenes[str(id)]) as PackedScene
 	if packed == null: return false
@@ -55,7 +56,38 @@ func enter(id: StringName, arrival: StringName = &"") -> bool:
 	active.initialize(defeated if defeated is Array else [])
 	restore_loot(state(str(id)).get("loot", []))
 	restore_fires(state(str(id)).get("fires", []))
+	restore_corruption(state(str(id)).get("corruption", []))
 	return true
+
+func serialize_corruption() -> Array:
+	var result: Array = []
+	for child in active.actors.get_children():
+		if child is CorruptionField and child.active: result.append(child.serialize())
+	return result
+
+func restore_corruption(data: Variant) -> void:
+	if not data is Array: return
+	for record in data:
+		if not record is Dictionary or not record.get("points",null) is Array: continue
+		var owner_id := str(record.get("owner",""))
+		if owner_id in active.defeated_ids: continue
+		var owner_actor: Enemy
+		for child in active.actors.get_children():
+			if child is Enemy and str(child.spawn_id) == owner_id and child.definition.risen: owner_actor = child
+		if not owner_actor: continue
+		var kit := owner_actor.definition.risen
+		var field := CorruptionField.new()
+		field.owner_id = owner_id
+		field.radius = kit.pool_radius
+		field.damage = kit.pool_damage
+		field.interval = kit.pool_tick
+		field.tick_left = clampf(float(record.get("tick",kit.pool_tick)),0.01,kit.pool_tick)
+		active.actors.add_child(field)
+		owner_actor.risen_combat.field = field
+		for pair in record.points:
+			if pair is Array and pair.size() == 2 and (pair[0] is float or pair[0] is int) and (pair[1] is float or pair[1] is int):
+				var point := Vector2(float(pair[0]),float(pair[1]))
+				if active.map_bounds.has_point(point): field.spread(Vector3(point.x,0,point.y))
 
 func serialize_fires() -> Array:
 	var result: Array = []

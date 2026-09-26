@@ -10,6 +10,11 @@ func _ready() -> void:
 	var color := ArtTheme.tier_color(item) if item else Color("dfb669")
 	Geometry.cylinder(self, Vector3(0, 0.18, 0), 0.28, 0.3, color, 0.15, 6)
 	Geometry.label(self, item.display_name if item else str(gold), Vector3(0, 0.85, 0), color, 24)
+	if item and item.id==&"veyne_letter":
+		var paper := Geometry.box(self,Vector3(0,0.3,0),Vector3(0.48,0.025,0.62),Color("766887"))
+		paper.rotation.z = 0.15
+		var seal := Geometry.ring(self,0.42,Color("85689a"),0.025)
+		seal.material_override = Geometry.material(Color("85689a"),0.7)
 	if item == null:
 		var coin := Sprite3D.new()
 		coin.texture = ArtTheme.icon(15)

@@ -124,7 +124,7 @@ func run() -> void:
 	check(gold_counts[0]>65000 and gold_counts[1]==0 and gold_counts[2]==0,"Sampled wildlife gold favors zero and only drops three through five otherwise")
 	for entry in table.entries:
 		check(absf(float(counts.get(entry.item.id,0))/100000.0-entry.chance)<0.002,"Sampled item drop probability: "+str(entry.item.id))
-		check(entry.item.icon!=null and entry.item.icon.get_width()>250,"Marsh icon loads: "+str(entry.item.id))
+		check(entry.item.icon!=null or entry.item.icon_index>=0,"Marsh loot has inventory art: "+str(entry.item.id))
 	var drops: Array = []
 	for actor in region.actors.get_children():
 		if actor is LootDrop: drops.append(actor)

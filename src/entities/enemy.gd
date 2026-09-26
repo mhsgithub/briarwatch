@@ -28,6 +28,9 @@ var den_combat: DenBossCombat
 var dormant: bool = false
 var corpse_consumed: bool = false
 var web_attack: WebAttack
+var risen_combat: RisenCombat
+var charge_combat: ChargeCombat
+var damage_gate: Callable
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -83,11 +86,21 @@ func _ready() -> void:
 		web_attack = WebAttack.new()
 		web_attack.actor = self
 		add_child(web_attack)
+	if definition.risen:
+		risen_combat = RisenCombat.new()
+		risen_combat.actor = self
+		add_child(risen_combat)
+	if definition.charge:
+		charge_combat = ChargeCombat.new()
+		charge_combat.actor = self
+		add_child(charge_combat)
 
 func _physics_process(delta: float) -> void:
+	if definition.passive: return
 	if dormant or health.current <= 0 or not is_instance_valid(target):
 		return
 	if statuses.has("stun"):
+		if charge_combat: charge_combat.cancel()
 		velocity = Vector3.ZERO
 		visual.moving = false
 		return
@@ -121,6 +134,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		visual.moving = false
 		return
+	if charge_combat and charge_combat.step(delta): return
 	var destination := home
 	var wants_move := false
 	if returning:
@@ -198,6 +212,7 @@ func receive_damage(packet: DamagePacket) -> void:
 	var before := health.current
 	if is_instance_valid(packet.source) and packet.source is Player:
 		packet.source.resolve_critical(packet)
+	if damage_gate.is_valid(): damage_gate.call(packet)
 	health.receive(packet)
 	var dealt := before - health.current
 	if is_instance_valid(packet.source) and packet.source is Player:
@@ -212,6 +227,7 @@ func _damaged(amount: float) -> void:
 	FloatingText.spawn(get_parent(), global_position + Vector3.UP * 2, amount, health.last_critical)
 
 func _die() -> void:
+	if charge_combat: charge_combat.cancel()
 	attack.cancel()
 	if commander: commander.cancel()
 	if brute: brute.cancel()

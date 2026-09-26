@@ -259,7 +259,8 @@ for name,poly in ponds:
 for name,points,width in roads:
     packed=', '.join(f'{x}, 0, {z}' for x,z in points)
     node(name,'MeshInstance3D','NavigationRegion',f'script = ExtResource("road")\npoints = PackedVector3Array({packed})\nwidth = {width}\ntint = Color(0.34, 0.35, 0.27, 1)')
-node('CampSquare','MeshInstance3D','NavigationRegion','script = ExtResource("road")\npoints = PackedVector3Array(-120,0,95,-89,0,95)\nwidth = 24.0\ntint = Color(0.34,0.35,0.30,1)')
+# Paving sits above the approach road so their overlap never fights for depth.
+node('CampSquare','MeshInstance3D','NavigationRegion','script = ExtResource("road")\npoints = PackedVector3Array(-120,0,95,-89,0,95)\nwidth = 24.0\nelevation = 0.07\ntint = Color(0.34,0.35,0.30,1)')
 prop('bridge',-60,43,length=24.0)
 prop('bridge',10,5,length=19.0)
 # Expedition camp: canvas quarters, cooking fire, supplies, ward, practice ring.
@@ -357,6 +358,8 @@ for i in range(70):
         packed=', '.join(f'{px:.2f}, {pz:.2f}' for px,pz in points)
         node(f'ShallowPuddle{i}','Node3D','NavigationRegion',f'script = ExtResource("water")\ndeep = false\nshore = PackedVector2Array({packed})')
 write('scenes/world/hollowmere.tscn','\n'.join(scene)+'\n')
+from author_chapel import install_hollowmere
+install_hollowmere()
 
 march=(ROOT/'scenes/world/briar_march.tscn').read_text(encoding='utf-8')
 if 'id="oswin"' not in march:
@@ -365,3 +368,6 @@ if 'id="oswin"' not in march:
 march=march.replace('position = Vector3(-39,0.1,33)','position = Vector3(-29,0.1,29)')
 write('scenes/world/briar_march.tscn',march)
 print(f'Authored {len(ITEMS)} items, {len(spawn_points)} enemies, {len(chests)} caches and Hollowmere scenery.')
+from author_darkmere import overlay, link_content
+overlay()
+link_content()

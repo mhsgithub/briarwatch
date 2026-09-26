@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="QuestDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/quest_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/items/soldiers_pauldrons.tres" id="reward"]
+[ext_resource type="Resource" path="res://content/quests/darkmere.tres" id="next"]
+[resource]
+script = ExtResource("script")
+id = &"unseen_hand"
+title = "The Unseen Hand"
+giver_region = &"hollowmere"
+handin_region = &"hollowmere"
+target_region = &"hollowmere"
+show_objective_marker = false
+required_item = &"veyne_letter"
+reward_gold = 0
+reward_item = ExtResource("reward")
+next_quest = ExtResource("next")
+offer_objective = "Speak with Warden Elric at Lanternwatch."
+offer_dialogue = "Veyne knew Corvin's name. He had corpses waiting before our patrol reached the landing. That was no chance ambush. Someone has been laying a path through this marsh. Search the Pilgrim Graves, the Drowned Tollhouse and the Old Beacon. Our scouts saw strange light at all three. Find the traces he left, and bring me anything that tells us where he hides. We must end this before another patrol walks into his hands."
+description = "Malrec Veyne was prepared for Corvin's patrol. Investigate the Pilgrim Graves, the Drowned Tollhouse and the Old Beacon in any order. Look for dark magical marks and examine each one. Recover any evidence of the necromancer's whereabouts and return it to Elric."
+objective = "Find the necromancer's whereabouts. Investigate the three sites and recover his orders."
+return_objective = "Bring the dark missive to Warden Elric at Lanternwatch."
+accept_text = "I will follow his traces"
+progress_dialogue = "The graves, the tollhouse and the beacon. Look for the same magic you saw beneath the chapel. Veyne prepared one ambush; expect him to have prepared more."
+handin_dialogue = "This seal... it is still warm. These were orders, carried by a corpse. Corvin was being watched from the moment he left camp. Take these pauldrons. You will need them when we find the hand behind this. Let me read what Veyne thought no living soul would see."
+completed_dialogue = "The letter has given us the name of his refuge."
+completion_text = "Veyne's orders are in Elric's hands. Soldier's Pauldrons received."

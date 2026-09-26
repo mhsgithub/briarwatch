@@ -7,12 +7,12 @@ survive through trade and mutual obligation. The protection of an old crown has
 receded. Roads that once joined the villages now belong to hungry packs and
 organized raiders. Briarwatch remains a place of shelter, repair and human company.
 
-This is an original medieval fantasy setting. Its inspiration is the readable
-perspective, deliberate combat, dangerous excursions, equipment progression and
-town-to-wilderness rhythm of traditional action RPGs. It does not reuse another
-game's characters, dialogue, geography, assets, classes or storyline.
+This is an original medieval fantasy setting. Diablo II is the reference for
+readable top-down combat, deliberate encounters, consequential equipment and
+loot, and the town-to-wilderness rhythm. Briarwatch has its own characters,
+dialogue, geography, art and story.
 
-## First playable experience
+## Briar March opening
 
 The player begins in a small timber-and-stone village with a sword, shield, padded
 coat, one Tonic and zero gold. The class is named Centurion: base stats without
@@ -76,7 +76,7 @@ Outlaw's Mantle. The key cannot be sold or blocked by a full pack.
 **Warden Elric**, roadkeeper: give the objective and its one-time reward.
 **Master Oswin**, veteran instructor: reset both talent trees for 100 gold.
 
-## Presentation and future direction
+## Presentation and scope
 
 The game uses heavily stylized, faceted geometry: slate-shingled timber houses,
 masonry defenses, jagged evergreen canopies and layered steel-and-cloth characters.
@@ -94,7 +94,7 @@ a vitality orb and a six-slot assignable action belt. The character panel combin
 Centurion preview, live stats, eleven equipment slots and a 20-cell pack. Gear slots
 are head, shoulders, armor, gloves, belt, boots, amulet, two rings, main hand and
 off hand. Each bag item occupies one cell; this is not a variable-size packing
-system. The thirty-eight-item catalog includes Outlaw's Mantle, the key, the
+system. The forty-seven-item catalog includes Outlaw's Mantle, the key, the
 Green Kasparov Family Seal ring, Blackroad Belt and Bloodclaw. Equipped gear appears on both the world
 character and portrait. Removing all equipment leaves simple clothing. The
 Pitchfork reserves both hands. N opens the bronze/enamel talent window at level 2.
@@ -128,7 +128,8 @@ Darius, Brutus and Garrick give 5 each, and Bloodfang gives 10.
 Level-ups reset EXP to zero and grant one talent point, up to level 20.
 Battle Mastery and Pathfinder contain fourteen implemented talents with explicit
 AND prerequisites, learned-action belt bindings and persistent cooldowns.
-The present finite content supports reaching level 3.
+The authored content supports progression through several early levels;
+the exact level reached depends on optional kills and discarded EXP overflow.
 See PROGRESSION.md for complete rules and content boundaries.
 
 ## Into the Lion's Den
@@ -186,7 +187,57 @@ thirty-two encounters across trails, groves and shore clearings, while five stro
 Widows poison their victims; Broodqueens fire webs that briefly root them.
 Fourteen marsh items expand the equipment catalog, including movement bonuses
 and Crit Rating. Every point gives 1% critical chance; critical hits double damage
-and display larger yellow numbers. No marsh quests are offered yet.
+and display larger yellow numbers. Elric offers The Drowned Patrol from camp.
 
 See [Hollowmere](HOLLOWMERE.md) for the camp, landmarks, wildlife, loot tables,
 soundtrack and authoring details.
+
+## The Drowned Patrol
+
+Quest four begins with Warden Elric at Lanternwatch after the third quest.
+Corvin Marr's patrol lies dead at Siltwater Landing north of camp. The wounded
+sergeant describes a necromancer commanding the dead and follows the Centurion
+as a friendly, noncombat escort to the Sunken Chapel. Its lever opens the crypt stair.
+
+The separate crypt instance contains a processional corridor, three burial rooms
+and a large ritual sanctum, with twenty zombies and four skeletal archers.
+Malrec Veyne channels among rotating sigils and rising spectral motes. Approaching
+him starts a timed roleplay: he announces that she has been summoned, kills
+Corvin with a spell and teleports away. Player control resumes as Corvin rises
+as the Risen Soldier. Escape can pause the sequence.
+
+The soldier leaves lasting corruption and telegraphs a heavy frontal cleave.
+At half health, one archer arrives from the corridor. His death clears all pools
+and drops the Green Captain's Breastplate. Return to Elric for fifty gold;
+Malrec escapes the crypt, leading to the two remaining Hollowmere quests.
+
+## The Unseen Hand and The Last Light of Darkmere
+
+Veyne was waiting for Corvin and had bodies prepared. Elric sends the Centurion
+to inspect the necromantic marks at Pilgrim Graves, the Drowned Tollhouse and
+Old Beacon. The sites are not highlighted as quest objectives. Their order is
+free: the first two inspections raise four zombies and two skeletal archers;
+the third raises three zombies and a Zombie Brute. Its charge has a committed
+wind-up and stuns on contact. The brute carries a dark magical missive. Collect
+it and return it to Elric for the Green Soldier's Pauldrons.
+
+The letter reveals Darkmere Hold, at the end of the northwest trail. Its broken
+gate towers, roofless walls and rubble enclose the entrance. The lower-floor
+instance is dark, with cold window light, abandoned beds, barrels, broken tables
+and cobwebs, and no torches. Zombies, skeletal archers and spiders inhabit its
+halls and side rooms. Rear stairs lead to a separate upper-floor boss chamber.
+
+Wall torches illuminate Malrec, a ruined throne and torn banners. His opening
+words suggest that the patrol and the player's arrival were both anticipated,
+and that the unnamed woman has already passed beyond the marsh. After the
+short dialogue, he casts fast, aim-locked fire and poison bolts. He periodically
+forms a dark boiling patch beneath himself and teleports across the room to
+channel falling meteors until struck. At 40% health he becomes invulnerable and
+four cultists channel beams into his ritual.
+Kill them all within sixty seconds while occasional zombies and spiders close
+in. Failure detonates the ritual and kills the player; success resumes the duel
+with each cast releasing two bolts in a tight cone.
+
+Malrec's death drops the Blue Black Reliquary ring. Elric awards fifty gold,
+honors the dead and prepares Lanternwatch to hold the reopened road. Hollowmere
+is complete, while the identity and destination of the summoned woman remain open.

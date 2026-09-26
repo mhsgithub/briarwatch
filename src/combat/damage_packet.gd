@@ -17,6 +17,8 @@ var critical: bool = false
 var critical_resolved: bool = false
 var poison_damage: float = 0.0
 var poison_seconds: float = 0.0
+var burn_damage: float = 0.0
+var burn_seconds: float = 0.0
 
 func _init(value: float, origin: Node3D = null, kind: StringName = &"physical", floor_damage: float = 0.0) -> void:
 	amount = value

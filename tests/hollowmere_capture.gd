@@ -30,6 +30,9 @@ func run() -> void:
 			enemy.set_physics_process(false)
 			enemy.attack.set_physics_process(false)
 	await shot("51-lanternwatch-camp",Vector3(-105,0.1,94),34)
+	# Nearby camera positions expose coplanar road/paving flicker at Elric's tent.
+	await shot("62-lanternwatch-ground-west",Vector3(-105,0.1,94),18)
+	await shot("63-lanternwatch-ground-east",Vector3(-102,0.1,90),18)
 	await shot("52-marsh-bridge",Vector3(-60,0.2,43),30)
 	await shot("53-sunken-chapel",Vector3(40,0.1,42),31)
 	await shot("54-widows-weald",Vector3(-104,0.1,-34),25)

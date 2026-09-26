@@ -344,31 +344,41 @@
     "cooldown": 0.1
   },
   "reptile_step": {
-    "files": ["reptile_step"],
+    "files": [
+      "reptile_step"
+    ],
     "volume_db": -20,
     "range": 16,
     "cooldown": 0.08
   },
   "spider_step": {
-    "files": ["spider_step"],
+    "files": [
+      "spider_step"
+    ],
     "volume_db": -20,
     "range": 16,
     "cooldown": 0.08
   },
   "spider_web": {
-    "files": ["spider_web"],
+    "files": [
+      "spider_web"
+    ],
     "volume_db": -15,
     "range": 25,
     "cooldown": 0.35
   },
   "spider_web_cast": {
-    "files": ["spider_web_cast"],
+    "files": [
+      "spider_web_cast"
+    ],
     "volume_db": -13,
     "range": 25,
     "cooldown": 0.3
   },
   "spider_web_impact": {
-    "files": ["spider_web_impact"],
+    "files": [
+      "spider_web_impact"
+    ],
     "volume_db": -13,
     "range": 25,
     "cooldown": 0.15
@@ -382,5 +392,342 @@
     "volume_db": -23,
     "range": 35,
     "cooldown": 5
+  },
+  "zombie_attack_1": {
+    "files": [
+      "zombie_attack_1"
+    ],
+    "volume_db": -13,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "zombie_alert": {
+    "files": [
+      "zombie_alert"
+    ],
+    "volume_db": -13,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "zombie_death": {
+    "files": [
+      "zombie_death"
+    ],
+    "volume_db": -13,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "zombie_hurt": {
+    "files": [
+      "zombie_hurt"
+    ],
+    "volume_db": -13,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "zombie_attack_2": {
+    "files": [
+      "zombie_attack_2"
+    ],
+    "volume_db": -13,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "zombie_attack": {
+    "files": [
+      "zombie_attack_1",
+      "zombie_attack_2"
+    ],
+    "volume_db": -13,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "skeleton_alert": {
+    "files": [
+      "skeleton_alert"
+    ],
+    "volume_db": -14,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "skeleton_hurt": {
+    "files": [
+      "skeleton_hurt"
+    ],
+    "volume_db": -12,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "skeleton_death": {
+    "files": [
+      "skeleton_death"
+    ],
+    "volume_db": -10,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "skeleton_step": {
+    "files": [
+      "skeleton_step"
+    ],
+    "volume_db": -24,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "bone_rise": {
+    "files": [
+      "bone_rise"
+    ],
+    "volume_db": -12,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "skeleton_attack": {
+    "files": [
+      "skeleton_attack"
+    ],
+    "volume_db": -13,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "zombie_step": {
+    "files": [
+      "zombie_step"
+    ],
+    "volume_db": -25,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "rotting_warning": {
+    "files": [
+      "rotting_warning"
+    ],
+    "volume_db": -15,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "rotting_cleave": {
+    "files": [
+      "rotting_cleave"
+    ],
+    "volume_db": -10,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "corruption_spread": {
+    "files": [
+      "corruption_spread"
+    ],
+    "volume_db": -20,
+    "range": 24,
+    "cooldown": 0.28
+  },
+  "corruption_hurt": {
+    "files": [
+      "corruption_hurt"
+    ],
+    "volume_db": -16,
+    "range": 24,
+    "cooldown": 0.15
+  },
+  "malrec_presence": {
+    "files": [
+      "malrec_presence"
+    ],
+    "volume_db": -15,
+    "range": 35,
+    "cooldown": 0.2
+  },
+  "malrec_death_spell": {
+    "files": [
+      "malrec_death_spell"
+    ],
+    "volume_db": -11,
+    "range": 35,
+    "cooldown": 0.2
+  },
+  "malrec_teleport": {
+    "files": [
+      "malrec_teleport"
+    ],
+    "volume_db": -13,
+    "range": 35,
+    "cooldown": 0.2
+  },
+  "crypt_lever": {
+    "files": [
+      "crypt_lever"
+    ],
+    "volume_db": -12,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "ritual_loop": {
+    "files": [
+      "ritual_loop"
+    ],
+    "volume_db": -23,
+    "range": 25,
+    "cooldown": 0.1
+  },
+  "brute_charge_warning": {
+    "files": [
+      "brute_charge_warning"
+    ],
+    "volume_db": -13,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "brute_charge": {
+    "files": [
+      "brute_charge"
+    ],
+    "volume_db": -13,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "brute_charge_impact": {
+    "files": [
+      "brute_charge_impact"
+    ],
+    "volume_db": -10,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "mark_ambush": {
+    "files": [
+      "mark_ambush"
+    ],
+    "volume_db": -14,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "reliquary_siphon": {
+    "files": [
+      "reliquary_siphon"
+    ],
+    "volume_db": -23,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "malrec_bolt_fire": {
+    "files": [
+      "malrec_bolt_fire"
+    ],
+    "volume_db": -16,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "malrec_bolt_poison": {
+    "files": [
+      "malrec_bolt_poison"
+    ],
+    "volume_db": -17,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "malrec_bolt_impact": {
+    "files": [
+      "malrec_bolt_impact"
+    ],
+    "volume_db": -15,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "meteor_warning": {
+    "files": [
+      "meteor_warning"
+    ],
+    "volume_db": -19,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "meteor_impact": {
+    "files": [
+      "meteor_impact"
+    ],
+    "volume_db": -13,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "cultist_ritual": {
+    "files": [
+      "cultist_ritual"
+    ],
+    "volume_db": -13,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "ritual_break": {
+    "files": [
+      "ritual_break"
+    ],
+    "volume_db": -12,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "ritual_detonation": {
+    "files": [
+      "ritual_detonation"
+    ],
+    "volume_db": -9,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "malrec_death": {
+    "files": [
+      "malrec_death"
+    ],
+    "volume_db": -12,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "occult_alert": {
+    "files": [
+      "malrec_presence"
+    ],
+    "volume_db": -15,
+    "range": 35,
+    "cooldown": 0.2
+  },
+  "occult_attack": {
+    "files": [
+      "malrec_bolt_fire"
+    ],
+    "volume_db": -16,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "occult_hurt": {
+    "files": [
+      "malrec_bolt_impact"
+    ],
+    "volume_db": -15,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "occult_death": {
+    "files": [
+      "malrec_death"
+    ],
+    "volume_db": -12,
+    "range": 32,
+    "cooldown": 0.18
+  },
+  "occult_step": {
+    "files": [
+      "skeleton_step"
+    ],
+    "volume_db": -24,
+    "range": 24,
+    "cooldown": 0.12
+  },
+  "malrec_dark_patch": {
+    "files": [
+      "malrec_dark_patch"
+    ],
+    "volume_db": -16,
+    "range": 32,
+    "cooldown": 0.18
   }
 }

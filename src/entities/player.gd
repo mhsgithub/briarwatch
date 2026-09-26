@@ -14,6 +14,7 @@ signal feedback(text: String)
 @onready var visual: ActorVisual = $Visual
 @onready var navigation: NavigationAgent3D = $Navigation
 var input_enabled: bool = true
+var cinematic_locked: bool = false
 var dead: bool = false
 var click_moving: bool = false
 var attack_target: Node3D
@@ -72,7 +73,7 @@ func _equipment_changed() -> void:
 	visual.set_equipment(inventory.equipment)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not input_enabled or dead or combat_state.knockdown_left > 0 or camera == null:
+	if not input_enabled or cinematic_locked or dead or combat_state.knockdown_left > 0 or camera == null:
 		return
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -202,11 +203,13 @@ func _try_attack(direction: Vector3) -> void:
 		_face(direction)
 
 func receive_damage(packet: DamagePacket) -> void:
-	if dead or health.invulnerable: return
+	if dead or cinematic_locked or health.invulnerable: return
 	if not abilities.accept_hit(packet): return
 	health.receive(packet)
 	if not dead and packet.poison_seconds > 0:
 		statuses.apply("poison", packet.poison_seconds, packet.poison_damage)
+	if not dead and packet.burn_seconds > 0:
+		statuses.apply("fire",packet.burn_seconds,packet.burn_damage)
 	if not dead and (packet.bleed_ticks > 0 or packet.knockdown_seconds > 0):
 		combat_state.apply(packet)
 	if not dead and packet.knockback > 0 and not statuses.control_immune and is_instance_valid(packet.source):
@@ -312,7 +315,7 @@ func use_consumable(id: StringName) -> void:
 	feedback.emit("None left in your pack.")
 
 func use_item(index: int) -> void:
-	if dead or index < 0 or index >= inventory.items.size():
+	if dead or cinematic_locked or index < 0 or index >= inventory.items.size():
 		return
 	var item := inventory.items[index]
 	if item.slot != "consumable":

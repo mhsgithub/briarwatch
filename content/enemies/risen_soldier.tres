@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/attacks/risen_sword.tres" id="attack"]
+[ext_resource type="Resource" path="res://content/attacks/rotting_cleave.tres" id="cleave"]
+[ext_resource type="Resource" path="res://content/loot/risen_soldier.tres" id="loot"]
+[ext_resource type="Script" path="res://src/data/commander_definition.gd" id="commander"]
+[ext_resource type="Script" path="res://src/data/risen_definition.gd" id="risen"]
+[sub_resource type="Resource" id="cleave_kit"]
+script = ExtResource("commander")
+cleave = ExtResource("cleave")
+cleave_cooldown = Vector2(8,12)
+warning_color = Color(0.46,0.68,0.24,0.42)
+warning_cue = "rotting_warning"
+release_cue = "rotting_cleave"
+voice_pitch = 1.0
+[sub_resource type="Resource" id="risen_kit"]
+script = ExtResource("risen")
+[resource]
+script = ExtResource("script")
+id = &"risen_soldier"
+display_name = "Risen Soldier"
+appearance = "risen_soldier"
+audio_profile = "zombie"
+voice_pitch = 0.76
+max_health = 270.0
+move_speed = 2.7
+hit_chance = 1.0
+experience = 12
+is_boss = true
+aggro_radius = 18.0
+leash_radius = 80.0
+visual_scale = 1.28
+collision_radius = 0.5
+attack = ExtResource("attack")
+commander = SubResource("cleave_kit")
+risen = SubResource("risen_kit")
+loot_table = ExtResource("loot")

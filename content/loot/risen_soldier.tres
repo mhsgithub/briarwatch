@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="LootTable" format=3]
+[ext_resource type="Script" path="res://src/data/loot_table.gd" id="table"]
+[ext_resource type="Script" path="res://src/data/loot_entry.gd" id="entry"]
+[ext_resource type="Resource" path="res://content/items/captains_breastplate.tres" id="item"]
+[sub_resource type="Resource" id="drop"]
+script = ExtResource("entry")
+item = ExtResource("item")
+chance = 1.0
+[resource]
+script = ExtResource("table")
+entries = Array[ExtResource("entry")]([SubResource("drop")])

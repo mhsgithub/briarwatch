@@ -24,7 +24,10 @@ region_scenes = {
 "watchtower": "res://scenes/world/watchtower.tscn",
 "warwick_cellars": "res://scenes/world/warwick_cellars.tscn",
 "dark_woods": "res://scenes/world/dark_woods.tscn",
-"hollowmere": "res://scenes/world/hollowmere.tscn"
+"hollowmere": "res://scenes/world/hollowmere.tscn",
+"chapel_crypts": "res://scenes/world/chapel_crypts.tscn",
+"darkmere_halls": "res://scenes/world/darkmere_halls.tscn",
+"darkmere_sanctum": "res://scenes/world/darkmere_sanctum.tscn"
 }
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource("environment")

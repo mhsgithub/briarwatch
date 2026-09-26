@@ -1,4 +1,4 @@
-# Edit the March in Godot
+# Edit Briarwatch regions in Godot
 
 Open `scenes/world/briar_march.tscn`. Switch to the **3D** workspace. The scene tree
 and standard Inspector are the source of truth; edits do not require a code
@@ -32,9 +32,10 @@ labels; gameplay always reads the current values when spawned.
 
 Duplicate an encounter node to create a group, update its **Encounter Id** and all
 child spawn IDs, and move the parent to relocate the group. Spawns must be direct
-children of an Encounter. The quest's `Target Region` and `Target Encounter` drive
-its map objective; `Required Item` drives actual completion. The current quest
-requires collecting the cellar key, not clearing the exterior encounter.
+children of an Encounter. Quest target region, encounter, optional stages and
+required item drive objectives and completion. The first quest requires the
+cellar key rather than clearing an exterior encounter; later quests have their
+own stage or item conditions.
 
 NPCs under `NPCs` use definitions from `content/npcs`. Move them or assign a
 definition. Vendor stock is an array of item resources. New items must also be
@@ -46,7 +47,7 @@ cell. The eleven supported equipment destinations are listed in
 ring, etc. only needs an item resource, catalog entry and a source such as vendor
 stock or loot. No UI rewrite is needed for those categories. Additional slot
 types require extending the shared schema and the character-panel placement.
-The current catalog contains twenty-one items. Item definitions expose explicit
+The catalog contains forty-seven items. Item definitions expose explicit
 buy/sell prices, rarity tier, damage/armor/vitality bonuses, weapon swing seconds,
 two-handed occupancy, recovery duration and appearance. See BALANCE.md for the
 exact content. The original three enemy types explicitly reference
@@ -190,3 +191,26 @@ Also run `tests/marsh_movement.gd` for live grounded click movement, bank-to-ban
 crossings in both directions, wildlife pursuit and travel re-entry.
 `tests/hollowmere_capture.gd` produces camp, bridge, wildlife, landmark, dialogue,
 equipment and cartography screenshots under ignored `test-results/`.
+
+## Chapel and Darkmere authoring
+
+`scenes/world/chapel_crypts.tscn` contains the crypt route, ritual chamber,
+undead encounters and the Risen Soldier. `scenes/world/darkmere_halls.tscn` and
+`darkmere_sanctum.tscn` are separate lower and upper floors. The Hollowmere
+patrol, investigation marks, keep approach and portals are additive authored
+content in `hollowmere.tscn`. Preserve quest stage IDs, encounter IDs and spawn
+IDs: they are serialized in character and region saves.
+
+The offline sources `tools/author_chapel.py` and `tools/author_darkmere.py`
+create the corresponding native scenes/Resources and install Hollowmere
+overlays. `tools/author_hollowmere.py` regenerates the base marsh scene and
+then reinstalls those overlays. Reflect manual edits in the relevant authoring
+source before regeneration, and inspect the resulting scene diff before
+committing. Malrec's timing, damage and summon types live in
+`MalrecDefinition`, attached to `MalrecEncounter` in the sanctum. Do not change
+the boss's stable `darkmere_malrec` spawn ID or the reward-credit namespace.
+
+After changing these areas, run `tests/drowned_patrol.gd` and/or
+`tests/darkmere.gd`, the full launcher test suite, and the matching capture
+fixture. The scripted checks cover quest order and mechanics; inspect the
+rendered crypt, keep and boss effects for visibility at the fixed camera angle.

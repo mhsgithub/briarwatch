@@ -10,6 +10,7 @@ var trees: PackedVector2Array=[]
 var houses: PackedVector2Array=[]
 var waters: Array[PackedVector2Array]=[]
 var landmarks: Array[Dictionary]=[]
+var chambers: Array[Rect2]=[]
 var redraw_timer: float=0
 
 func bind_region(value: Region) -> void:
@@ -19,6 +20,7 @@ func bind_region(value: Region) -> void:
 	houses.clear()
 	waters.clear()
 	landmarks.clear()
+	chambers.clear()
 	for child in region.navigation_region.get_children():
 		if child is MarshWater: waters.append(child.shore)
 		if child.get_script()==preload("res://src/world/road.gd") and child.width<10:
@@ -28,6 +30,8 @@ func bind_region(value: Region) -> void:
 				line.append(Vector2(world.x,world.z))
 			roads.append(line)
 	for prop in region.get_node("NavigationRegion/Scenery").get_children():
+		if prop is CryptChamber:
+			chambers.append(Rect2(Vector2(prop.position.x,prop.position.z)-prop.extent/2,prop.extent))
 		if prop is MarshProp and prop.kind == "cypress": trees.append(Vector2(prop.global_position.x,prop.global_position.z))
 		if prop is DarkThicket:
 			trees.append(Vector2(prop.global_position.x,prop.global_position.z))
@@ -95,6 +99,9 @@ func _draw() -> void:
 		for i in range(65):
 			outline.append(point(Vector2(sin(i*TAU/64)*18,-51+cos(i*TAU/64)*18)))
 		draw_polyline(outline,Color("a7946b"),2,true)
+	elif not chambers.is_empty():
+		for chamber in chambers:
+			draw_rect(Rect2(point(chamber.position),point(chamber.end)-point(chamber.position)),Color("a7946b"),false,2)
 	elif region.interior:
 		draw_rect(Rect2(point(Vector2(-10,-15)),point(Vector2(10,15))-point(Vector2(-10,-15))),Color("a7946b"),false,3)
 		for x in [-5.0,5.0]:
@@ -143,11 +150,15 @@ func objective_location() -> Dictionary:
 	if not quest or not quest.accepted or quest.rewarded: return {}
 	if quest.cleared:
 		var npc := region.get_node_or_null("NPCs/"+quest.definition.handin_npc) as Npc
-		if npc: return {"position":Vector2(npc.global_position.x,npc.global_position.z),"label":npc.definition.display_name}
+		if npc and region.region_id == quest.definition.handin_region: return {"position":Vector2(npc.global_position.x,npc.global_position.z),"label":npc.definition.display_name}
 		return _portal_objective(quest.definition.handin_region, "Return to "+quest.definition.handin_npc.capitalize())
-	if region.region_id != quest.definition.target_region:
-		var entrance:=_portal_objective(quest.definition.target_region, quest.definition.entrance_label)
+	if not quest.definition.show_objective_marker: return {}
+	if region.region_id != quest.objective_region():
+		var entrance:=_portal_objective(quest.objective_region(), quest.definition.entrance_label)
 		return entrance if not entrance.is_empty() else _portal_objective(&"briar_march","Return to the March")
+	if quest.stage():
+		var target := region.get_node_or_null(quest.stage().target_path) as Node3D
+		if target: return {"position":Vector2(target.global_position.x,target.global_position.z),"label":quest.stage().label}
 	for encounter in region.get_node("Encounters").get_children():
 		if encounter is Encounter and encounter.encounter_id==quest.definition.target_encounter:
 			return {"position":Vector2(encounter.global_position.x,encounter.global_position.z),"label":"Quest objective"}

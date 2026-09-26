@@ -1,4 +1,4 @@
-# Project scope and implementation overview
+# Current project scope and extension points
 
 Briarwatch is an original single-player frontier action RPG built with Godot
 4.7.2 stable, typed GDScript, native scenes and Inspector-editable Resources.
@@ -13,6 +13,16 @@ Watchtower. The watchtower, Warwick cellars and Dark Woods are separate instance
 The three linked quests retrieve Darius Crowbane's cellar key, free Lord Kasparov
 from Jailor Brutus, and stop Garrick Vane and Bloodfang in the Dark Woods.
 Into the Lion's Den concludes the first map's story.
+
+Hollowmere Marshes is the second outdoor region, reached through Elric after
+quest three. Lanternwatch provides trading, healing and talent resets. Quest
+four, The Drowned Patrol, follows Corvin Marr from Siltwater Landing to the
+Sunken Chapel crypt instance, Malrec Veyne's ritual and the Risen Soldier.
+The game has eight regions and six linked quests. The Unseen Hand continues
+the patrol investigation; The Last Light of Darkmere concludes Hollowmere
+with Malrec Veyne in the two-floor ruined keep. The quest IDs in order are
+`open_road`, `warwick_rescue`, `lions_den`, `drowned_patrol`, `unseen_hand`
+and `darkmere`. The final hand-in leaves no further quest offer.
 
 The Centurion is the only playable class. The slice includes basic melee combat,
 enemy AI, ranged arrows, damage and status effects, equipment, loot, vendors,
@@ -34,6 +44,8 @@ definitions live under `content/` as Resources or JSON data. Authored scenes
 contain regions, encounters, spawn markers, NPCs, portals and scenery. Shared
 definitions are immutable; placed enemies can use instance-specific overrides.
 Stable region, spawn, item and quest IDs support persistence and future content.
+Boss reward credits are stored separately from live defeated IDs so a reset
+can restore an unfinished fight without paying duplicate EXP or loot.
 
 ## Extension points
 

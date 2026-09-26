@@ -12,6 +12,7 @@ They are distributed with the game and require no network access at runtime.
 | Garrick Vane and Bloodfang | Determined Pursuit — Emma_MA | CC0 1.0 | https://opengameart.org/content/determined-pursuit-epic-orchestra-loop |
 | Hollowmere Marshes | RPG - The Secret Within the Woods — HitCtrl | CC BY 3.0; credit: HitCtrl | https://opengameart.org/content/rpg-the-secret-within-the-woods |
 | Lanternwatch Camp | RPG Ambient 3 — HitCtrl | CC BY 3.0; credit: HitCtrl | https://opengameart.org/content/rpg-ambient-3 |
+| Sunken Chapel crypts and Darkmere exploration | Dungeon Ambience — yd | CC0 1.0 | https://opengameart.org/content/dungeon-ambience |
 
 License texts:
 
@@ -22,5 +23,9 @@ License texts:
 `RPG - The Secret Within The Silent Woods.ogg`. `hollowmere_camp.ogg` is
 HitCtrl's unmodified RPG Ambient 3 Ogg release. Playback volume and looping are set in-game.
 
-The source filenames were renamed for stable, descriptive project paths. No music
-was synthesized, recomposed or generated for this integration.
+The source filenames were renamed for stable, descriptive project paths. The
+unmodified Dungeon Ambience recording, downloaded as `dungeon002_0.ogg`, is
+committed as `chapel_crypts.ogg`. The Risen Soldier retains crypt exploration
+music. Darkmere uses that ambient track for exploration and the CC0 Determined
+Pursuit track for the Malrec Veyne boss encounter. No music was synthesized or
+recomposed for this project.

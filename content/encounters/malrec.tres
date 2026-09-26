@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MalrecDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/malrec_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/enemies/cultist.tres" id="cultist"]
+[ext_resource type="Resource" path="res://content/enemies/zombie.tres" id="zombie"]
+[ext_resource type="Resource" path="res://content/enemies/marsh_widow.tres" id="spider"]
+[resource]
+script = ExtResource("script")
+cultist = ExtResource("cultist")
+zombie = ExtResource("zombie")
+spider = ExtResource("spider")

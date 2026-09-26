@@ -32,6 +32,7 @@ func _process(_delta: float) -> void:
 	if not talent.is_empty(): queue_redraw()
 
 func _gui_input(event: InputEvent) -> void:
+	if player.cinematic_locked: return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
 		player.actions.clear(index)
 		accept_event()

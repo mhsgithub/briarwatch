@@ -33,7 +33,7 @@ world content. There are no global autoloads or general-purpose GameManager.
 | `EquipmentSlots` | Stable gear-slot IDs, accepted item categories, labels and fallback icons |
 | `Exploration` | Persistent 2-metre survey cells, movement reveal and fog texture |
 | `AudioLibrary` / `GameAudio` | Cached recorded cues, event routing, spatial range, variants and voice limits |
-| `QuestLog` | Accept, key-possession state, one-time hand-in reward and objective text |
+| `QuestLog` | Active and completed quest IDs, stages, story flags, objectives and once-only hand-in rewards |
 | `Npc` / `LootDrop` | World interaction targets; service definition or collectible reward |
 | `GameHUD` | Presentation, paused panels, inventory controls and service-action signals |
 | `EquipmentPanel` / `ItemTile` | Character layout, item inspection and compatible drag/drop requests |
@@ -82,11 +82,12 @@ time. Enemy floating numbers are instantiated as `FloatingText` before entering
 the tree, so their process callback runs, rises/fades and frees them after 1.3 s.
 
 Reward: enemy death → Region records spawn ID, rolls the enemy's optional LootTable and drops gold/items and
-decrements the encounter → Session schedules a deferred snapshot. For The Crow's Captive, actual key collection (not camp clearance or boss death)
-updates QuestLog. The later quests depend on their configured boss encounters.
+decrements the encounter → Session schedules a deferred snapshot. The Crow's Captive advances on key collection;
+later quests use encounter defeat, ordered stages or the investigation note as configured.
 Collection changes inventory; claimed drops are excluded from
 the snapshot. The Crow's Captive and Into the Lion's Den each award 50 gold. A Lord Beneath
 the Stones awards 10 gold and a family seal, reserving the item if the pack is full.
+Hollowmere's three quests use the same hand-in and once-only reward path.
 
 Interaction: click-to-approach or E finds a nearby target → Player emits a request
 → Session opens the defined service or collects loot → HUD emits a service action
@@ -109,7 +110,7 @@ new slots, without changing the save version or existing IDs.
 UI: EquipmentPanel presents eleven gear cells and twenty single-item pack cells.
 Click inspects, double/right-click activates; drag requests equip/unequip, not bag
 reordering. Rules remain in Inventory and Player. Item resources may provide a
-custom `icon` texture or an `icon_index` into two shared 4x4 atlases (0–31); fallback icons
+custom `icon` texture or an `icon_index` into shared painted atlases; fallback icons
 come from the slot schema. CharacterPreview uses a separate transparent 3D world
 and the same ActorVisual with a copy of the actual equipment appearance state. Portrait rendering is created only for the open panel.
 Item names use the shared white/green/blue/orange tier palette. GoldAmount provides
@@ -168,7 +169,7 @@ and loose loot, plus optional explored cells, namespaced under `regions[region_i
 RegionTravel migrates legacy outdoor state into `briar_march`. Quest items are
 deduplicated stable IDs in Inventory's separate `quest_items` pouch; they are not
 sellable and never compete for bag capacity. Quest snapshots include the definition
-ID. Old camp-clear flags migrate to the new retrieval objective, preserving
+ID, stable stage ID, completed IDs and story flags. Old camp-clear flags migrate to the retrieval objective, preserving
 acceptance but not treating an old reward as completion of the new quest.
 Older saves default to empty actions
 and a fresh survey around town. Exploration changes coalesce into a save every
@@ -199,7 +200,7 @@ grants three seconds of damage immunity. Iona heals without resetting the world.
 - Better art: replace ActorVisual and prop geometry with meshes/AnimationTrees;
   keep damage and AI in their existing owners.
 
-Current limits: single player, five regions, three linked quests, fixed-cell 20-slot inventory,
+Current limits: single player, eight regions, six linked quests, fixed-cell 20-slot inventory,
 eleven gear slots, no animation skeleton, no avoidance solver, no streamed world,
 no random item affixes and no account/cloud service. Navigation/AI have been tested
 at this slice's population, not at hundreds of simultaneous combatants.
@@ -226,7 +227,7 @@ Player resolves one critical roll per direct physical packet using equipment
 Crit Rating; HealthComponent doubles final damage and exposes its critical flag
 to FloatingText. Item movement bonuses feed the existing movement multiplier.
 
-## Playtest combat and audio refinement
+## Enemy accuracy and audio
 
 EnemyDefinition owns melee hit chance and voice profile. AttackComponent checks
 reach, facing and obstructions before rolling its own RNG; a failed roll emits
@@ -268,7 +269,7 @@ Death inside returns to the region's configured recovery hub; loading resumes
 safely in the saved hub. Legacy saves default to Briarwatch.
 The current small regions load synchronously, without background streaming.
 
-## Progression and Warwick implementation
+## Progression and Warwick
 
 CharacterProgression owns level/EXP/ranks and derives unspent points. The
 CenturionTalents catalog reads class content from centurion.json. Dependencies
@@ -347,3 +348,52 @@ kills so retries cannot duplicate loot/EXP. Maze state and floor loot survive.
 Region.map_enabled suppresses both the map button and M action in Dark Woods.
 CharacterProgression stores testing point grants separately from level-derived
 points; the U shortcut uses the same rank/prerequisite validation as normal play.
+
+## Chapel quest and encounter
+
+QuestDefinition optionally contains ordered QuestStage Resources. QuestLog saves
+stable stage IDs, while the first three quests retain their existing flow.
+The fourth offer is gated by giver_region. Session creates PatrolCompanion from
+quest state; it uses native navigation and never joins combat targeting groups.
+ChapelLever persists its opening flag; RegionTravel loads chapel_crypts as an
+ordinary registered Region, with Hollowmere as its recovery hub.
+
+CryptRitual owns timed staging, player/actor suspension, camera framing and dialogue.
+Only completion commits corvin_fallen; interrupted scenes replay safely. The
+Risen Soldier composes CommanderCombat's configured cleave with RisenCombat.
+CorruptionField aggregates permanent patches under one half-second damage clock,
+preventing overlapping patches from multiplying damage. Region snapshots retain
+patch coordinates and summon state; owner death removes the whole field.
+The reinforcement uses a stable spawn ID and ordinary one-time EXP/loot accounting.
+CryptChamber owns modular art/collision openings and supplies room bounds to the map.
+Native content is authored by tools/author_chapel.py; Hollowmere regeneration
+reinstalls its additive patrol overlay without regenerating existing world art.
+
+## Investigation and Darkmere
+
+MarkInvestigation owns native NecromanticMark sites and stores their activation
+order in Region.world_state. Stable site/index spawn IDs restore survivors,
+while Region's ordinary defeated/reward-credit accounting prevents duplicate
+loot. The third activation selects the brute wave regardless of site. The
+one-time quest-note drop uses the existing quest pouch, ground loot and save path.
+QuestDefinition.show_objective_marker suppresses investigation pins until hand-in.
+
+Darkmere's lower halls and upper chamber are independent registered Regions.
+Quest stages advance on floor transitions. MalrecEncounter owns intro, bolt
+cast, teleport, meteor channel, ritual and victory states; values and summon
+types live in MalrecDefinition. Enemy's optional damage gate caps a threshold-
+crossing hit before health resolution, so even a large critical cannot skip the
+ritual. The optional passive flag leaves cultists and Malrec's movement/attacks
+under encounter control. ChargeCombat composes with ordinary brute melee AI.
+ElementalBolt uses swept collision; MeteorImpact owns a warning and one impact.
+NecroticPatch owns its five-second ground timer and one-second damage cadence;
+MalrecEncounter schedules casts and clears outstanding hazards on defeat or retry.
+Fire and poison damage feed the common actor status store and ward system.
+
+Death resets the unfinished boss and temporary summons while retaining kill
+reward credits. Leaving an unfinished upper floor likewise restarts the fight
+on return; ordinary lower-floor kills and drops persist. Malrec's completed
+spawn ID prevents respawn and duplicate unique loot. ItemDefinition exposes
+life_steal_chance and life_steal_amount; successful PlayerAbilities.damage_dealt
+rolls equipped item procs only after positive health damage, with no item-ID logic.
+Content and overlay regeneration live in tools/author_darkmere.py.

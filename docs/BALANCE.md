@@ -1,4 +1,4 @@
-# Centurion and March balance
+# Character, equipment and encounter balance
 
 ## Design contract
 
@@ -67,7 +67,8 @@ The March's Green items are Guardian’s Amulet, Kasparov Family Seal, Blackroad
 Belt and Bloodclaw; Hollowmere adds Green drops and expedition vendor gear.
 Names use White → Green →
 Blue → Legendary (orange) colors in item details, tooltips, shops and world drops.
-Blue/Legendary are supported tiers, not additional items in the present catalog.
+The Black Reliquary is the Blue item in the current catalog. Legendary is a
+supported presentation tier without a current drop.
 
 | Item | Main effect | Buy value | Sell value |
 |---|---|---:|---:|
@@ -149,7 +150,7 @@ of their visible footprint, then restore their original materials when you leave
 Collision is unchanged. FireVisual is reusable and contains layered animated
 flames, rising embers and phase-varied warm light.
 
-## Existing saves
+## Save compatibility
 
 Version-1 saves remain supported. Existing gold, bag and outdoor defeated
 IDs are preserved; this is not a fresh-start reset. Item definitions adopt the
@@ -270,7 +271,7 @@ Hollowmere has 25 crocodiles (100 HP, 20 damage, 70% hit, 2 EXP), 42 Marsh Widow
 3 EXP). Widow hits apply one poison damage per second for three seconds.
 Broodqueen ranged webs root for two seconds, with 0.8-second warnings and
 9.5–12.5-second cooldowns. All three use a 28-metre leash. Shared gold weights
-are 70% zero, 12% three, 10% four and 8% five. Their fourteen independent item
+are 70% zero, 12% three, 10% four and 8% five. Their fifteen independent item
 rolls and complete gear values are listed in [Hollowmere's loot table](HOLLOWMERE.md).
 
 Oswin in Briarwatch and Tamsin in Lanternwatch reset both talent trees for 100
@@ -278,3 +279,54 @@ gold. Every spent point is refunded, including spent testing grants. Level/EXP
 remain. Empty trees and insufficient funds make no change. Learned ability
 bindings, active talent effects and cooldowns are cleared. Five marsh caches
 drop 12, 15, 20, 10 and 18 gold respectively and never refill.
+
+## Chapel crypts
+
+| Enemy | Health | Base damage | Accuracy | EXP |
+|---|---:|---:|---:|---:|
+| Zombie | 120 | 24 melee | 80% | 2 |
+| Skeletal Archer | 100 | 30 ranged | Physical projectile collision | 3 |
+| Risen Soldier | 270 | 35 melee | 100% | 12 |
+
+Zombies and skeletal archers use the marsh wildlife loot table; archers share the
+existing bowman AI. Twenty zombies and four archers populate the crypt. One more
+archer appears at the soldier's 50% health threshold, once per encounter save.
+Rotting Cleave: 60 physical damage, 3.6 m reach, 110-degree cone, 1 s wind-up,
+8–12 s cooldown. Aim locks at the raised-weapon telegraph. Corruption spreads
+at most every 0.65 s, 1.15 m spacing, 1.65 m damage radius: 20 damage per 0.5 s,
+ignoring armor, once per tick even in overlapping pools. Pools end only on owner death.
+Captain's Breastplate is a guaranteed Green body item: +5 armor, +5 vitality,
++1 Crit Rating. Elric's quest reward is 50 gold, once.
+
+## Hollowmere conclusion
+
+- All ordinary map-two enemies use the marsh wildlife table, including an
+  independent 2% Tonic roll alongside its gear and gold rolls.
+- Zombie Brute: 200 health, 40 melee damage, 100% base hit chance, 4 EXP, ordinary
+  marsh loot. Charge: 0.8 s telegraph, 14 m/s, at most 0.7 s, 8–11 s cooldown;
+  starts at 3.5–12 m, locks aim, stops on walls/contact, applies 1 s stun.
+- Soldier's Pauldrons: Green shoulders, +4 armor, +1 Strength, +1 Crit Rating.
+  Quest five awards the item and no gold; full bags use pending rewards.
+- Malrec Veyne: 500 health, no melee attacks, 25 EXP. Bolts: 0.55 s cast,
+  23 m/s, 0.65 s cooldown, equally likely fire/poison; 25 magical damage plus
+  2 damage per second for three seconds. After the ritual each cast launches
+  two bolts across a 6-degree cone: one aimed at the player and one fanning
+  to either side. Elemental wards apply.
+- Teleport/meteor phase: cooldown 14 s starting at interruption; 0.9 s teleport,
+  then three meteors every 0.6 s, each with a 1.15 s ground warning and 1.8 m
+  impact radius. Hit: 40 fire damage plus 2/s burn for three seconds. Hitting
+  Malrec ends channeling; meteors already falling still land.
+- Dark magic patch: while casting bolts, Malrec sometimes forms a stationary
+  3.2-metre-radius boiling patch under himself. It deals 10 magical damage each
+  second spent inside and lasts five seconds. The first cooldown is randomly
+  5–8 seconds; later cooldowns are 12–17 seconds. Casts wait until Malrec is
+  in his bolt stance, so teleporting or the ritual may delay a ready patch.
+- Ritual at 40%: four stationary cultists with 80 health, no attacks or rewards.
+  All must die within **60 s**. Malrec is immune. A zombie
+  and a Marsh Widow spawn after 5 s and every 9 s thereafter. A failed ritual
+  kills the player regardless of armor/wards; interrupted retries restore Malrec.
+- The Black Reliquary: guaranteed Blue ring, +2 Strength, +20 vitality,
+  independent 5% chance on a successful damaging hit to recover 3 vitality.
+  It does not proc on misses, blocked or immune hits, or while unequipped.
+- Quest six awards exactly 50 gold once. Boss and summon rewards cannot be farmed
+  by resetting the encounter.

@@ -15,6 +15,7 @@
 [ext_resource type="Resource" path="res://content/items/fenwarden_charm.tres" id="fenwarden_charm"]
 [ext_resource type="Resource" path="res://content/items/marshwarden_band.tres" id="marshwarden_band"]
 [ext_resource type="Resource" path="res://content/items/bogiron_greatblade.tres" id="bogiron_greatblade"]
+[ext_resource type="Resource" path="res://content/items/tonic.tres" id="tonic"]
 [sub_resource type="Resource" id="marshscale_tunic"]
 script = ExtResource("entry")
 item = ExtResource("marshscale_tunic")
@@ -71,7 +72,11 @@ chance = 0.015
 script = ExtResource("entry")
 item = ExtResource("bogiron_greatblade")
 chance = 0.01
+[sub_resource type="Resource" id="tonic"]
+script = ExtResource("entry")
+item = ExtResource("tonic")
+chance = 0.02
 [resource]
 script = ExtResource("table")
 gold_weights = PackedFloat32Array(70, 0, 0, 12, 10, 8)
-entries = Array[ExtResource("entry")]([SubResource("marshscale_tunic"), SubResource("bogwalker_boots"), SubResource("rotcap_cowl"), SubResource("swampgrip_mitts"), SubResource("mud_stained_sash"), SubResource("bogwood_shield"), SubResource("marsh_cleaver"), SubResource("gloomhide_vest"), SubResource("marshrunner_boots"), SubResource("marshguard_crown"), SubResource("marshwarden_sash"), SubResource("fenwarden_charm"), SubResource("marshwarden_band"), SubResource("bogiron_greatblade")])
+entries = Array[ExtResource("entry")]([SubResource("tonic"),SubResource("marshscale_tunic"), SubResource("bogwalker_boots"), SubResource("rotcap_cowl"), SubResource("swampgrip_mitts"), SubResource("mud_stained_sash"), SubResource("bogwood_shield"), SubResource("marsh_cleaver"), SubResource("gloomhide_vest"), SubResource("marshrunner_boots"), SubResource("marshguard_crown"), SubResource("marshwarden_sash"), SubResource("fenwarden_charm"), SubResource("marshwarden_band"), SubResource("bogiron_greatblade")])

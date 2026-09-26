@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="QuestDefinition" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="QuestDefinition" load_steps=3 format=3]
 [ext_resource type="Script" path="res://src/data/quest_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/quests/drowned_patrol.tres" id="next"]
 [resource]
 script = ExtResource("script")
+next_quest = ExtResource("next")
 id = &"lions_den"
 title = "Into the Lion's Den"
 giver_npc = "kasparov"

@@ -6,7 +6,7 @@ are gathering against the surviving gangs, but Elric believes that Vane, Crowban
 and Brutus were serving another power. Their supply trails lead into the marsh.
 After the third quest is handed in to Kasparov, Elric offers a journey to the
 expedition camp. Choosing the travel dialogue confirms departure. He can escort
-the player back to Briarwatch at any time. No Hollowmere quests are active yet.
+the player back to Briarwatch at any time. He offers The Drowned Patrol at camp.
 
 ## Lanternwatch Camp
 
@@ -72,7 +72,8 @@ quality and sold by Rowan; they are separate from the wildlife loot table.
 | Oakheart Guard | Shield; +5 armor; +10 vitality | 150 |
 | Wyrmfang | Two-handed polearm; 23 damage; 2 s/swing; +2 Strength; +10 vitality | 225 |
 
-All three species share an explicit loot table. Each item is rolled independently.
+The three wildlife species and regular Hollowmere undead share an explicit loot
+table. Each item is rolled independently.
 Gold weights are 70% for zero, 12% for three, 10% for four and 8% for five.
 
 | Item | Quality / slot | Properties | Drop chance |
@@ -91,6 +92,7 @@ Gold weights are 70% for zero, 12% for three, 10% for four and 8% for five.
 | Fenwarden Charm | Green amulet | +10 vitality | 1.5% |
 | Marshwarden Band | Green ring | +1 Strength | 1.5% |
 | Bogiron Greatblade | Green two-handed sword | 20 damage; 1.9 s/swing; +2 Crit Rating | 1% |
+| Tonic | Consumable | 50 vitality over 5 s | 2% |
 
 Base Crit Rating is zero. One point gives one percentage point of critical
 chance, capped at 100%. Direct player attacks, including damaging talents, roll
@@ -124,3 +126,25 @@ and `assets/music/LICENSES.md`, and accompany packaged Windows builds.
 Occasional distant frog calls use EZduzziteh's CC0 recordings, spaced 18–36
 seconds apart outside camp. Creature alerts, bites, hurt and death reactions
 use distinct reptile and spider cue profiles with recorded foley.
+
+## Patrol investigation
+
+The Drowned Patrol begins at camp after arrival. Existing authored landmarks
+anchor the story: Siltwater Landing holds the fallen patrol and wounded Corvin;
+the Sunken Chapel has a lever and stair to chapel_crypts. Corvin follows without
+fighting after his account. The chapel has twenty zombies, four skeletal archers,
+Malrec's ritual and the Risen Soldier miniboss. See GAME.md and BALANCE.md for
+story flow and encounter values. Return to Elric to complete the quest for 50 gold.
+
+## Darkmere and the investigation sites
+
+After quest four, Elric offers The Unseen Hand, then The Last Light of Darkmere.
+The three freely ordered marks occupy the existing graves, tollhouse and beacon
+landmarks and do not add quest pins. Darkmere's exterior stands at (-111,-114)
+near the northwest road end. The entrance
+loads darkmere_halls; its rear stairs load darkmere_sanctum. Both recover to
+Lanternwatch. These two quests, unique rewards and Malrec encounter conclude
+the map. The Risen Soldier uses exploration music; Malrec uses boss music.
+
+Lanternwatch's paving sits three centimetres above the approach-road mesh to
+keep the camp ground stable as the camera follows the player.

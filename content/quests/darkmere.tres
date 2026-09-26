@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="QuestDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/quest_definition.gd" id="script"]
+[ext_resource type="Script" path="res://src/data/quest_stage.gd" id="stage"]
+[sub_resource type="Resource" id="enter"]
+script = ExtResource("stage")
+id = &"enter_hold"
+region = &"hollowmere"
+target_path = NodePath("Portals/DarkmereHold")
+label = "Darkmere Hold"
+objective = "Enter Darkmere Hold at the northwest end of the road."
+[sub_resource type="Resource" id="ascend"]
+script = ExtResource("stage")
+id = &"ascend_hold"
+region = &"darkmere_halls"
+target_path = NodePath("Portals/UpperFloor")
+label = "The upper chamber"
+objective = "Find the stairs at the back of the lower halls."
+[sub_resource type="Resource" id="boss"]
+script = ExtResource("stage")
+id = &"defeat_malrec"
+region = &"darkmere_sanctum"
+target_path = NodePath("MalrecEncounter")
+label = "Malrec Veyne"
+objective = "Defeat Malrec Veyne in the upper chamber."
+[resource]
+script = ExtResource("script")
+id = &"darkmere"
+title = "The Last Light of Darkmere"
+giver_region = &"hollowmere"
+handin_region = &"hollowmere"
+target_region = &"darkmere_sanctum"
+target_encounter = &"malrec"
+reward_gold = 50
+entrance_label = "Darkmere Hold"
+offer_objective = "Hear what Elric has learned from Veyne's letter."
+offer_dialogue = "Darkmere Hold. The old keep at the northwest end of the road. These orders direct the dead there, and speak of a woman who has crossed beyond the marsh. Veyne remains behind to close the way. Whatever he is protecting, we cannot let him finish. Enter the hold and put an end to his work. For Corvin, and everyone who never reached our lanterns."
+description = "The dark missive reveals Malrec Veyne's refuge: Darkmere Hold, an abandoned keep deep in the northwest marsh. Enter the ruined keep, find Veyne and defeat him, then return to Warden Elric."
+objective = "Enter Darkmere Hold in the northwest. Find Malrec Veyne and defeat him."
+return_objective = "Malrec Veyne is dead. Return to Warden Elric at Lanternwatch."
+accept_text = "Veyne will answer for the patrol"
+progress_dialogue = "Follow the western road past the Widow's Weald, then take its northern end to Darkmere. The walls are broken, but the old gate still stands."
+handin_dialogue = "Then Corvin's murderer is gone. We can recover the fallen and open the road again. But Veyne said she had already crossed the water... I fear the silence you bought us is only a little time. For now, Lanternwatch will burn through the night. Rest. The marsh owes you that much."
+completed_dialogue = "The dead have fallen silent around Darkmere. We will hold this road while we learn what passed beyond it."
+completion_text = "Hollowmere's watch endures. Malrec Veyne is defeated."
+stages = Array[ExtResource("stage")]([SubResource("enter"),SubResource("ascend"),SubResource("boss")])

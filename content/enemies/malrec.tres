@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/attacks/ritualist.tres" id="attack"]
+[ext_resource type="Resource" path="res://content/loot/malrec.tres" id="loot"]
+[resource]
+script = ExtResource("script")
+id = &"malrec"
+display_name = "Malrec Veyne"
+appearance = "malrec"
+max_health = 500.0
+hit_chance = 1.0
+experience = 25
+audio_profile = "occult"
+attack = ExtResource("attack")
+passive = true
+is_boss = true
+collision_radius = 0.6
+collision_height = 2.5
+loot_table = ExtResource("loot")

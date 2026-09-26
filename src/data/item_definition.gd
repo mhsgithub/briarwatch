@@ -13,12 +13,14 @@ extends Resource
 @export var vitality_bonus: float = 0.0
 @export var strength_bonus: float = 0.0
 @export var crit_rating: float = 0.0
+@export_range(0,1) var life_steal_chance: float = 0.0
+@export var life_steal_amount: float = 0.0
 ## Percentage points, additive with other equipment and movement talents.
 @export var movement_bonus: float = 0.0
 @export_range(0.1, 5) var swing_seconds: float = 0.8
 @export var two_handed: bool = false
 ## Shared presentation vocabulary, not gameplay behavior.
-@export_enum("plain", "quilted", "mail", "leather", "reinforced", "hood", "helmet", "sword", "bloodclaw", "pitchfork", "oak", "iron", "amulet", "cleaver", "greatblade", "polearm") var appearance: String = "plain"
+@export_enum("plain", "quilted", "mail", "leather", "reinforced", "hood", "helmet", "sword", "bloodclaw", "pitchfork", "oak", "iron", "amulet", "cleaver", "greatblade", "polearm", "captain_plate") var appearance: String = "plain"
 @export_range(0.1, 30) var heal_seconds: float = 5.0
 @export var damage_bonus: float = 0.0
 @export var armor_bonus: float = 0.0

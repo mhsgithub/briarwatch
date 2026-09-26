@@ -58,6 +58,12 @@ try {
             if ($LASTEXITCODE -eq 0) {
                 & $GodotPath --headless --path . --script res://tests/marsh_movement.gd -- --test
             }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/drowned_patrol.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --headless --path . --script res://tests/darkmere.gd -- --test
+            }
         }
         'capture' {
             & $GodotPath --path . --script res://tests/visual_capture.gd -- --test
@@ -69,6 +75,12 @@ try {
             }
             if ($LASTEXITCODE -eq 0) {
                 & $GodotPath --path . --script res://tests/hollowmere_capture.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --path . --script res://tests/chapel_capture.gd -- --test
+            }
+            if ($LASTEXITCODE -eq 0) {
+                & $GodotPath --path . --script res://tests/darkmere_capture.gd -- --test
             }
         }
     }

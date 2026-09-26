@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+[ext_resource type="Script" path="res://src/data/enemy_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://content/attacks/zombie.tres" id="attack"]
+[ext_resource type="Resource" path="res://content/loot/marsh_wildlife.tres" id="loot"]
+[resource]
+script = ExtResource("script")
+id = &"zombie"
+display_name = "Zombie"
+appearance = "zombie"
+behavior = "melee"
+audio_profile = "zombie"
+max_health = 120.0
+move_speed = 2.25
+hit_chance = 0.8
+experience = 2
+aggro_radius = 10.0
+leash_radius = 28.0
+attack = ExtResource("attack")
+loot_table = ExtResource("loot")

@@ -38,7 +38,7 @@ func step(delta: float) -> bool:
 		start("cleave", offset)
 		cleave_left = rng.randf_range(kit.cleave_cooldown.x, kit.cleave_cooldown.y)
 		return true
-	if kick_left <= 0 and offset.length() <= kit.kick.reach:
+	if kit.kick and kick_left <= 0 and offset.length() <= kit.kick.reach:
 		start("kick", offset)
 		kick_left = rng.randf_range(kit.kick_cooldown.x, kit.kick_cooldown.y)
 		return true
@@ -53,7 +53,7 @@ func start(ability: String, direction: Vector3) -> void:
 	actor._face(direction)
 	special.request(direction)
 	actor.visual.special_started(kind, special.definition.windup)
-	AudioLibrary.play_world(actor, actor.global_position + Vector3.UP, "boss_roar" if kind == "cleave" else "human_effort", 0.74, -2)
+	AudioLibrary.play_world(actor, actor.global_position + Vector3.UP, actor.definition.commander.warning_cue if kind == "cleave" else "human_effort", actor.definition.commander.voice_pitch, -2)
 	_show_warning()
 
 func _show_warning() -> void:
@@ -69,7 +69,7 @@ func _show_warning() -> void:
 	surface.generate_normals()
 	warning = Geometry.mesh_node(actor, surface.commit(), Vector3(0, 0.07, 0), Color("cf6136"))
 	warning.rotation.y = actor.visual.rotation.y
-	var material := Geometry.material(Color(0.85, 0.25, 0.08, 0.38), 0.6).duplicate() as StandardMaterial3D
+	var material := Geometry.material(actor.definition.commander.warning_color, 0.6).duplicate() as StandardMaterial3D
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	warning.material_override = material
@@ -79,7 +79,7 @@ func _resolved() -> void:
 	if is_instance_valid(warning): warning.queue_free()
 	recovery_left = 0.65 if kind == "cleave" else 0.4
 	actor.attack.remaining = recovery_left + 0.3
-	AudioLibrary.play_world(actor, actor.global_position + Vector3.UP, "heavy_cleave" if kind == "cleave" else "impact", 0.72, 1)
+	AudioLibrary.play_world(actor, actor.global_position + Vector3.UP, actor.definition.commander.release_cue if kind == "cleave" else "impact", actor.definition.commander.voice_pitch, 1)
 	if kind == "cleave": AudioLibrary.play_world(actor, actor.global_position, "metal", 0.8, -4)
 
 func cancel() -> void:

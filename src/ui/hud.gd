@@ -19,7 +19,7 @@ var toast_time: float = 0
 var panel: PanelContainer
 var panel_body: VBoxContainer
 var mode: String = ""
-var current_npc: Npc
+var current_npc: Node3D
 var large_map: RegionMap
 var damage_flash: ColorRect
 var region_label: Label
@@ -32,6 +32,8 @@ var experience_bar: ProgressBar
 var level_label: Label
 var talent_button: Button
 var map_button: Button
+var cinematic_panel: PanelContainer
+var cinematic_text: Label
 
 func _ready() -> void:
 	process_mode=Node.PROCESS_MODE_ALWAYS
@@ -160,6 +162,20 @@ func _build() -> void:
 	# GUI hit testing follows sibling order, not z_index. Keep the belt usable
 	# above the modal scrim so pack items can be dropped on it.
 	root.move_child(action_frame,root.get_child_count()-1)
+	cinematic_panel = PanelContainer.new()
+	cinematic_panel.add_theme_stylebox_override("panel",ArtTheme.box(Color(0.025,0.035,0.04,0.96),ArtTheme.GOLD,22))
+	_place(cinematic_panel,Control.PRESET_CENTER_BOTTOM,Rect2(-470,-215,940,130))
+	cinematic_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	cinematic_panel.z_index = 5
+	cinematic_text = _label("",22,ArtTheme.PALE,true)
+	cinematic_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	cinematic_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	cinematic_panel.add_child(cinematic_text)
+	cinematic_panel.hide()
+
+func roleplay_line(speaker: String, text: String) -> void:
+	cinematic_panel.visible = not text.is_empty()
+	cinematic_text.text = speaker+"\n“"+text+"”"
 
 func bind(actor: Player,log: QuestLog) -> void:
 	player=actor
@@ -235,6 +251,9 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo or not is_instance_valid(player): return
+	if player.cinematic_locked and event.physical_keycode != KEY_ESCAPE:
+		get_viewport().set_input_as_handled()
+		return
 	if event.physical_keycode >= KEY_1 and event.physical_keycode <= KEY_6:
 		if mode.is_empty() and not player.dead:
 			player.actions.activate(event.physical_keycode-KEY_1)
@@ -321,7 +340,7 @@ func _scroll_list(height: float=260) -> VBoxContainer:
 	return list
 
 func show_inventory() -> void:
-	if not is_instance_valid(player) or player.dead: return
+	if not is_instance_valid(player) or player.dead or player.cinematic_locked: return
 	_begin("inventory","Character & inventory","A roadwarden carries what the road demands.")
 	var equipment:=EquipmentPanel.new()
 	equipment.player=player
@@ -330,7 +349,7 @@ func show_inventory() -> void:
 	panel_body.add_child(equipment)
 
 func show_talents() -> void:
-	if not is_instance_valid(player) or player.dead: return
+	if not is_instance_valid(player) or player.dead or player.cinematic_locked: return
 	if not player.progression.talents_unlocked():
 		toast("Talents unlock at level 2. Earn EXP by defeating enemies.")
 		return
@@ -343,7 +362,7 @@ func _use_item(index: int) -> void:
 	player.use_item(index)
 
 func show_action_picker(index: int) -> void:
-	if player.dead: return
+	if player.dead or player.cinematic_locked: return
 	_begin("actions","Action slot %d" % (index+1),"Bind a learned ability or a consumable. Bindings remain when supplies run out.")
 	var list:=_scroll_list(240)
 	for talent: Dictionary in CenturionTalents.all():
@@ -398,14 +417,21 @@ func _trade_row(item: ItemDefinition,amount: int,callback: Callable,parent: Node
 	if disabled: row.modulate.a=0.6
 	return button
 
-func show_npc(npc: Npc) -> void:
+func show_npc(npc: Node3D) -> void:
+	if player.cinematic_locked: return
 	current_npc=npc
-	var definition:=npc.definition
+	var definition: NpcDefinition=npc.definition
 	_begin("npc",definition.display_name,definition.title.to_upper())
 	var greeting:=_label("“"+definition.greeting+"”",18,ArtTheme.PALE,true)
 	greeting.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	panel_body.add_child(greeting)
 	match definition.service:
+		"companion":
+			if quest.stage() and quest.stage().id == &"find_patrol":
+				greeting.text = "“They came out of the reeds without a sound. Boatmen, pilgrims... dead faces I knew. Our steel cut them and they would not fall. A figure in black stood beyond them, moving his hands as if he were pulling threads. A necromancer. I saw his lights withdraw toward the Sunken Chapel. That is where they came from. My leg will hold. Let me show you the way; I will stay behind your blade.”"
+				_button("Come with me. We will investigate the chapel.",func(): service_action.emit("patrol_report",0),panel_body)
+			else:
+				greeting.text = "“The old pilgrimage road leads east to the chapel. There were crypts beneath it before the water rose. Look for the stone lever by the steps. I am with you, but I can barely hold a blade.”"
 		"trainer":
 			var explanation := _label("Reset both talent trees and recover every spent talent point. Learned ability bindings and active talent effects are cleared. Your level and EXP are kept.",17)
 			explanation.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -432,7 +458,10 @@ func show_npc(npc: Npc) -> void:
 		"warden":
 			if definition.id == &"elric" and quest.is_completed("lions_den"):
 				var in_marsh := large_map.region.region_id == &"hollowmere"
-				greeting.text = "“The lanterns mark the safe ground. Beyond them lie drowned homesteads and trails our scouts have yet to chart. Somewhere out there is the hand that guided Vane. Search carefully; we will plan our next move here.”" if in_marsh else "“Kasparov is gathering his banners, but the bandits did not arrange all this alone. Someone put that beast in Vane's hands and paid to keep our lord in chains. The scouts followed their supply trails into the Hollowmere Marshes. We must learn who is pulling the strings. Our expedition has made camp on the old causeway. When you are ready, travel with me.”"
+				if in_marsh:
+					_show_staged_quest(greeting)
+				else:
+					greeting.text = "“Kasparov is gathering his banners, but someone put that beast in Vane's hands and paid to keep our lord in chains. Their supply trails lead into the Hollowmere Marshes. Our expedition has made camp on the old causeway. Travel with me when you are ready.”"
 				_button("Travel with Elric to Briarwatch" if in_marsh else "I am ready · Travel to the Hollowmere Marshes",func(): service_action.emit("travel",0),panel_body)
 				_button("Not yet · Farewell",close_panel,panel_body)
 				return
@@ -488,8 +517,33 @@ func show_npc(npc: Npc) -> void:
 				panel_body.add_child(_label("Defeat Brutus and unlock the cell first.",17))
 	_button("Farewell  [Esc]",close_panel,panel_body)
 
+func _show_staged_quest(greeting: Label) -> void:
+	var offer := quest.offered()
+	var reward_claimed: bool = str(offer.id) in quest.flags.get("claimed_rewards", [])
+	panel_body.add_child(_label(offer.title,23,ArtTheme.GOLD,true))
+	if quest.is_completed(str(offer.id)):
+		greeting.text = "“"+offer.completed_dialogue+"”"
+	elif offer != quest.definition or not quest.accepted:
+		greeting.text = "“"+offer.offer_dialogue+"”"
+		if not reward_claimed:
+			var reward := GoldAmount.new()
+			reward.amount = offer.reward_gold
+			if offer.reward_gold > 0: panel_body.add_child(reward)
+			else: reward.free()
+			if offer.reward_item: panel_body.add_child(_label("Reward: "+offer.reward_item.display_name,18,ArtTheme.tier_color(offer.reward_item)))
+		_button(offer.accept_text,func(): service_action.emit("accept",0),panel_body)
+	elif quest.cleared:
+		greeting.text = "“"+offer.handin_dialogue+"”"
+		var claim_label := "Report what happened" if reward_claimed else "Report what happened · Receive "+(offer.reward_item.display_name if offer.reward_item else "%d gold" % offer.reward_gold)
+		_button(claim_label,func(): service_action.emit("claim",0),panel_body)
+	else:
+		greeting.text = "“"+offer.progress_dialogue+"”"
+		var objective := _label(quest.status_text(),17)
+		objective.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		panel_body.add_child(objective)
+
 func show_quest() -> void:
-	if not is_instance_valid(player) or player.dead: return
+	if not is_instance_valid(player) or player.dead or player.cinematic_locked: return
 	_begin("quest","Quest journal","")
 	if not quest.accepted or quest.rewarded:
 		panel_body.add_child(_label("No current quest.",17,ArtTheme.MUTED))
@@ -509,7 +563,7 @@ func _refresh_quest() -> void:
 	quest_text.text = next.offer_objective if quest.rewarded and next!=quest.definition else (quest.status_text() if not quest.rewarded else "")
 
 func show_map() -> void:
-	if not is_instance_valid(player) or player.dead: return
+	if not is_instance_valid(player) or player.dead or player.cinematic_locked: return
 	if large_map.region and not large_map.region.map_enabled: return
 	AudioLibrary.play_ui(self,"page")
 	close_panel()
@@ -545,6 +599,7 @@ func show_music_credits() -> void:
 		"Determined Pursuit — Emma_MA · CC0 1.0\nopengameart.org/content/determined-pursuit-epic-orchestra-loop",
 		"RPG - The Secret Within the Woods — HitCtrl · CC BY 3.0\nopengameart.org/content/rpg-the-secret-within-the-woods",
 		"RPG Ambient 3 — HitCtrl · CC BY 3.0\nopengameart.org/content/rpg-ambient-3",
+		"Dungeon Ambience — yd · CC0 1.0\nopengameart.org/content/dungeon-ambience",
 		"Creative Commons licenses: creativecommons.org/licenses/by/3.0/\ncreativecommons.org/licenses/by/4.0/\ncreativecommons.org/publicdomain/zero/1.0/\nTracks are unmodified; playback volume and looping are set in-game."]:
 		var credit := _label(entry,15,ArtTheme.PALE)
 		credit.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

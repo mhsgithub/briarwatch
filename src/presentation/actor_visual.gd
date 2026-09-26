@@ -2,7 +2,7 @@
 class_name ActorVisual
 extends Node3D
 ## Art-only articulated silhouettes. Gameplay owns timing and health.
-@export_enum("warrior", "melee", "archer", "wolf", "npc", "commander", "brutus", "lord", "elite", "garrick", "bloodfang") var style: String = "warrior"
+@export_enum("warrior", "melee", "archer", "wolf", "npc", "commander", "brutus", "lord", "elite", "garrick", "bloodfang", "crocodile", "marsh_widow", "broodqueen", "zombie", "skeletal_archer", "corvin", "risen_soldier", "zombie_brute", "cultist", "malrec") var style: String = "warrior"
 @export var tint: Color = Color("527b7b")
 var equipment: Dictionary = {}
 var pivot: Node3D
@@ -58,7 +58,22 @@ func rebuild() -> void:
 	carried_torch = null
 	pivot = Node3D.new()
 	add_child(pivot)
-	if style in ["crocodile","marsh_widow","broodqueen"]:
+	if style=="malrec":
+		pivot.add_child(NecromancerVisual.new())
+	elif style=="cultist":
+		var robe:=Color("332c3b")
+		Geometry.cylinder(pivot,Vector3(0,0.85,0),0.5,1.65,robe,0.26,7)
+		Geometry.sphere(pivot,Vector3(0,1.85,0),Vector3(0.65,0.75,0.65),robe)
+		Geometry.box(pivot,Vector3(0,1.82,-0.3),Vector3(0.28,0.25,0.04),Color("111319"))
+		for side in [-1,1]:
+			Geometry.beam(pivot,Vector3(side*0.3,1.3,0),Vector3(side*0.45,1.6,-0.5),0.15,robe)
+			Geometry.sphere(pivot,Vector3(side*0.45,1.6,-0.5),Vector3.ONE*0.17,Color("aaa08b"))
+	elif style in ["zombie","zombie_brute","skeletal_archer","corvin","risen_soldier"]:
+		UndeadVisual.build(self)
+		if style=="zombie_brute":
+			pivot.scale=Vector3(1.6,1.25,1.4)
+			Geometry.sphere(pivot,Vector3(0,1.05,0.03),Vector3(0.9,0.82,0.68),Color("65745a"))
+	elif style in ["crocodile","marsh_widow","broodqueen"]:
 		MarshCreature.build(self)
 	elif style == "bloodfang":
 		_build_bloodfang()
@@ -136,12 +151,17 @@ func _build_human() -> void:
 			var body := part("body")
 			var appearance := gear("body").appearance
 			var body_color := leather.lightened(0.10) if appearance == "leather" else tint.darkened(0.10)
+			if appearance == "captain_plate": body_color = Color("617675")
 			Geometry.cylinder(body,Vector3(0,1.23,0),0.34,0.67,steel if appearance == "mail" else body_color,0.44,8)
 			Geometry.cylinder(body,Vector3(0,0.83,0),0.46,0.47,body_color,0.33,8)
 			Geometry.box(body,Vector3(0,1.14,-0.36),Vector3(0.28,0.78,0.065),body_color)
 			for side in [-1,1]:
 				Geometry.sphere(body,Vector3(side*0.43,1.43,0),Vector3(0.39,0.23,0.50),steel if appearance == "mail" else body_color.lightened(0.12))
 			_build_cape(body_color)
+			if appearance == "captain_plate":
+				Geometry.box(body,Vector3(0,1.23,-0.415),Vector3(0.12,0.57,0.04),brass)
+				Geometry.box(body,Vector3(0,1.3,-0.44),Vector3(0.25,0.25,0.04),Color("243d3b"))
+				Geometry.sphere(body,Vector3(0,1.3,-0.47),Vector3(0.10,0.16,0.025),brass)
 		if gear("head"):
 			var head := part("head")
 			if gear("head").appearance == "helmet":
@@ -447,7 +467,7 @@ func _process(delta: float) -> void:
 	swing=maxf(0,swing-delta)
 	flash=maxf(0,flash-delta)
 	telegraph.visible=swing>0.2 and style!="npc"
-	slash.visible=swing>0 and swing<0.16 and style!="archer" and style!="npc"
+	slash.visible=swing>0 and swing<0.16 and style not in ["archer","skeletal_archer","npc","corvin"]
 	if weapon:
 		weapon.rotation.y=lerpf(-1.0,0.35,clampf((swing-0.2)/maxf(0.01,windup_duration),0,1)) if swing>0.2 else lerpf(1.3,-1.0,swing/0.2)
 		if swing<=0:
@@ -472,6 +492,9 @@ func _process(delta: float) -> void:
 	if carried_torch: carried_torch.rotation.x=0
 	if special_left > 0:
 		telegraph.visible = false
+		if special_kind == "charge":
+			pivot.rotation.x = -0.35
+			for fist in fists: fist.rotation.x = -0.65
 		if special_kind == "web":
 			pivot.rotation.x = -0.25
 			for i in [0,4]:

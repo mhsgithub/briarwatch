@@ -1,86 +1,61 @@
 # Asset provenance
 
-Project-specific geometry, shaders, colors, text, names, layouts, the shield icon
-were authored for this project. Audio now uses edited CC0 recordings; see
-[AUDIO.md](AUDIO.md) for authors, source URLs, licensing and build recipes. The three painted UI
-textures below were AI-generated specifically for Briarwatch using the built-in
-image-generation tool on 17 September 2026. No franchise assets, copied maps,
-commercial character models or third-party game-art packs are included.
+Briarwatch's geometry, shaders, colors, text, names, layouts and vector item
+icons were authored for this original setting. The faceted world meshes are
+built through native Godot scenes and scripts; they are not imported franchise
+models or copied maps. [VISUAL_DIRECTION.md](VISUAL_DIRECTION.md) defines the
+style and preserves atlas prompts. Audio sources, synthesis and music licenses
+are documented in [AUDIO.md](AUDIO.md) and the asset license files.
 
-| Source asset | Method and purpose |
+## Painted interface textures
+
+These textures were generated specifically for Briarwatch and are committed
+source inputs. The interface supplies dark enamel backings where needed. Atlas
+regions are selected through item Resources, so additions can use a custom icon
+without replacing existing cells.
+
+| Source asset | Purpose |
 |---|---|
-| `assets/ui/equipment_atlas.png` | Built-in image generation; 1254x1254 RGBA, 4x4 painted equipment/consumable atlas |
-| `assets/ui/field_gear_atlas.png` | Built-in image generation; 4x4 equipment expansion atlas, using our original atlas as style reference |
-| `assets/ui/panel_frame.png` | Built-in image generation; 1536x1024 RGBA, engraved bronze nine-slice panel border |
+| `assets/ui/equipment_atlas.png` | 4×4 original equipment and consumables |
+| `assets/ui/field_gear_atlas.png` | 4×4 March equipment expansion |
+| `assets/ui/panel_frame.png` | Engraved bronze nine-slice panel frame |
+| `assets/ui/talent_atlas.png` | 4×4 Centurion talent and family-seal art |
+| `assets/ui/marsh_gear_atlas.png` | 4×4 Hollowmere wildlife-drop equipment |
+| `assets/ui/rowan_gear_atlas.png` | 3×2 Lanternwatch vendor equipment |
 
-All final PNGs are source inputs within the project, not external runtime
-dependencies; include them when committing the overhaul. Alpha is preserved;
-the UI supplies an opaque dark backing.
-Atlas cell size derives from the actual image width rather than the requested
-generation size. Prompts and cell mapping are preserved in
-[VISUAL_DIRECTION.md](VISUAL_DIRECTION.md). No API key or paid service is required
-to run or edit the game with these assets. The imagegen skill informed their
-production use, readability constraints and portable save locations.
+The original inventory art, character/pack layout and bronze/enamel palette
+remain the visual baseline. The exact first equipment/talent cell mapping and
+prompts are in [VISUAL_DIRECTION.md](VISUAL_DIRECTION.md) and
+[TALENT_ART_PROMPT.md](TALENT_ART_PROMPT.md). The marsh gear prompt is retained
+in `assets/ui/marsh_gear_prompt.txt`. The final PNGs, not a generation service,
+are needed to run or build the game.
 
-World geometry is built by `Geometry`, `WorldProp`, `ActorVisual`, `Terrain` and
-`Road`. Recorded effects are routed through `GameAudio` and `AudioLibrary`; final
-WAVs are included under `assets/audio/`. Complete composed music and its licensing
-record are included under `assets/music/` and routed through `MusicDirector`.
-Body UI uses Godot's bundled
-fallback font. Headings request the installed system fonts Georgia, Noto Serif,
-then serif, with Godot fallback when unavailable; no system font files are copied
-or redistributed. Exact heading metrics can therefore differ between PCs.
-Godot is distributed separately under its own license; see
-https://godotengine.org/license/ and the engine's About/License panel when making
-a distributable build.
+## World and character art
 
-No project-wide open-source license has been chosen on the user's behalf.
+`Geometry`, `WorldProp`, `ActorVisual`, `Terrain`, `Road` and region-specific
+components create timber, slate, stone, marsh vegetation, bridges, ruins,
+fortifications and layered actor silhouettes. The Watchtower, Warwick cellar,
+Dark Woods, chapel crypts and Darkmere Hold use editor-visible native geometry
+with authored collision and spawn markers. Dark Woods thickets use a local
+visibility shader; Hollowmere water and mist have dedicated shaders.
 
-The watchtower update adds original native geometry in `tower_interior.gd`,
-the procedural `tower_stone.gdshader`, a hand-authored vector cellar-key icon,
-and a native two-handed axe/commander silhouette. No external art was downloaded.
-Outlaw's Mantle reuses the existing shoulder icon (atlas cell 9) and uses its
-hide-colored shoulder/cape appearance on the character. Boss sound cues reuse
-the existing CC0 library with runtime pitch/gain treatment; see AUDIO.md.
+Garrick, Bloodfang, Brutus, Corvin, the undead and Malrec have original native
+models and presentation. Fire, corruption and Malrec's dark boiling patch have
+separate visual components and shaders. The vector item icons for Bloodclaw,
+Captain's Breastplate, Soldier's Pauldrons, Black Reliquary
+and Veyne's letter are authored in this repository. These are editable source
+assets, not runtime downloads.
 
-## Centurion talent atlas — September 2026
+## Sound, music and fonts
 
-`assets/ui/talent_atlas.png`: built-in image generation, original 1254×1254 RGBA
-4×4 atlas. The imagegen skill guided painted-icon consistency, readability,
-inspection and copying the result into the portable repository. Row-major cells:
-Block, Whirlwind, Impale, Bloodthirst; Retaliate, Rampage, Bladestorm, Momentum;
-Leap, Unshackled, Iron Constitution, Elemental Resolve; Fleetfooted, Blood and
-Breath, Kasparov Family Seal, spare star. No original inventory art was replaced.
-The exact prompt is in TALENT_ART_PROMPT.md. Warwick/Brutus/Kasparov and their
-animations use original native geometry and code.
+Final effects are included under `assets/audio/`; their recorded CC0 sources
+and project-authored synthesis recipes are documented in
+`assets/audio/LICENSES.md` and [AUDIO.md](AUDIO.md). Complete music tracks and
+their licenses are in `assets/music/` and `assets/music/LICENSES.md`. No
+network access is needed for playback.
 
-## Dark Woods assets
-
-The twisted tree mesh, batched thickets, forest edge, circular clearing, cage,
-chest, Elite Bandit, Garrick Vane and articulated Bloodfang are original native
-geometry and code. The tree shader provides wind and local visibility fading.
-Bloodfang's jaw, head and arms animate fury/feeding/howls; rage adds red light.
-
-Dark trees have exposed roots without a ground slab. The northwest forest edge
-uses seeded irregular placement, rotation and scale. Vane's thrown brand and
-the player's brief burn effect use the native FireVisual; Brutus's knives use
-small steel-and-wood geometry aligned with their travel direction.
-assets/audio/fire_hurt.wav is an original synthesized PCM hiss/crackle made for
-Briarwatch. tools/build_fire_sfx.ps1 reproduces it without external dependencies.
-
-assets/ui/blackroad_belt.svg and bloodclaw.svg are original vector item icons.
-Bloodclaw also has a dedicated hooked, blood-streaked world/portrait model.
-All sources are committed and editable; no external downloads, generated binary
-dependency or third-party art license is introduced.
-
-## Hollowmere assets
-
-The marsh, shore water shader, cypress groves, lamps, bridges, ruins, crocodiles
-and articulated spiders use original native geometry. `marsh_gear_atlas.png`
-is an original generated 4×4 painted atlas for the fourteen wildlife drops.
-`rowan_gear_atlas.png` is a separate original 1536×1024, 3×2 painted atlas:
-Wyrmhide Grips, Emerald Band, Wyrmsteel Shoulders, Oakheart Guard, Wyrmfang,
-then an empty cell. Both were created with the built-in imagegen tool and
-inspected before integration. Resources use AtlasTexture regions directly;
-the approved inventory art and layout remain intact. Music and frog recording
-licenses and sources are documented in AUDIO.md and the asset license files.
+Body UI uses Godot's bundled fallback font. Headings request local Georgia,
+Noto Serif and then serif, with Godot fallback; no system font is redistributed.
+Heading metrics may therefore differ slightly between PCs. Godot is obtained
+separately under its own license; see https://godotengine.org/license/.
+No project-wide open-source license has been selected on the owner's behalf.

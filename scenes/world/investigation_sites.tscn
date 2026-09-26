@@ -1,0 +1,25 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://src/world/mark_investigation.gd" id="controller"]
+[ext_resource type="Script" path="res://src/world/necromantic_mark.gd" id="mark"]
+[ext_resource type="Resource" path="res://content/enemies/zombie.tres" id="zombie"]
+[ext_resource type="Resource" path="res://content/enemies/skeletal_archer.tres" id="archer"]
+[ext_resource type="Resource" path="res://content/enemies/zombie_brute.tres" id="brute"]
+[ext_resource type="Resource" path="res://content/items/veyne_letter.tres" id="note"]
+[node name="MarkInvestigation" type="Node3D"]
+script = ExtResource("controller")
+zombie = ExtResource("zombie")
+archer = ExtResource("archer")
+brute = ExtResource("brute")
+note = ExtResource("note")
+[node name="graves" type="Node3D" parent="."]
+position = Vector3(-44,0.08,-81)
+script = ExtResource("mark")
+site_id = &"graves"
+[node name="tollhouse" type="Node3D" parent="."]
+position = Vector3(94,0.08,-34)
+script = ExtResource("mark")
+site_id = &"tollhouse"
+[node name="beacon" type="Node3D" parent="."]
+position = Vector3(109,0.08,-104)
+script = ExtResource("mark")
+site_id = &"beacon"
